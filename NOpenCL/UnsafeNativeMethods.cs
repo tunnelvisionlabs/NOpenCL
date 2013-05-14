@@ -27,7 +27,7 @@
         [DllImport(ExternDll.OpenCL)]
         public static extern ErrorCode clGetPlatformInfo(ClPlatformID platform, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
 
-        public static T GetPlatformInfo<T>(ClPlatformID platform, PlatformInfo<T> parameter)
+        public static T GetPlatformInfo<T>(ClPlatformID platform, ParameterInfo<T> parameter)
         {
             UIntPtr requiredSize;
             ErrorHandler.ThrowOnFailure(clGetPlatformInfo(platform, parameter.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
@@ -54,18 +54,20 @@
 
         public static class PlatformInfo
         {
-            public static readonly PlatformInfo<string> Profile = new PlatformInfoString(0x0900);
-            public static readonly PlatformInfo<string> Version = new PlatformInfoString(0x0901);
-            public static readonly PlatformInfo<string> Name = new PlatformInfoString(0x0902);
-            public static readonly PlatformInfo<string> Vendor = new PlatformInfoString(0x0903);
-            public static readonly PlatformInfo<string> Extensions = new PlatformInfoString(0x0904);
+            public static readonly ParameterInfo<string> Profile = new ParameterInfoString(0x0900);
+            public static readonly ParameterInfo<string> Version = new ParameterInfoString(0x0901);
+            public static readonly ParameterInfo<string> Name = new ParameterInfoString(0x0902);
+            public static readonly ParameterInfo<string> Vendor = new ParameterInfoString(0x0903);
+            public static readonly ParameterInfo<string> Extensions = new ParameterInfoString(0x0904);
         }
 
-        public abstract class PlatformInfo<T>
+        #endregion
+
+        public abstract class ParameterInfo<T>
         {
             private readonly int _name;
 
-            protected PlatformInfo(int name)
+            protected ParameterInfo(int name)
             {
                 _name = name;
             }
@@ -81,9 +83,9 @@
             public abstract T Deserialize(UIntPtr memorySize, IntPtr memory);
         }
 
-        public sealed class PlatformInfoString : PlatformInfo<string>
+        public sealed class ParameterInfoString : ParameterInfo<string>
         {
-            public PlatformInfoString(int name)
+            public ParameterInfoString(int name)
                 : base(name)
             {
             }
@@ -93,8 +95,6 @@
                 return Marshal.PtrToStringAnsi(memory, (int)memorySize.ToUInt32() - 1);
             }
         }
-
-        #endregion
 
         public enum ErrorCode
         {
