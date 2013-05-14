@@ -29,8 +29,12 @@
 
         public static T GetPlatformInfo<T>(ClPlatformID platform, ParameterInfo<T> parameter)
         {
+            int? fixedSize = parameter.FixedSize;
             UIntPtr requiredSize;
-            ErrorHandler.ThrowOnFailure(clGetPlatformInfo(platform, parameter.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
+            if (fixedSize.HasValue)
+                requiredSize = (UIntPtr)fixedSize;
+            else
+                ErrorHandler.ThrowOnFailure(clGetPlatformInfo(platform, parameter.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
 
             IntPtr memory = IntPtr.Zero;
             try
@@ -77,6 +81,14 @@
                 get
                 {
                     return _name;
+                }
+            }
+
+            public virtual int? FixedSize
+            {
+                get
+                {
+                    return null;
                 }
             }
 
