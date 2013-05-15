@@ -31,11 +31,23 @@
         public static T GetPlatformInfo<T>(ClPlatformID platform, PlatformParameterInfo<T> parameter)
         {
             int? fixedSize = parameter.ParameterInfo.FixedSize;
+#if DEBUG
+            bool verifyFixedSize = true;
+#else
+            bool verifyFixedSize = false;
+#endif
+
             UIntPtr requiredSize;
-            if (fixedSize.HasValue)
+            if (fixedSize.HasValue && !verifyFixedSize)
                 requiredSize = (UIntPtr)fixedSize;
             else
                 ErrorHandler.ThrowOnFailure(clGetPlatformInfo(platform, parameter.ParameterInfo.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
+
+            if (verifyFixedSize && fixedSize.HasValue)
+            {
+                if (requiredSize.ToUInt64() != (ulong)fixedSize.Value)
+                    throw new ArgumentException("The parameter definition includes a fixed size that does not match the required size according to the runtime.");
+            }
 
             IntPtr memory = IntPtr.Zero;
             try
@@ -159,11 +171,23 @@
         public static T GetDeviceInfo<T>(ClDeviceID device, DeviceParameterInfo<T> parameter)
         {
             int? fixedSize = parameter.ParameterInfo.FixedSize;
+#if DEBUG
+            bool verifyFixedSize = true;
+#else
+            bool verifyFixedSize = false;
+#endif
+
             UIntPtr requiredSize;
-            if (fixedSize.HasValue)
+            if (fixedSize.HasValue && !verifyFixedSize)
                 requiredSize = (UIntPtr)fixedSize;
             else
                 ErrorHandler.ThrowOnFailure(clGetDeviceInfo(device, parameter.ParameterInfo.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
+
+            if (verifyFixedSize && fixedSize.HasValue)
+            {
+                if (requiredSize.ToUInt64() != (ulong)fixedSize.Value)
+                    throw new ArgumentException("The parameter definition includes a fixed size that does not match the required size according to the runtime.");
+            }
 
             IntPtr memory = IntPtr.Zero;
             try
