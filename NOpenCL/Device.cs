@@ -33,7 +33,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.BuiltInKernels).Split(new [] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.BuiltInKernels).Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
 
