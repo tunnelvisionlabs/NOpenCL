@@ -798,6 +798,86 @@
 
         #endregion
 
+        #region Partition a Device
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clRetainDevice(DeviceSafeHandle device);
+
+        [DllImport(ExternDll.OpenCL)]
+        public static extern ErrorCode clReleaseDevice(IntPtr device);
+
+        #endregion
+
+        #region Contexts
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clRetainContext(ContextSafeHandle context);
+
+        [DllImport(ExternDll.OpenCL)]
+        public static extern ErrorCode clReleaseContext(IntPtr context);
+
+        #endregion
+
+        #region Command Queues
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clRetainCommandQueue(CommandQueueSafeHandle commandQueue);
+
+        [DllImport(ExternDll.OpenCL)]
+        public static extern ErrorCode clReleaseCommandQueue(IntPtr commandQueue);
+
+        #endregion
+
+        #region Buffer Objects
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clRetainMemObject(MemObjectSafeHandle memObject);
+
+        [DllImport(ExternDll.OpenCL)]
+        public static extern ErrorCode clReleaseMemObject(IntPtr memObject);
+
+        #endregion
+
+        #region Sampler Objects
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clRetainSampler(SamplerSafeHandle sampler);
+
+        [DllImport(ExternDll.OpenCL)]
+        public static extern ErrorCode clReleaseSampler(IntPtr sampler);
+
+        #endregion
+
+        #region Program Objects
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clRetainProgram(ProgramSafeHandle program);
+
+        [DllImport(ExternDll.OpenCL)]
+        public static extern ErrorCode clReleaseProgram(IntPtr program);
+
+        #endregion
+
+        #region Kernel Objects
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clRetainKernel(KernelSafeHandle kernel);
+
+        [DllImport(ExternDll.OpenCL)]
+        public static extern ErrorCode clReleaseKernel(IntPtr kernel);
+
+        #endregion
+
+        #region Event Objects
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clRetainEvent(EventSafeHandle @event);
+
+        [DllImport(ExternDll.OpenCL)]
+        public static extern ErrorCode clReleaseEvent(IntPtr @event);
+
+        #endregion
+
         public abstract class ParameterInfo<T>
         {
             private readonly int _name;
