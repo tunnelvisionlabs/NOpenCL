@@ -1463,7 +1463,7 @@
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clSetEventCallback(EventSafeHandle @event, ExecutionStatus executionCallbackType, EventCallback eventNotify, IntPtr userData);
 
-        [DllImport(ExternDll.OpenCL)]
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void EventCallback(EventSafeHandle @event, ExecutionStatus eventCommandExecutionStatus, IntPtr userData);
 
         [DllImport(ExternDll.OpenCL)]
