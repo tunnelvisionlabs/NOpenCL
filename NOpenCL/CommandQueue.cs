@@ -67,6 +67,31 @@
             return new CommandQueue(handle);
         }
 
+        /// <summary>
+        /// Blocks until all previously queued OpenCL commands in the command-queue are
+        /// issued to the associated device and have completed.
+        /// </summary>
+        /// <remarks>
+        /// <see cref="Finsh"/> does not return until all previously queued commands in
+        /// the command queue have been processed and completed. <see cref="Finsh"/> is
+        /// also a synchronization point.
+        /// </remarks>
+        public void Finish()
+        {
+            ThrowIfDisposed();
+            UnsafeNativeMethods.Finish(Handle);
+        }
+
+        /// <summary>
+        /// Issues all previously queued OpenCL commands in the command-queue to the device
+        /// associated with the command-queue.
+        /// </summary>
+        public void Flush()
+        {
+            ThrowIfDisposed();
+            UnsafeNativeMethods.Flush(Handle);
+        }
+
         public void Dispose()
         {
             _handle.Dispose();

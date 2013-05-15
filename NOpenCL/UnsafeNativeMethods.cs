@@ -1302,6 +1302,26 @@
 
         #endregion
 
+        #region Flush and Finish
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clFlush(CommandQueueSafeHandle commandQueue);
+
+        public static void Flush(CommandQueueSafeHandle commandQueue)
+        {
+            ErrorHandler.ThrowOnFailure(clFlush(commandQueue));
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clFinish(CommandQueueSafeHandle commandQueue);
+
+        public static void Finish(CommandQueueSafeHandle commandQueue)
+        {
+            ErrorHandler.ThrowOnFailure(clFinish(commandQueue));
+        }
+
+        #endregion
+
         public abstract class ParameterInfo<T>
         {
             private readonly int _name;
