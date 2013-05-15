@@ -67,6 +67,26 @@
             return new CommandQueue(handle);
         }
 
+        public Event EnqueueMarker(params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueMarkerWithWaitList(Handle, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueBarrier(params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueBarrierWithWaitList(Handle, eventHandles);
+            return new Event(handle);
+        }
+
         /// <summary>
         /// Blocks until all previously queued OpenCL commands in the command-queue are
         /// issued to the associated device and have completed.
