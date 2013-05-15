@@ -27,7 +27,7 @@
         [DllImport(ExternDll.OpenCL)]
         public static extern ErrorCode clGetPlatformInfo(ClPlatformID platform, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
 
-        public static T GetPlatformInfo<T>(ClPlatformID platform, ParameterInfo<T> parameter)
+        public static T GetPlatformInfo<T>(ClPlatformID platform, PlatformParameterInfo<T> parameter)
         {
             int? fixedSize = parameter.FixedSize;
             UIntPtr requiredSize;
@@ -58,11 +58,91 @@
 
         public static class PlatformInfo
         {
-            public static readonly ParameterInfo<string> Profile = new ParameterInfoString(0x0900);
-            public static readonly ParameterInfo<string> Version = new ParameterInfoString(0x0901);
-            public static readonly ParameterInfo<string> Name = new ParameterInfoString(0x0902);
-            public static readonly ParameterInfo<string> Vendor = new ParameterInfoString(0x0903);
-            public static readonly ParameterInfo<string> Extensions = new ParameterInfoString(0x0904);
+            /// <summary>
+            /// OpenCL profile string. Returns the profile name supported by the implementation.
+            /// The profile name returned can be one of the following strings:
+            ///
+            /// <list type="bullet">
+            /// <item>FULL_PROFILE - if the implementation supports the OpenCL specification
+            /// (functionality defined as part of the core specification and does not require
+            /// any extensions to be supported).</item>
+            /// <item>EMBEDDED_PROFILE - if the implementation supports the OpenCL embedded
+            /// profile. The embedded profile is defined to be a subset for each version of
+            /// OpenCL.</item>
+            /// </list>
+            /// </summary>
+            public static readonly PlatformParameterInfo<string> Profile = (PlatformParameterInfo<string>)new ParameterInfoString(0x0900);
+
+            /// <summary>
+            /// OpenCL version string. Returns the OpenCL version supported by the implementation.
+            /// This version string has the following format:
+            /// <para />
+            /// OpenCL<em>&lt;space&gt;</em><em>&lt;major_version.minor_version&gt;</em><em>&lt;space&gt;</em><em>&lt;platform-specific information&gt;</em>
+            /// <para />
+            /// The <em>major_version.minor_version</em> value returned will be 1.2.
+            /// </summary>
+            public static readonly PlatformParameterInfo<string> Version = (PlatformParameterInfo<string>)new ParameterInfoString(0x0901);
+
+            /// <summary>
+            /// Platform name string.
+            /// </summary>
+            public static readonly PlatformParameterInfo<string> Name = (PlatformParameterInfo<string>)new ParameterInfoString(0x0902);
+
+            /// <summary>
+            /// Platform vendor string.
+            /// </summary>
+            public static readonly PlatformParameterInfo<string> Vendor = (PlatformParameterInfo<string>)new ParameterInfoString(0x0903);
+
+            /// <summary>
+            /// Returns a space-separated list of extension names (the extension names themselves
+            /// do not contain any spaces) supported by the platform. Extensions defined here must
+            /// be supported by all devices associated with this platform.
+            /// </summary>
+            public static readonly PlatformParameterInfo<string> Extensions = (PlatformParameterInfo<string>)new ParameterInfoString(0x0904);
+        }
+
+        public sealed class PlatformParameterInfo<T> : ParameterInfo<T>
+        {
+            private readonly ParameterInfo<T> _parameterInfo;
+
+            public PlatformParameterInfo(ParameterInfo<T> parameterInfo)
+                : base(parameterInfo.Name)
+            {
+                _parameterInfo = parameterInfo;
+            }
+
+            public static explicit operator PlatformParameterInfo<T>(ParameterInfo<T> parameterInfo)
+            {
+                if (parameterInfo == null)
+                    throw new ArgumentNullException("parameterInfo");
+
+                PlatformParameterInfo<T> result = parameterInfo as PlatformParameterInfo<T>;
+                if (result != null)
+                    return result;
+
+                return new PlatformParameterInfo<T>(parameterInfo);
+            }
+
+            public ParameterInfo<T> ParameterInfo
+            {
+                get
+                {
+                    return _parameterInfo;
+                }
+            }
+
+            public override int? FixedSize
+            {
+                get
+                {
+                    return _parameterInfo.FixedSize;
+                }
+            }
+
+            public override T Deserialize(UIntPtr memorySize, IntPtr memory)
+            {
+                return _parameterInfo.Deserialize(memorySize, memory);
+            }
         }
 
         #endregion
