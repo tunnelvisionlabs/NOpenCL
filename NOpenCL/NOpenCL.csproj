@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddressingMode.cs" />
     <Compile Include="AffinityDomain.cs" />
     <Compile Include="CacheType.cs" />
     <Compile Include="CommandQueue.cs" />
@@ -51,8 +52,10 @@
     <Compile Include="Extensions\KhrD3D11Sharing.cs" />
     <Compile Include="Extensions\KhrD3D10Sharing.cs" />
     <Compile Include="Extensions\NvDeviceAttributeQuery.cs" />
+    <Compile Include="FilterMode.cs" />
     <Compile Include="KernelSafeHandle.cs" />
     <Compile Include="MemObjectSafeHandle.cs" />
+    <Compile Include="Sampler.cs" />
     <Compile Include="SamplerSafeHandle.cs" />
     <Compile Include="ProgramSafeHandle.cs" />
     <Compile Include="DeviceSafeHandle.cs" />

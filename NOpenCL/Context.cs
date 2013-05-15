@@ -64,6 +64,12 @@
             return new Context(handle);
         }
 
+        public Sampler CreateSampler(bool normalizedCoordinates, AddressingMode addressingMode, FilterMode filterMode)
+        {
+            SamplerSafeHandle handle = UnsafeNativeMethods.CreateSampler(Handle, normalizedCoordinates, addressingMode, filterMode);
+            return new Sampler(handle);
+        }
+
         public void Dispose()
         {
             _context.Dispose();
