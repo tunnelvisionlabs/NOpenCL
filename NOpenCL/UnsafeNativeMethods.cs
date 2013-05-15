@@ -169,7 +169,7 @@
         [DllImport(ExternDll.OpenCL)]
         public static extern ErrorCode clGetDeviceInfo(ClDeviceID device, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
 
-        public static T GetDeviceInfo<T>(ClDeviceID device, ParameterInfo<T> parameter)
+        public static T GetDeviceInfo<T>(ClDeviceID device, DeviceParameterInfo<T> parameter)
         {
             int? fixedSize = parameter.FixedSize;
             UIntPtr requiredSize;
@@ -200,80 +200,124 @@
 
         public static class DeviceInfo
         {
-            public static readonly ParameterInfo<uint> AddressBits = new ParameterInfoUInt32(0x100D);
-            public static readonly ParameterInfo<bool> Available = new ParameterInfoBoolean(0x1027);
-            public static readonly ParameterInfo<string> BuiltInKernels = new ParameterInfoString(0x103F);
-            public static readonly ParameterInfo<bool> CompilerAvailable = new ParameterInfoBoolean(0x1028);
-            public static readonly ParameterInfo<IntPtr> DoubleFloatingPointConfiguration = new ParameterInfoIntPtr(0x1032);
-            public static readonly ParameterInfo<bool> LittleEndian = new ParameterInfoBoolean(0x1026);
-            public static readonly ParameterInfo<bool> ErrorCorrectionSupport = new ParameterInfoBoolean(0x1024);
-            public static readonly ParameterInfo<IntPtr> ExecutionCapabilities = new ParameterInfoIntPtr(0x1029);
-            public static readonly ParameterInfo<string> Extensions = new ParameterInfoString(0x1030);
-            public static readonly ParameterInfo<UIntPtr> GlobalCacheSize = new ParameterInfoUIntPtr(0x101E);
-            public static readonly ParameterInfo<uint> GlobalCacheType = new ParameterInfoUInt32(0x101C);
-            public static readonly ParameterInfo<uint> GlobalCacheLineSize = new ParameterInfoUInt32(0x101D);
-            public static readonly ParameterInfo<UIntPtr> GlobalMemorySize = new ParameterInfoUIntPtr(0x101F);
-            public static readonly ParameterInfo<IntPtr> HalfFloatingPointConfiguration = new ParameterInfoIntPtr(0x1033);
-            public static readonly ParameterInfo<bool> HostUnifiedMemory = new ParameterInfoBoolean(0x1035);
-            public static readonly ParameterInfo<bool> ImageSupport = new ParameterInfoBoolean(0x1016);
-            public static readonly ParameterInfo<UIntPtr> Image2DMaxHeight = new ParameterInfoUIntPtr(0x1012);
-            public static readonly ParameterInfo<UIntPtr> Image2DMaxWidth = new ParameterInfoUIntPtr(0x1011);
-            public static readonly ParameterInfo<UIntPtr> Image3DMaxDepth = new ParameterInfoUIntPtr(0x1015);
-            public static readonly ParameterInfo<UIntPtr> Image3DMaxHeight = new ParameterInfoUIntPtr(0x1014);
-            public static readonly ParameterInfo<UIntPtr> Image3DMaxWidth = new ParameterInfoUIntPtr(0x1013);
-            public static readonly ParameterInfo<UIntPtr> ImageMaxBufferSize = new ParameterInfoUIntPtr(0x1040);
-            public static readonly ParameterInfo<UIntPtr> ImageMaxArraySize = new ParameterInfoUIntPtr(0x1041);
-            public static readonly ParameterInfo<bool> LinkerAvailable = new ParameterInfoBoolean(0x103E);
-            public static readonly ParameterInfo<UIntPtr> LocalMemorySize = new ParameterInfoUIntPtr(0x1023);
-            public static readonly ParameterInfo<uint> LocalMemoryType = new ParameterInfoUInt32(0x1022);
-            public static readonly ParameterInfo<uint> MaxClockFrequency = new ParameterInfoUInt32(0x100C);
-            public static readonly ParameterInfo<uint> MaxComputeUnits = new ParameterInfoUInt32(0x1002);
-            public static readonly ParameterInfo<uint> MaxConstantArguments = new ParameterInfoUInt32(0x1021);
-            public static readonly ParameterInfo<UIntPtr> MaxConstantBufferSize = new ParameterInfoUIntPtr(0x1020);
-            public static readonly ParameterInfo<UIntPtr> MaxMemoryAllocationSize = new ParameterInfoUIntPtr(0x1010);
-            public static readonly ParameterInfo<UIntPtr> MaxParameterSize = new ParameterInfoUIntPtr(0x1017);
-            public static readonly ParameterInfo<uint> MaxReadImageArguments = new ParameterInfoUInt32(0x100E);
-            public static readonly ParameterInfo<uint> MaxSamplers = new ParameterInfoUInt32(0x1018);
-            public static readonly ParameterInfo<UIntPtr> MaxWorkGroupSize = new ParameterInfoUIntPtr(0x1004);
-            public static readonly ParameterInfo<uint> MaxWorkItemDimensions = new ParameterInfoUInt32(0x1003);
-            public static readonly ParameterInfo<UIntPtr[]> MaxWorkItemSizes = new ParameterInfoUIntPtrArray(0x1005);
-            public static readonly ParameterInfo<uint> MaxWriteImageArguments = new ParameterInfoUInt32(0x100F);
-            public static readonly ParameterInfo<uint> MemoryBaseAddressAlignment = new ParameterInfoUInt32(0x1019);
-            public static readonly ParameterInfo<uint> MinDataTypeAlignment = new ParameterInfoUInt32(0x101A);
-            public static readonly ParameterInfo<string> Name = new ParameterInfoString(0x102B);
-            public static readonly ParameterInfo<uint> NativeVectorWidthChar = new ParameterInfoUInt32(0x1036);
-            public static readonly ParameterInfo<uint> NativeVectorWidthShort = new ParameterInfoUInt32(0x1037);
-            public static readonly ParameterInfo<uint> NativeVectorWidthInt = new ParameterInfoUInt32(0x1038);
-            public static readonly ParameterInfo<uint> NativeVectorWidthLong = new ParameterInfoUInt32(0x1039);
-            public static readonly ParameterInfo<uint> NativeVectorWidthFloat = new ParameterInfoUInt32(0x103A);
-            public static readonly ParameterInfo<uint> NativeVectorWidthDouble = new ParameterInfoUInt32(0x103B);
-            public static readonly ParameterInfo<uint> NativeVectorWidthHalf = new ParameterInfoUInt32(0x103C);
-            public static readonly ParameterInfo<string> OpenCLVersion = new ParameterInfoString(0x103D);
-            public static readonly ParameterInfo<IntPtr> ParentDevice = new ParameterInfoIntPtr(0x1042);
-            public static readonly ParameterInfo<uint> PartitionMaxSubDevices = new ParameterInfoUInt32(0x1043);
-            public static readonly ParameterInfo<IntPtr[]> PartitionProperties = new ParameterInfoIntPtrArray(0x1044);
-            public static readonly ParameterInfo<IntPtr> PartitionAffinityDomain = new ParameterInfoIntPtr(0x1045);
-            public static readonly ParameterInfo<IntPtr[]> PartitionType = new ParameterInfoIntPtrArray(0x1046);
-            public static readonly ParameterInfo<IntPtr> Platform = new ParameterInfoIntPtr(0x1031);
-            public static readonly ParameterInfo<uint> PreferredVectorWidthChar = new ParameterInfoUInt32(0x1006);
-            public static readonly ParameterInfo<uint> PreferredVectorWidthShort = new ParameterInfoUInt32(0x1007);
-            public static readonly ParameterInfo<uint> PreferredVectorWidthInt = new ParameterInfoUInt32(0x1008);
-            public static readonly ParameterInfo<uint> PreferredVectorWidthLong = new ParameterInfoUInt32(0x1009);
-            public static readonly ParameterInfo<uint> PreferredVectorWidthFloat = new ParameterInfoUInt32(0x100A);
-            public static readonly ParameterInfo<uint> PreferredVectorWidthDouble = new ParameterInfoUInt32(0x100B);
-            public static readonly ParameterInfo<uint> PreferredVectorWidthHalf = new ParameterInfoUInt32(0x1034);
-            public static readonly ParameterInfo<UIntPtr> PrintfBufferSize = new ParameterInfoUIntPtr(0x1049);
-            public static readonly ParameterInfo<bool> PreferredInteropUserSync = new ParameterInfoBoolean(0x1048);
-            public static readonly ParameterInfo<string> Profile = new ParameterInfoString(0x102E);
-            public static readonly ParameterInfo<UIntPtr> ProfilingTimerResolution = new ParameterInfoUIntPtr(0x1025);
-            public static readonly ParameterInfo<IntPtr> QueueProperties = new ParameterInfoIntPtr(0x102A);
-            public static readonly ParameterInfo<uint> ReferenceCount = new ParameterInfoUInt32(0x1047);
-            public static readonly ParameterInfo<IntPtr> SingleFloatingPointConfiguration = new ParameterInfoIntPtr(0x101B);
-            public static readonly ParameterInfo<IntPtr> DeviceType = new ParameterInfoIntPtr(0x1000);
-            public static readonly ParameterInfo<string> Vendor = new ParameterInfoString(0x102C);
-            public static readonly ParameterInfo<uint> VendorID = new ParameterInfoUInt32(0x1001);
-            public static readonly ParameterInfo<string> Version = new ParameterInfoString(0x102F);
-            public static readonly ParameterInfo<string> DriverVersion = new ParameterInfoString(0x102D);
+            public static readonly DeviceParameterInfo<uint> AddressBits = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x100D);
+            public static readonly DeviceParameterInfo<bool> Available = (DeviceParameterInfo<bool>)new ParameterInfoBoolean(0x1027);
+            public static readonly DeviceParameterInfo<string> BuiltInKernels = (DeviceParameterInfo<string>)new ParameterInfoString(0x103F);
+            public static readonly DeviceParameterInfo<bool> CompilerAvailable = (DeviceParameterInfo<bool>)new ParameterInfoBoolean(0x1028);
+            public static readonly DeviceParameterInfo<IntPtr> DoubleFloatingPointConfiguration = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1032);
+            public static readonly DeviceParameterInfo<bool> LittleEndian = (DeviceParameterInfo<bool>)new ParameterInfoBoolean(0x1026);
+            public static readonly DeviceParameterInfo<bool> ErrorCorrectionSupport = (DeviceParameterInfo<bool>)new ParameterInfoBoolean(0x1024);
+            public static readonly DeviceParameterInfo<IntPtr> ExecutionCapabilities = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1029);
+            public static readonly DeviceParameterInfo<string> Extensions = (DeviceParameterInfo<string>)new ParameterInfoString(0x1030);
+            public static readonly DeviceParameterInfo<UIntPtr> GlobalCacheSize = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x101E);
+            public static readonly DeviceParameterInfo<uint> GlobalCacheType = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x101C);
+            public static readonly DeviceParameterInfo<uint> GlobalCacheLineSize = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x101D);
+            public static readonly DeviceParameterInfo<UIntPtr> GlobalMemorySize = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x101F);
+            public static readonly DeviceParameterInfo<IntPtr> HalfFloatingPointConfiguration = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1033);
+            public static readonly DeviceParameterInfo<bool> HostUnifiedMemory = (DeviceParameterInfo<bool>)new ParameterInfoBoolean(0x1035);
+            public static readonly DeviceParameterInfo<bool> ImageSupport = (DeviceParameterInfo<bool>)new ParameterInfoBoolean(0x1016);
+            public static readonly DeviceParameterInfo<UIntPtr> Image2DMaxHeight = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1012);
+            public static readonly DeviceParameterInfo<UIntPtr> Image2DMaxWidth = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1011);
+            public static readonly DeviceParameterInfo<UIntPtr> Image3DMaxDepth = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1015);
+            public static readonly DeviceParameterInfo<UIntPtr> Image3DMaxHeight = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1014);
+            public static readonly DeviceParameterInfo<UIntPtr> Image3DMaxWidth = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1013);
+            public static readonly DeviceParameterInfo<UIntPtr> ImageMaxBufferSize = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1040);
+            public static readonly DeviceParameterInfo<UIntPtr> ImageMaxArraySize = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1041);
+            public static readonly DeviceParameterInfo<bool> LinkerAvailable = (DeviceParameterInfo<bool>)new ParameterInfoBoolean(0x103E);
+            public static readonly DeviceParameterInfo<UIntPtr> LocalMemorySize = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1023);
+            public static readonly DeviceParameterInfo<uint> LocalMemoryType = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1022);
+            public static readonly DeviceParameterInfo<uint> MaxClockFrequency = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x100C);
+            public static readonly DeviceParameterInfo<uint> MaxComputeUnits = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1002);
+            public static readonly DeviceParameterInfo<uint> MaxConstantArguments = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1021);
+            public static readonly DeviceParameterInfo<UIntPtr> MaxConstantBufferSize = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1020);
+            public static readonly DeviceParameterInfo<UIntPtr> MaxMemoryAllocationSize = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1010);
+            public static readonly DeviceParameterInfo<UIntPtr> MaxParameterSize = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1017);
+            public static readonly DeviceParameterInfo<uint> MaxReadImageArguments = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x100E);
+            public static readonly DeviceParameterInfo<uint> MaxSamplers = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1018);
+            public static readonly DeviceParameterInfo<UIntPtr> MaxWorkGroupSize = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1004);
+            public static readonly DeviceParameterInfo<uint> MaxWorkItemDimensions = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1003);
+            public static readonly DeviceParameterInfo<UIntPtr[]> MaxWorkItemSizes = (DeviceParameterInfo<UIntPtr[]>)new ParameterInfoUIntPtrArray(0x1005);
+            public static readonly DeviceParameterInfo<uint> MaxWriteImageArguments = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x100F);
+            public static readonly DeviceParameterInfo<uint> MemoryBaseAddressAlignment = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1019);
+            public static readonly DeviceParameterInfo<uint> MinDataTypeAlignment = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x101A);
+            public static readonly DeviceParameterInfo<string> Name = (DeviceParameterInfo<string>)new ParameterInfoString(0x102B);
+            public static readonly DeviceParameterInfo<uint> NativeVectorWidthChar = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1036);
+            public static readonly DeviceParameterInfo<uint> NativeVectorWidthShort = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1037);
+            public static readonly DeviceParameterInfo<uint> NativeVectorWidthInt = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1038);
+            public static readonly DeviceParameterInfo<uint> NativeVectorWidthLong = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1039);
+            public static readonly DeviceParameterInfo<uint> NativeVectorWidthFloat = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x103A);
+            public static readonly DeviceParameterInfo<uint> NativeVectorWidthDouble = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x103B);
+            public static readonly DeviceParameterInfo<uint> NativeVectorWidthHalf = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x103C);
+            public static readonly DeviceParameterInfo<string> OpenCLVersion = (DeviceParameterInfo<string>)new ParameterInfoString(0x103D);
+            public static readonly DeviceParameterInfo<IntPtr> ParentDevice = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1042);
+            public static readonly DeviceParameterInfo<uint> PartitionMaxSubDevices = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1043);
+            public static readonly DeviceParameterInfo<IntPtr[]> PartitionProperties = (DeviceParameterInfo<IntPtr[]>)new ParameterInfoIntPtrArray(0x1044);
+            public static readonly DeviceParameterInfo<IntPtr> PartitionAffinityDomain = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1045);
+            public static readonly DeviceParameterInfo<IntPtr[]> PartitionType = (DeviceParameterInfo<IntPtr[]>)new ParameterInfoIntPtrArray(0x1046);
+            public static readonly DeviceParameterInfo<IntPtr> Platform = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1031);
+            public static readonly DeviceParameterInfo<uint> PreferredVectorWidthChar = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1006);
+            public static readonly DeviceParameterInfo<uint> PreferredVectorWidthShort = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1007);
+            public static readonly DeviceParameterInfo<uint> PreferredVectorWidthInt = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1008);
+            public static readonly DeviceParameterInfo<uint> PreferredVectorWidthLong = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1009);
+            public static readonly DeviceParameterInfo<uint> PreferredVectorWidthFloat = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x100A);
+            public static readonly DeviceParameterInfo<uint> PreferredVectorWidthDouble = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x100B);
+            public static readonly DeviceParameterInfo<uint> PreferredVectorWidthHalf = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1034);
+            public static readonly DeviceParameterInfo<UIntPtr> PrintfBufferSize = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1049);
+            public static readonly DeviceParameterInfo<bool> PreferredInteropUserSync = (DeviceParameterInfo<bool>)new ParameterInfoBoolean(0x1048);
+            public static readonly DeviceParameterInfo<string> Profile = (DeviceParameterInfo<string>)new ParameterInfoString(0x102E);
+            public static readonly DeviceParameterInfo<UIntPtr> ProfilingTimerResolution = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1025);
+            public static readonly DeviceParameterInfo<IntPtr> QueueProperties = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x102A);
+            public static readonly DeviceParameterInfo<uint> ReferenceCount = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1047);
+            public static readonly DeviceParameterInfo<IntPtr> SingleFloatingPointConfiguration = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x101B);
+            public static readonly DeviceParameterInfo<IntPtr> DeviceType = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1000);
+            public static readonly DeviceParameterInfo<string> Vendor = (DeviceParameterInfo<string>)new ParameterInfoString(0x102C);
+            public static readonly DeviceParameterInfo<uint> VendorID = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1001);
+            public static readonly DeviceParameterInfo<string> Version = (DeviceParameterInfo<string>)new ParameterInfoString(0x102F);
+            public static readonly DeviceParameterInfo<string> DriverVersion = (DeviceParameterInfo<string>)new ParameterInfoString(0x102D);
+        }
+
+        public sealed class DeviceParameterInfo<T> : ParameterInfo<T>
+        {
+            private readonly ParameterInfo<T> _parameterInfo;
+
+            public DeviceParameterInfo(ParameterInfo<T> parameterInfo)
+                : base(parameterInfo.Name)
+            {
+                _parameterInfo = parameterInfo;
+            }
+
+            public static explicit operator DeviceParameterInfo<T>(ParameterInfo<T> parameterInfo)
+            {
+                if (parameterInfo == null)
+                    throw new ArgumentNullException("parameterInfo");
+
+                DeviceParameterInfo<T> result = parameterInfo as DeviceParameterInfo<T>;
+                if (result != null)
+                    return result;
+
+                return new DeviceParameterInfo<T>(parameterInfo);
+            }
+
+            public ParameterInfo<T> ParameterInfo
+            {
+                get
+                {
+                    return _parameterInfo;
+                }
+            }
+
+            public override int? FixedSize
+            {
+                get
+                {
+                    return _parameterInfo.FixedSize;
+                }
+            }
+
+            public override T Deserialize(UIntPtr memorySize, IntPtr memory)
+            {
+                return _parameterInfo.Deserialize(memorySize, memory);
+            }
         }
 
         #endregion
