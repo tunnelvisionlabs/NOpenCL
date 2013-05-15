@@ -85,7 +85,7 @@
             }
         }
 
-        public UIntPtr GlobalCacheSize
+        public ulong GlobalCacheSize
         {
             get
             {
@@ -109,7 +109,7 @@
             }
         }
 
-        public UIntPtr GlobalMemorySize
+        public ulong GlobalMemorySize
         {
             get
             {
@@ -205,7 +205,7 @@
             }
         }
 
-        public UIntPtr LocalMemorySize
+        public ulong LocalMemorySize
         {
             get
             {
@@ -245,7 +245,7 @@
             }
         }
 
-        public UIntPtr MaxConstantBufferSize
+        public ulong MaxConstantBufferSize
         {
             get
             {
@@ -253,7 +253,7 @@
             }
         }
 
-        public UIntPtr MaxMemoryAllocationSize
+        public ulong MaxMemoryAllocationSize
         {
             get
             {
