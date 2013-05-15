@@ -47,6 +47,8 @@
     <Compile Include="CommandQueueSafeHandle.cs" />
     <Compile Include="DisposableCollection`1.cs" />
     <Compile Include="EventSafeHandle.cs" />
+    <Compile Include="Extensions\KhrD3D11Sharing.cs" />
+    <Compile Include="Extensions\KhrD3D10Sharing.cs" />
     <Compile Include="Extensions\NvDeviceAttributeQuery.cs" />
     <Compile Include="KernelSafeHandle.cs" />
     <Compile Include="MemObjectSafeHandle.cs" />
