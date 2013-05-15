@@ -44,11 +44,14 @@
     <Compile Include="CacheType.cs" />
     <Compile Include="CommandQueue.cs" />
     <Compile Include="CommandQueueProperties.cs" />
+    <Compile Include="CommandType.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ContextSafeHandle.cs" />
     <Compile Include="CommandQueueSafeHandle.cs" />
     <Compile Include="DisposableCollection`1.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="EventSafeHandle.cs" />
+    <Compile Include="ExecutionStatus.cs" />
     <Compile Include="Extensions\KhrD3D11Sharing.cs" />
     <Compile Include="Extensions\KhrD3D10Sharing.cs" />
     <Compile Include="Extensions\NvDeviceAttributeQuery.cs" />

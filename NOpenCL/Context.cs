@@ -70,6 +70,12 @@
             return new Sampler(handle);
         }
 
+        public Event CreateUserEvent()
+        {
+            EventSafeHandle handle = UnsafeNativeMethods.CreateUserEvent(Handle);
+            return new Event(handle);
+        }
+
         public void Dispose()
         {
             _context.Dispose();
