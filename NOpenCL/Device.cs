@@ -325,6 +325,7 @@
             }
         }
 
+        [Obsolete("Deprecated in OpenCL 1.2")]
         public uint MinDataTypeAlignmentSize
         {
             get
