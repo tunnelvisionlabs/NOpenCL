@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="AffinityDomain.cs" />
     <Compile Include="CacheType.cs" />
+    <Compile Include="CommandQueue.cs" />
     <Compile Include="CommandQueueProperties.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ContextSafeHandle.cs" />
