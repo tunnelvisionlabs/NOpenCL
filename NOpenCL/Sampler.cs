@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// To create an instance of <see cref="Sampler"/>, call <see cref="Context.CreateSampler"/>.
+    /// To create an instance of <see cref="Sampler"/>, call <see cref="NOpenCL.Context.CreateSampler"/>.
     /// </summary>
     public sealed class Sampler : IDisposable
     {

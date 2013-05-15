@@ -284,11 +284,11 @@
             /// describes one or more of the following values:
             ///
             /// <list type="bullet">
-            /// <item><see cref="ExecutionCapabilities.Kernel"/> - The OpenCL device can execute OpenCL kernels.</item>
-            /// <item><see cref="ExecutionCapabilities.NativeKernel"/> - The OpenCL device can execute native kernels.</item>
+            /// <item><see cref="NOpenCL.ExecutionCapabilities.Kernel"/> - The OpenCL device can execute OpenCL kernels.</item>
+            /// <item><see cref="NOpenCL.ExecutionCapabilities.NativeKernel"/> - The OpenCL device can execute native kernels.</item>
             /// </list>
             ///
-            /// The mandated minimum capability is <see cref="ExecutionCapabilities.Kernel"/>.
+            /// The mandated minimum capability is <see cref="NOpenCL.ExecutionCapabilities.Kernel"/>.
             /// </summary>
             public static readonly DeviceParameterInfo<ulong> ExecutionCapabilities = (DeviceParameterInfo<ulong>)new ParameterInfoUInt64(0x1029);
 
@@ -408,14 +408,14 @@
 
             /// <summary>
             /// Size of local memory arena in bytes. The minimum value is 32 KB for devices
-            /// that are not of type <see cref="DeviceType.Custom"/>.
+            /// that are not of type <see cref="NOpenCL.DeviceType.Custom"/>.
             /// </summary>
             public static readonly DeviceParameterInfo<ulong> LocalMemorySize = (DeviceParameterInfo<ulong>)new ParameterInfoUInt64(0x1023);
 
             /// <summary>
-            /// Type of local memory supported. This can be set to <see cref="LocalMemoryType.Local"/>
-            /// implying dedicated local memory storage such as SRAM, or <see cref="LocalMemoryType.Global"/>.
-            /// For custom devices, <see cref="LocalMemoryType.None"/> can also be returned indicating
+            /// Type of local memory supported. This can be set to <see cref="NOpenCL.LocalMemoryType.Local"/>
+            /// implying dedicated local memory storage such as SRAM, or <see cref="NOpenCL.LocalMemoryType.Global"/>.
+            /// For custom devices, <see cref="NOpenCL.LocalMemoryType.None"/> can also be returned indicating
             /// no local memory support.
             /// </summary>
             public static readonly DeviceParameterInfo<uint> LocalMemoryType = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1022);
@@ -433,26 +433,26 @@
 
             /// <summary>
             /// Max number of arguments declared with the <c>__constant</c> qualifier in
-            /// a kernel. The minimum value is 8 for devices that are not of type <see cref="DeviceType.Custom"/>.
+            /// a kernel. The minimum value is 8 for devices that are not of type <see cref="NOpenCL.DeviceType.Custom"/>.
             /// </summary>
             public static readonly DeviceParameterInfo<uint> MaxConstantArguments = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1021);
 
             /// <summary>
             /// Max size in bytes of a constant buffer allocation. The minimum value is 64
-            /// KB for devices that are not of type <see cref="DeviceType.Custom"/>.
+            /// KB for devices that are not of type <see cref="NOpenCL.DeviceType.Custom"/>.
             /// </summary>
             public static readonly DeviceParameterInfo<ulong> MaxConstantBufferSize = (DeviceParameterInfo<ulong>)new ParameterInfoUInt64(0x1020);
 
             /// <summary>
             /// Max size of memory object allocation in bytes. The minimum value is max
             /// (1/4th of <see cref="GlobalMemorySize"/>, 128*1024*1024) for devices that are
-            /// not of type <see cref="DeviceType.Custom"/>.
+            /// not of type <see cref="NOpenCL.DeviceType.Custom"/>.
             /// </summary>
             public static readonly DeviceParameterInfo<ulong> MaxMemoryAllocationSize = (DeviceParameterInfo<ulong>)new ParameterInfoUInt64(0x1010);
 
             /// <summary>
             /// Max size in bytes of the arguments that can be passed to a kernel. The
-            /// minimum value is 1024 for devices that are not of type <see cref="DeviceType.Custom"/>.
+            /// minimum value is 1024 for devices that are not of type <see cref="NOpenCL.DeviceType.Custom"/>.
             /// For this minimum value, only a maximum of 128 arguments can be passed to a kernel.
             /// </summary>
             public static readonly DeviceParameterInfo<UIntPtr> MaxParameterSize = (DeviceParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1017);
@@ -480,7 +480,7 @@
             /// <summary>
             /// Maximum dimensions that specify the global and local work-item IDs used by
             /// the data parallel execution model. (Refer to <see cref="clEnqueueNDRangeKernel"/>). The
-            /// minimum value is 3 for devices that are not of type <see cref="DeviceType.Custom"/>.
+            /// minimum value is 3 for devices that are not of type <see cref="NOpenCL.DeviceType.Custom"/>.
             /// </summary>
             public static readonly DeviceParameterInfo<uint> MaxWorkItemDimensions = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1003);
 
@@ -491,7 +491,7 @@
             /// Returns <em>n</em> <see cref="IntPtr"/> entries, where <em>n</em> is the
             /// value returned by the query for <see cref="MaxWorkItemDimensions"/>.
             /// <para/>
-            /// The minimum value is (1, 1, 1) for devices that are not of type <see cref="DeviceType.Custom"/>.
+            /// The minimum value is (1, 1, 1) for devices that are not of type <see cref="NOpenCL.DeviceType.Custom"/>.
             /// </summary>
             public static readonly DeviceParameterInfo<UIntPtr[]> MaxWorkItemSizes = (DeviceParameterInfo<UIntPtr[]>)new ParameterInfoUIntPtrArray(0x1005);
 
@@ -504,7 +504,7 @@
             /// <summary>
             /// The minimum value is the size (in bits) of the largest OpenCL built-in
             /// data type supported by the device (long16 in FULL profile, long16 or
-            /// int16 in EMBEDDED profile) for devices that are not of type <see cref="DeviceType.Custom"/>.
+            /// int16 in EMBEDDED profile) for devices that are not of type <see cref="NOpenCL.DeviceType.Custom"/>.
             /// </summary>
             public static readonly DeviceParameterInfo<uint> MemoryBaseAddressAlignment = (DeviceParameterInfo<uint>)new ParameterInfoUInt32(0x1019);
 
@@ -568,7 +568,7 @@
 
             /// <summary>
             /// OpenCL C version string. Returns the highest OpenCL C version supported
-            /// by the compiler for this device that is not of type <see cref="DeviceType.Custom"/>.
+            /// by the compiler for this device that is not of type <see cref="NOpenCL.DeviceType.Custom"/>.
             /// This version string has the following format:
             /// <para/>
             /// <em>OpenCL&lt;space&gt;C&lt;space&gt;&lt;major_version.minor_version&gt;&lt;space&gt;&lt;vendor-specific information&gt;</em>
@@ -758,7 +758,7 @@
             /// </list>
             ///
             /// The mandated minimum floating-point capability for devices that are
-            /// not of type <see cref="DeviceType.Custom"/> is
+            /// not of type <see cref="NOpenCL.DeviceType.Custom"/> is
             /// <see cref="FloatingPointConfiguration.RoundToNearest"/> |
             /// <see cref="FloatingPointConfiguration.InfNaN"/>.
             /// </summary>
@@ -766,9 +766,9 @@
 
             /// <summary>
             /// The OpenCL device type. Currently supported values are one of or a
-            /// combination of: <see cref="DeviceType.Cpu"/>, <see cref="DeviceType.Gpu"/>,
-            /// <see cref="DeviceType.Accelerator"/>, <see cref="DeviceType.Default"/>, a
-            /// combination of the above types, or <see cref="DeviceType.Custom"/>.
+            /// combination of: <see cref="NOpenCL.DeviceType.Cpu"/>, <see cref="NOpenCL.DeviceType.Gpu"/>,
+            /// <see cref="NOpenCL.DeviceType.Accelerator"/>, <see cref="NOpenCL.DeviceType.Default"/>, a
+            /// combination of the above types, or <see cref="NOpenCL.DeviceType.Custom"/>.
             /// </summary>
             public static readonly DeviceParameterInfo<ulong> DeviceType = (DeviceParameterInfo<ulong>)new ParameterInfoUInt64(0x1000);
 

@@ -72,8 +72,8 @@
         /// issued to the associated device and have completed.
         /// </summary>
         /// <remarks>
-        /// <see cref="Finsh"/> does not return until all previously queued commands in
-        /// the command queue have been processed and completed. <see cref="Finsh"/> is
+        /// <see cref="Finish"/> does not return until all previously queued commands in
+        /// the command queue have been processed and completed. <see cref="Finish"/> is
         /// also a synchronization point.
         /// </remarks>
         public void Finish()
