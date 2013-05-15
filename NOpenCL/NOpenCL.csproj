@@ -42,6 +42,7 @@
     <Compile Include="AffinityDomain.cs" />
     <Compile Include="CacheType.cs" />
     <Compile Include="CommandQueueProperties.cs" />
+    <Compile Include="Context.cs" />
     <Compile Include="ContextSafeHandle.cs" />
     <Compile Include="CommandQueueSafeHandle.cs" />
     <Compile Include="DisposableCollection`1.cs" />

@@ -897,10 +897,132 @@
         #region Contexts
 
         [DllImport(ExternDll.OpenCL)]
+        private static extern ContextSafeHandle clCreateContext([In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] properties, uint numDevices, [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices, CreateContextCallback pfnNotify, IntPtr userData, out ErrorCode errorCode);
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ContextSafeHandle clCreateContextFromType([In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] properties, DeviceType deviceType, CreateContextCallback pfnNotify, IntPtr userData, out ErrorCode errorCode);
+
+        public static ContextSafeHandle CreateContext(ClDeviceID[] devices, CreateContextCallback pfnNotify, IntPtr userData)
+        {
+            ErrorCode errorCode = ErrorCode.Success;
+            ContextSafeHandle result = clCreateContext(null, (uint)devices.Length, devices, pfnNotify, userData, out errorCode);
+            ErrorHandler.ThrowOnFailure(errorCode);
+            return result;
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate void CreateContextCallback([MarshalAs(UnmanagedType.LPStr)] string errorInfo, IntPtr privateInfo, UIntPtr cb, IntPtr userData);
+
+        [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clRetainContext(ContextSafeHandle context);
 
         [DllImport(ExternDll.OpenCL)]
         public static extern ErrorCode clReleaseContext(IntPtr context);
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clGetContextInfo(ContextSafeHandle context, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+
+        public static T GetContextInfo<T>(ContextSafeHandle context, ContextParameterInfo<T> parameter)
+        {
+            int? fixedSize = parameter.ParameterInfo.FixedSize;
+#if DEBUG
+            bool verifyFixedSize = true;
+#else
+            bool verifyFixedSize = false;
+#endif
+
+            UIntPtr requiredSize;
+            if (fixedSize.HasValue && !verifyFixedSize)
+                requiredSize = (UIntPtr)fixedSize;
+            else
+                ErrorHandler.ThrowOnFailure(clGetContextInfo(context, parameter.ParameterInfo.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
+
+            if (verifyFixedSize && fixedSize.HasValue)
+            {
+                if (requiredSize.ToUInt64() != (ulong)fixedSize.Value)
+                    throw new ArgumentException("The parameter definition includes a fixed size that does not match the required size according to the runtime.");
+            }
+
+            IntPtr memory = IntPtr.Zero;
+            try
+            {
+                memory = Marshal.AllocHGlobal((int)requiredSize.ToUInt32());
+                UIntPtr actualSize;
+                ErrorHandler.ThrowOnFailure(clGetContextInfo(context, parameter.ParameterInfo.Name, requiredSize, memory, out actualSize));
+                return parameter.ParameterInfo.Deserialize(actualSize, memory);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(memory);
+            }
+        }
+
+        public static class ContextInfo
+        {
+            /// <summary>
+            /// Return the context reference count. The reference count returned should be considered
+            /// immediately stale. It is unsuitable for general use in applications. This feature is
+            /// provided for identifying memory leaks.
+            /// </summary>
+            public static readonly ContextParameterInfo<uint> ReferenceCount = (ContextParameterInfo<uint>)new ParameterInfoUInt32(0x1080);
+
+            /// <summary>
+            /// Return the number of devices in context.
+            /// </summary>
+            public static readonly ContextParameterInfo<uint> NumDevices = (ContextParameterInfo<uint>)new ParameterInfoUInt32(0x1083);
+
+            /// <summary>
+            /// Return the list of devices in context.
+            /// </summary>
+            public static readonly ContextParameterInfo<IntPtr[]> Devices = (ContextParameterInfo<IntPtr[]>)new ParameterInfoIntPtrArray(0x1081);
+
+            /// <summary>
+            /// Return the properties argument specified in <see cref="clCreateContext"/> or
+            /// <see cref="clCreateContextFromType"/>.
+            /// <para/>
+            /// If the properties argument specified in <see cref="clCreateContext"/> or
+            /// <see cref="clCreateContextFromType"/> used to create context is not null,
+            /// the implementation must return the values specified in the properties argument.
+            /// <para/>
+            /// If the properties argument specified in <see cref="clCreateContext"/> or
+            /// <see cref="clCreateContextFromType"/> used to create context is null, the
+            /// implementation may return either a <em>paramValueSizeRet</em> of 0, i.e. there
+            /// is no context property value to be returned or can return a context property
+            /// value of 0 (where 0 is used to terminate the context properties list) in the
+            /// memory that <em>paramValue</em> points to.
+            /// </summary>
+            public static readonly ContextParameterInfo<IntPtr[]> Properties = (ContextParameterInfo<IntPtr[]>)new ParameterInfoIntPtrArray(0x1082);
+        }
+
+        public sealed class ContextParameterInfo<T>
+        {
+            private readonly ParameterInfo<T> _parameterInfo;
+
+            public ContextParameterInfo(ParameterInfo<T> parameterInfo)
+            {
+                if (parameterInfo == null)
+                    throw new ArgumentNullException("parameterInfo");
+
+                _parameterInfo = parameterInfo;
+            }
+
+            public static explicit operator ContextParameterInfo<T>(ParameterInfo<T> parameterInfo)
+            {
+                ContextParameterInfo<T> result = parameterInfo as ContextParameterInfo<T>;
+                if (result != null)
+                    return result;
+
+                return new ContextParameterInfo<T>(parameterInfo);
+            }
+
+            public ParameterInfo<T> ParameterInfo
+            {
+                get
+                {
+                    return _parameterInfo;
+                }
+            }
+        }
 
         #endregion
 
