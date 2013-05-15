@@ -29,20 +29,20 @@
 
         public static T GetPlatformInfo<T>(ClPlatformID platform, PlatformParameterInfo<T> parameter)
         {
-            int? fixedSize = parameter.FixedSize;
+            int? fixedSize = parameter.ParameterInfo.FixedSize;
             UIntPtr requiredSize;
             if (fixedSize.HasValue)
                 requiredSize = (UIntPtr)fixedSize;
             else
-                ErrorHandler.ThrowOnFailure(clGetPlatformInfo(platform, parameter.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
+                ErrorHandler.ThrowOnFailure(clGetPlatformInfo(platform, parameter.ParameterInfo.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
 
             IntPtr memory = IntPtr.Zero;
             try
             {
                 memory = Marshal.AllocHGlobal((int)requiredSize.ToUInt32());
                 UIntPtr actualSize;
-                ErrorHandler.ThrowOnFailure(clGetPlatformInfo(platform, parameter.Name, requiredSize, memory, out actualSize));
-                return parameter.Deserialize(actualSize, memory);
+                ErrorHandler.ThrowOnFailure(clGetPlatformInfo(platform, parameter.ParameterInfo.Name, requiredSize, memory, out actualSize));
+                return parameter.ParameterInfo.Deserialize(actualSize, memory);
             }
             finally
             {
@@ -101,21 +101,20 @@
             public static readonly PlatformParameterInfo<string> Extensions = (PlatformParameterInfo<string>)new ParameterInfoString(0x0904);
         }
 
-        public sealed class PlatformParameterInfo<T> : ParameterInfo<T>
+        public sealed class PlatformParameterInfo<T>
         {
             private readonly ParameterInfo<T> _parameterInfo;
 
             public PlatformParameterInfo(ParameterInfo<T> parameterInfo)
-                : base(parameterInfo.Name)
             {
+                if (parameterInfo == null)
+                    throw new ArgumentNullException("parameterInfo");
+
                 _parameterInfo = parameterInfo;
             }
 
             public static explicit operator PlatformParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
-
                 PlatformParameterInfo<T> result = parameterInfo as PlatformParameterInfo<T>;
                 if (result != null)
                     return result;
@@ -129,19 +128,6 @@
                 {
                     return _parameterInfo;
                 }
-            }
-
-            public override int? FixedSize
-            {
-                get
-                {
-                    return _parameterInfo.FixedSize;
-                }
-            }
-
-            public override T Deserialize(UIntPtr memorySize, IntPtr memory)
-            {
-                return _parameterInfo.Deserialize(memorySize, memory);
             }
         }
 
@@ -171,20 +157,20 @@
 
         public static T GetDeviceInfo<T>(ClDeviceID device, DeviceParameterInfo<T> parameter)
         {
-            int? fixedSize = parameter.FixedSize;
+            int? fixedSize = parameter.ParameterInfo.FixedSize;
             UIntPtr requiredSize;
             if (fixedSize.HasValue)
                 requiredSize = (UIntPtr)fixedSize;
             else
-                ErrorHandler.ThrowOnFailure(clGetDeviceInfo(device, parameter.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
+                ErrorHandler.ThrowOnFailure(clGetDeviceInfo(device, parameter.ParameterInfo.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
 
             IntPtr memory = IntPtr.Zero;
             try
             {
                 memory = Marshal.AllocHGlobal((int)requiredSize.ToUInt32());
                 UIntPtr actualSize;
-                ErrorHandler.ThrowOnFailure(clGetDeviceInfo(device, parameter.Name, requiredSize, memory, out actualSize));
-                return parameter.Deserialize(actualSize, memory);
+                ErrorHandler.ThrowOnFailure(clGetDeviceInfo(device, parameter.ParameterInfo.Name, requiredSize, memory, out actualSize));
+                return parameter.ParameterInfo.Deserialize(actualSize, memory);
             }
             finally
             {
@@ -276,21 +262,20 @@
             public static readonly DeviceParameterInfo<string> DriverVersion = (DeviceParameterInfo<string>)new ParameterInfoString(0x102D);
         }
 
-        public sealed class DeviceParameterInfo<T> : ParameterInfo<T>
+        public sealed class DeviceParameterInfo<T>
         {
             private readonly ParameterInfo<T> _parameterInfo;
 
             public DeviceParameterInfo(ParameterInfo<T> parameterInfo)
-                : base(parameterInfo.Name)
             {
+                if (parameterInfo == null)
+                    throw new ArgumentNullException("parameterInfo");
+
                 _parameterInfo = parameterInfo;
             }
 
             public static explicit operator DeviceParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
-
                 DeviceParameterInfo<T> result = parameterInfo as DeviceParameterInfo<T>;
                 if (result != null)
                     return result;
@@ -304,19 +289,6 @@
                 {
                     return _parameterInfo;
                 }
-            }
-
-            public override int? FixedSize
-            {
-                get
-                {
-                    return _parameterInfo.FixedSize;
-                }
-            }
-
-            public override T Deserialize(UIntPtr memorySize, IntPtr memory)
-            {
-                return _parameterInfo.Deserialize(memorySize, memory);
             }
         }
 
