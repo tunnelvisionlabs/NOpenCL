@@ -13,7 +13,7 @@
         /// D3D11_RESOURCE_MISC_SHARED will perform faster when shared with OpenCL,
         /// compared with resources which have not set this flag. Otherwise returns false.
         /// </summary>
-        public static readonly UnsafeNativeMethods.ContextParameterInfo<bool> D3D11PreferSharedResourcesKhr =
+        private static readonly UnsafeNativeMethods.ContextParameterInfo<bool> D3D11PreferSharedResourcesKhr =
             (UnsafeNativeMethods.ContextParameterInfo<bool>)new UnsafeNativeMethods.ParameterInfoBoolean(0x402D);
 
         public static bool IsSupported(Platform platform)
