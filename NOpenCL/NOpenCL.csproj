@@ -39,8 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AffinityDomain.cs" />
+    <Compile Include="CacheType.cs" />
+    <Compile Include="CommandQueueProperties.cs" />
+    <Compile Include="Device.cs" />
+    <Compile Include="DeviceType.cs" />
     <Compile Include="ErrorHandler.cs" />
+    <Compile Include="ExecutionCapabilities.cs" />
     <Compile Include="ExternDll.cs" />
+    <Compile Include="FloatingPointConfiguration.cs" />
+    <Compile Include="LocalMemoryType.cs" />
+    <Compile Include="PartitionProperty.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnsafeNativeMethods.cs" />

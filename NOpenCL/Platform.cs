@@ -52,6 +52,14 @@
             }
         }
 
+        internal UnsafeNativeMethods.ClPlatformID ID
+        {
+            get
+            {
+                return _platform;
+            }
+        }
+
         public static Platform[] GetPlatforms()
         {
             UnsafeNativeMethods.ClPlatformID[] platforms = UnsafeNativeMethods.GetPlatformIDs();
