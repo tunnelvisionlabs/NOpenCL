@@ -3,7 +3,7 @@
     using System;
 
     [Flags]
-    public enum FloatingPointConfiguration
+    public enum FloatingPointConfiguration : ulong
     {
         None = 0,
         Denorm = 1 << 0,

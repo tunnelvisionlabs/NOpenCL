@@ -3,7 +3,7 @@
     using System;
 
     [Flags]
-    public enum AffinityDomain
+    public enum AffinityDomain : ulong
     {
         None = 0,
         Numa = 1 << 0,

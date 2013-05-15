@@ -3,7 +3,7 @@
     using System;
 
     [Flags]
-    public enum CommandQueueProperties
+    public enum CommandQueueProperties : ulong
     {
         None = 0,
         OutOfOrderExecutionModeEnable = 1 << 0,

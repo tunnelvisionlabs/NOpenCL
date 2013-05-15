@@ -241,7 +241,7 @@
             /// <c><see cref="FloatingPointConfiguration.Fma"/> | <see cref="FloatingPointConfiguration.RoundToNearest"/> | <see cref="FloatingPointConfiguration.RoundToZero"/> | <see cref="FloatingPointConfiguration.RoundToInf"/> | <see cref="FloatingPointConfiguration.InfNaN"/> | <see cref="FloatingPointConfiguration.Denorm"/></c>
             /// .
             /// </summary>
-            public static readonly DeviceParameterInfo<IntPtr> DoubleFloatingPointConfiguration = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1032);
+            public static readonly DeviceParameterInfo<ulong> DoubleFloatingPointConfiguration = (DeviceParameterInfo<ulong>)new ParameterInfoUInt64(0x1032);
 
             /// <summary>
             /// Is true if the OpenCL device is a little endian device and false otherwise.
@@ -266,7 +266,7 @@
             ///
             /// The mandated minimum capability is <see cref="ExecutionCapabilities.Kernel"/>.
             /// </summary>
-            public static readonly DeviceParameterInfo<IntPtr> ExecutionCapabilities = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1029);
+            public static readonly DeviceParameterInfo<ulong> ExecutionCapabilities = (DeviceParameterInfo<ulong>)new ParameterInfoUInt64(0x1029);
 
             /// <summary>
             /// Returns a space separated list of extension names (the extension names
@@ -328,7 +328,7 @@
             /// <c><see cref="FloatingPointConfiguration.RoundToZero"/></c> or <c><see cref="FloatingPointConfiguration.RoundToInf"/> | <see cref="FloatingPointConfiguration.InfNaN"/></c>
             /// .
             /// </summary>
-            public static readonly DeviceParameterInfo<IntPtr> HalfFloatingPointConfiguration = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1033);
+            public static readonly DeviceParameterInfo<ulong> HalfFloatingPointConfiguration = (DeviceParameterInfo<ulong>)new ParameterInfoUInt64(0x1033);
 
             /// <summary>
             /// Is true if the device and the host have a unified memory subsystem and is false otherwise.
@@ -598,7 +598,7 @@
             ///
             /// If the device does not support any affinity domains, <see cref="AffinityDomain.None"/> will be returned.
             /// </summary>
-            public static readonly DeviceParameterInfo<IntPtr> PartitionAffinityDomain = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1045);
+            public static readonly DeviceParameterInfo<ulong> PartitionAffinityDomain = (DeviceParameterInfo<ulong>)new ParameterInfoUInt64(0x1045);
 
             /// <summary>
             /// Returns the properties argument specified in <see cref="clCreateSubDevices"/>
@@ -710,7 +710,7 @@
             /// These properties are described in the table for <see cref="clCreateCommandQueue"/>.
             /// The mandated minimum capability is <see cref="CommandQueueProperties.ProfilingEnable"/>.
             /// </summary>
-            public static readonly DeviceParameterInfo<IntPtr> QueueProperties = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x102A);
+            public static readonly DeviceParameterInfo<ulong> QueueProperties = (DeviceParameterInfo<ulong>)new ParameterInfoUInt64(0x102A);
 
             /// <summary>
             /// Returns the device reference count. If the device is a root-level device,
@@ -738,7 +738,7 @@
             /// <see cref="FloatingPointConfiguration.RoundToNearest"/> |
             /// <see cref="FloatingPointConfiguration.InfNaN"/>.
             /// </summary>
-            public static readonly DeviceParameterInfo<IntPtr> SingleFloatingPointConfiguration = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x101B);
+            public static readonly DeviceParameterInfo<ulong> SingleFloatingPointConfiguration = (DeviceParameterInfo<ulong>)new ParameterInfoUInt64(0x101B);
 
             /// <summary>
             /// The OpenCL device type. Currently supported values are one of or a
@@ -746,7 +746,7 @@
             /// <see cref="DeviceType.Accelerator"/>, <see cref="DeviceType.Default"/>, a
             /// combination of the above types, or <see cref="DeviceType.Custom"/>.
             /// </summary>
-            public static readonly DeviceParameterInfo<IntPtr> DeviceType = (DeviceParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1000);
+            public static readonly DeviceParameterInfo<ulong> DeviceType = (DeviceParameterInfo<ulong>)new ParameterInfoUInt64(0x1000);
 
             /// <summary>
             /// Vendor name string.

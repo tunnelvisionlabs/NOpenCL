@@ -3,7 +3,7 @@
     using System;
 
     [Flags]
-    public enum ExecutionCapabilities
+    public enum ExecutionCapabilities : ulong
     {
         None = 0,
         Kernel = 1 << 0,
