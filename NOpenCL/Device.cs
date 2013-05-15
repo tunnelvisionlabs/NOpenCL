@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using DeviceInfo = NOpenCL.UnsafeNativeMethods.DeviceInfo;
 
-    public sealed class Device
+    public sealed class Device : IEquatable<Device>
     {
         private readonly UnsafeNativeMethods.ClDeviceID _device;
 
@@ -614,6 +614,26 @@
 
             UnsafeNativeMethods.ClDeviceID[] devices = UnsafeNativeMethods.GetDeviceIDs(platform.ID, deviceType);
             return Array.ConvertAll(devices, device => new Device(device));
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Device);
+        }
+
+        public bool Equals(Device other)
+        {
+            if (other == this)
+                return true;
+            else if (other == null)
+                return false;
+
+            return object.Equals(_device, other._device);
+        }
+
+        public override int GetHashCode()
+        {
+            return _device.GetHashCode();
         }
     }
 }

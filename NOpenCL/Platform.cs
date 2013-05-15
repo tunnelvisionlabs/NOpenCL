@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    public sealed class Platform
+    public sealed class Platform : IEquatable<Platform>
     {
         private readonly UnsafeNativeMethods.ClPlatformID _platform;
 
@@ -64,6 +64,26 @@
         {
             UnsafeNativeMethods.ClPlatformID[] platforms = UnsafeNativeMethods.GetPlatformIDs();
             return Array.ConvertAll(platforms, platform => new Platform(platform));
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Platform);
+        }
+
+        public bool Equals(Platform other)
+        {
+            if (other == this)
+                return true;
+            else if (other == null)
+                return false;
+
+            return object.Equals(_platform, other._platform);
+        }
+
+        public override int GetHashCode()
+        {
+            return _platform.GetHashCode();
         }
 
         public override string ToString()
