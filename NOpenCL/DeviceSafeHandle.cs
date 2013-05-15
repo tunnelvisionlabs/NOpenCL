@@ -10,6 +10,12 @@
         {
         }
 
+        internal DeviceSafeHandle(UnsafeNativeMethods.ClDeviceID device)
+            : base(true)
+        {
+            SetHandle(device.Handle);
+        }
+
         protected override bool ReleaseHandle()
         {
             ErrorCode result = UnsafeNativeMethods.clReleaseDevice(handle);

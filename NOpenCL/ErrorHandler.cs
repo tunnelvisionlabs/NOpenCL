@@ -13,10 +13,22 @@
             switch (errorCode)
             {
             case ErrorCode.OutOfHostMemory:
-                throw new OutOfMemoryException("There is insufficient memory to satisfy the request.");
+                throw new OutOfMemoryException("Could not allocate OpenCL resources on the host.");
+
+            case ErrorCode.OutOfResources:
+                throw new OutOfMemoryException("Could not allocate OpenCL resources on the device.");
+
+            case ErrorCode.DevicePartitionFailed:
+                throw new InvalidOperationException("The device could not be further partitioned.");
+
+            case ErrorCode.InvalidDevicePartitionCount:
+                throw new InvalidOperationException("Invalid device partition size.");
+
+            case ErrorCode.InvalidDevice:
+                throw new ArgumentException("Invalid device.");
 
             case ErrorCode.InvalidValue:
-                throw new ArgumentException();
+                throw new ArgumentException("Invalid value.");
 
             default:
                 throw new Exception(string.Format("Unknown error code: {0}", errorCode));

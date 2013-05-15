@@ -44,6 +44,7 @@
     <Compile Include="CommandQueueProperties.cs" />
     <Compile Include="ContextSafeHandle.cs" />
     <Compile Include="CommandQueueSafeHandle.cs" />
+    <Compile Include="DisposableCollection`1.cs" />
     <Compile Include="EventSafeHandle.cs" />
     <Compile Include="KernelSafeHandle.cs" />
     <Compile Include="MemObjectSafeHandle.cs" />

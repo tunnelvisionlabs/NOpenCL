@@ -4,20 +4,32 @@
     using System.Collections.Generic;
     using DeviceInfo = NOpenCL.UnsafeNativeMethods.DeviceInfo;
 
-    public sealed class Device : IEquatable<Device>
+    public sealed class Device : IEquatable<Device>, IDisposable
     {
         private readonly UnsafeNativeMethods.ClDeviceID _device;
+        private readonly DeviceSafeHandle _handle;
+
+        private bool _disposed;
 
         private Device(UnsafeNativeMethods.ClDeviceID device)
         {
             _device = device;
         }
 
+        internal Device(UnsafeNativeMethods.ClDeviceID device, DeviceSafeHandle handle)
+        {
+            if (handle == null)
+                throw new ArgumentNullException("handle");
+
+            _device = device;
+            _handle = handle;
+        }
+
         public uint AddressBits
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.AddressBits);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.AddressBits);
             }
         }
 
@@ -25,7 +37,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.Available);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.Available);
             }
         }
 
@@ -33,7 +45,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.BuiltInKernels).Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.BuiltInKernels).Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
 
@@ -41,7 +53,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.CompilerAvailable);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.CompilerAvailable);
             }
         }
 
@@ -49,7 +61,7 @@
         {
             get
             {
-                return (FloatingPointConfiguration)UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.DoubleFloatingPointConfiguration);
+                return (FloatingPointConfiguration)UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.DoubleFloatingPointConfiguration);
             }
         }
 
@@ -57,7 +69,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.LittleEndian);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.LittleEndian);
             }
         }
 
@@ -65,7 +77,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.ErrorCorrectionSupport);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.ErrorCorrectionSupport);
             }
         }
 
@@ -73,7 +85,7 @@
         {
             get
             {
-                return (ExecutionCapabilities)UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.ExecutionCapabilities);
+                return (ExecutionCapabilities)UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.ExecutionCapabilities);
             }
         }
 
@@ -81,7 +93,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.Extensions).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.Extensions).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
 
@@ -89,7 +101,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.GlobalCacheSize);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.GlobalCacheSize);
             }
         }
 
@@ -97,7 +109,7 @@
         {
             get
             {
-                return (CacheType)UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.GlobalCacheType);
+                return (CacheType)UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.GlobalCacheType);
             }
         }
 
@@ -105,7 +117,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.GlobalCacheLineSize);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.GlobalCacheLineSize);
             }
         }
 
@@ -113,7 +125,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.GlobalMemorySize);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.GlobalMemorySize);
             }
         }
 
@@ -121,7 +133,7 @@
         {
             get
             {
-                return (FloatingPointConfiguration)UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.HalfFloatingPointConfiguration);
+                return (FloatingPointConfiguration)UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.HalfFloatingPointConfiguration);
             }
         }
 
@@ -129,7 +141,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.HostUnifiedMemory);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.HostUnifiedMemory);
             }
         }
 
@@ -137,7 +149,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.ImageSupport);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.ImageSupport);
             }
         }
 
@@ -145,7 +157,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.Image2DMaxHeight);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.Image2DMaxHeight);
             }
         }
 
@@ -153,7 +165,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.Image2DMaxWidth);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.Image2DMaxWidth);
             }
         }
 
@@ -161,7 +173,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.Image3DMaxDepth);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.Image3DMaxDepth);
             }
         }
 
@@ -169,7 +181,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.Image3DMaxHeight);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.Image3DMaxHeight);
             }
         }
 
@@ -177,7 +189,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.Image3DMaxWidth);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.Image3DMaxWidth);
             }
         }
 
@@ -185,7 +197,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.ImageMaxBufferSize);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.ImageMaxBufferSize);
             }
         }
 
@@ -193,7 +205,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.ImageMaxArraySize);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.ImageMaxArraySize);
             }
         }
 
@@ -201,7 +213,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.LinkerAvailable);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.LinkerAvailable);
             }
         }
 
@@ -209,7 +221,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.LocalMemorySize);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.LocalMemorySize);
             }
         }
 
@@ -217,7 +229,7 @@
         {
             get
             {
-                return (LocalMemoryType)UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.LocalMemoryType);
+                return (LocalMemoryType)UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.LocalMemoryType);
             }
         }
 
@@ -225,7 +237,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MaxClockFrequency);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MaxClockFrequency);
             }
         }
 
@@ -233,7 +245,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MaxComputeUnits);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MaxComputeUnits);
             }
         }
 
@@ -241,7 +253,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MaxConstantArguments);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MaxConstantArguments);
             }
         }
 
@@ -249,7 +261,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MaxConstantBufferSize);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MaxConstantBufferSize);
             }
         }
 
@@ -257,7 +269,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MaxMemoryAllocationSize);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MaxMemoryAllocationSize);
             }
         }
 
@@ -265,7 +277,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MaxParameterSize);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MaxParameterSize);
             }
         }
 
@@ -273,7 +285,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MaxReadImageArguments);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MaxReadImageArguments);
             }
         }
 
@@ -281,7 +293,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MaxSamplers);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MaxSamplers);
             }
         }
 
@@ -289,7 +301,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MaxWorkGroupSize);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MaxWorkGroupSize);
             }
         }
 
@@ -297,7 +309,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MaxWorkItemDimensions);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MaxWorkItemDimensions);
             }
         }
 
@@ -305,7 +317,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MaxWorkItemSizes);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MaxWorkItemSizes);
             }
         }
 
@@ -313,7 +325,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MaxWriteImageArguments);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MaxWriteImageArguments);
             }
         }
 
@@ -321,7 +333,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MemoryBaseAddressAlignment);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MemoryBaseAddressAlignment);
             }
         }
 
@@ -330,7 +342,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.MinDataTypeAlignment);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.MinDataTypeAlignment);
             }
         }
 
@@ -338,7 +350,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.Name);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.Name);
             }
         }
 
@@ -346,7 +358,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.NativeVectorWidthChar);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.NativeVectorWidthChar);
             }
         }
 
@@ -354,7 +366,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.NativeVectorWidthShort);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.NativeVectorWidthShort);
             }
         }
 
@@ -362,7 +374,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.NativeVectorWidthInt);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.NativeVectorWidthInt);
             }
         }
 
@@ -370,7 +382,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.NativeVectorWidthLong);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.NativeVectorWidthLong);
             }
         }
 
@@ -378,7 +390,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.NativeVectorWidthFloat);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.NativeVectorWidthFloat);
             }
         }
 
@@ -386,7 +398,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.NativeVectorWidthDouble);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.NativeVectorWidthDouble);
             }
         }
 
@@ -394,7 +406,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.NativeVectorWidthHalf);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.NativeVectorWidthHalf);
             }
         }
 
@@ -402,7 +414,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.OpenCLVersion);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.OpenCLVersion);
             }
         }
 
@@ -418,7 +430,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PartitionMaxSubDevices);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PartitionMaxSubDevices);
             }
         }
 
@@ -426,7 +438,7 @@
         {
             get
             {
-                IntPtr[] result = UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PartitionProperties);
+                IntPtr[] result = UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PartitionProperties);
                 return Array.ConvertAll(result, partitionProperty => (PartitionProperty)partitionProperty);
             }
         }
@@ -435,7 +447,7 @@
         {
             get
             {
-                return (AffinityDomain)UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PartitionAffinityDomain);
+                return (AffinityDomain)UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PartitionAffinityDomain);
             }
         }
 
@@ -443,7 +455,7 @@
         {
             get
             {
-                IntPtr[] result = UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PartitionType);
+                IntPtr[] result = UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PartitionType);
                 return Array.ConvertAll(result, partitionProperty => (PartitionProperty)partitionProperty);
             }
         }
@@ -460,7 +472,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PreferredVectorWidthChar);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PreferredVectorWidthChar);
             }
         }
 
@@ -468,7 +480,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PreferredVectorWidthShort);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PreferredVectorWidthShort);
             }
         }
 
@@ -476,7 +488,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PreferredVectorWidthInt);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PreferredVectorWidthInt);
             }
         }
 
@@ -484,7 +496,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PreferredVectorWidthLong);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PreferredVectorWidthLong);
             }
         }
 
@@ -492,7 +504,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PreferredVectorWidthFloat);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PreferredVectorWidthFloat);
             }
         }
 
@@ -500,7 +512,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PreferredVectorWidthDouble);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PreferredVectorWidthDouble);
             }
         }
 
@@ -508,7 +520,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PreferredVectorWidthHalf);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PreferredVectorWidthHalf);
             }
         }
 
@@ -516,7 +528,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PrintfBufferSize);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PrintfBufferSize);
             }
         }
 
@@ -524,7 +536,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.PreferredInteropUserSync);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.PreferredInteropUserSync);
             }
         }
 
@@ -532,7 +544,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.Profile);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.Profile);
             }
         }
 
@@ -540,7 +552,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.ProfilingTimerResolution);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.ProfilingTimerResolution);
             }
         }
 
@@ -548,7 +560,7 @@
         {
             get
             {
-                return (CommandQueueProperties)UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.QueueProperties);
+                return (CommandQueueProperties)UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.QueueProperties);
             }
         }
 
@@ -556,7 +568,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.ReferenceCount);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.ReferenceCount);
             }
         }
 
@@ -564,7 +576,7 @@
         {
             get
             {
-                return (FloatingPointConfiguration)UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.SingleFloatingPointConfiguration);
+                return (FloatingPointConfiguration)UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.SingleFloatingPointConfiguration);
             }
         }
 
@@ -572,7 +584,7 @@
         {
             get
             {
-                return (DeviceType)UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.DeviceType);
+                return (DeviceType)UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.DeviceType);
             }
         }
 
@@ -580,7 +592,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.Vendor);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.Vendor);
             }
         }
 
@@ -588,7 +600,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.VendorID);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.VendorID);
             }
         }
 
@@ -596,7 +608,7 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.Version);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.Version);
             }
         }
 
@@ -604,7 +616,16 @@
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(_device, DeviceInfo.DriverVersion);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.DriverVersion);
+            }
+        }
+
+        internal UnsafeNativeMethods.ClDeviceID ID
+        {
+            get
+            {
+                ThrowIfDisposed();
+                return _device;
             }
         }
 
@@ -615,6 +636,71 @@
 
             UnsafeNativeMethods.ClDeviceID[] devices = UnsafeNativeMethods.GetDeviceIDs(platform.ID, deviceType);
             return Array.ConvertAll(devices, device => new Device(device));
+        }
+
+        /// <summary>
+        /// Split the aggregate device into as many smaller aggregate devices as can
+        /// be created, each containing <paramref name="partitionSize"/> compute units.
+        /// If <paramref name="partitionSize"/> does not divide evenly into
+        /// <see cref="MaxComputeUnits"/>, then the remaining compute units are not used.
+        /// </summary>
+        /// <param name="partitionSize">The size of the partitions to be created.</param>
+        /// <returns>A collection of sub-devices representing the created partitions.</returns>
+        public DisposableCollection<Device> PartitionEqually(int partitionSize)
+        {
+            return UnsafeNativeMethods.PartitionEqually(ID, partitionSize);
+        }
+
+        /// <summary>
+        /// Split the aggregate device into smaller aggregate devices according to the
+        /// specified <paramref name="partitionSizes"/>. For each nonzero count <em>m</em>
+        /// in the list, a sub-device is created with <em>m</em> compute units in it.
+        /// <para/>
+        /// The number of non-zero count entries in the list may not exceed <see cref="MaxSubDevices"/>.
+        /// The total number of compute units specified may not exceed <see cref="MaxComputeUnits"/>.
+        /// </summary>
+        /// <param name="partitionSizes">The size of the partitions to be created.</param>
+        /// <returns>A collection of sub-devices representing the created partitions.</returns>
+        public DisposableCollection<Device> Partition(params int[] partitionSizes)
+        {
+            if (partitionSizes == null)
+                throw new ArgumentNullException("partitionSizes");
+            if (partitionSizes.Length == 0)
+                throw new ArgumentException();
+
+            return UnsafeNativeMethods.PartitionByCounts(ID, partitionSizes);
+        }
+
+        /// <summary>
+        /// Split the device into smaller aggregate devices containing one or more compute
+        /// units that all share part of a cache hierarchy. The value accompanying this
+        /// property may be drawn from the following list:
+        ///
+        /// <list type="bullet">
+        /// <item><see cref="AffinityDomain.Numa"/> - Split the device into sub-devices comprised of compute units that share a NUMA node.</item>
+        /// <item><see cref="AffinityDomain.L4Cache"/> - Split the device into sub-devices comprised of compute units that share a level 4 data cache.</item>
+        /// <item><see cref="AffinityDomain.L3Cache"/> - Split the device into sub-devices comprised of compute units that share a level 3 data cache.</item>
+        /// <item><see cref="AffinityDomain.L2Cache"/> - Split the device into sub-devices comprised of compute units that share a level 2 data cache.</item>
+        /// <item><see cref="AffinityDomain.L1Cache"/> - Split the device into sub-devices comprised of compute units that share a level 1 data cache.</item>
+        /// <item><see cref="AffinityDomain.NextPartitionable"/> - Split the device along the next partitionable affinity domain. The implementation shall find the first level along which the device or sub-device may be further subdivided in the order NUMA, L4, L3, L2, L1, and partition the device into sub-devices comprised of compute units that share memory subsystems at this level.</item>
+        /// </list>
+        ///
+        /// The user may determine what happened by checking <see cref="PartitionType"/> on the sub-devices.
+        /// </summary>
+        /// <param name="affinityDomain"></param>
+        /// <returns>A collection of sub-devices representing the created partitions.</returns>
+        public DisposableCollection<Device> PartitionByAffinityDomain(AffinityDomain affinityDomain)
+        {
+            return UnsafeNativeMethods.PartitionByAffinityDomain(ID, affinityDomain);
+        }
+
+        public void Dispose()
+        {
+            if (_handle != null)
+                _handle.Dispose();
+
+            _disposed = true;
+            GC.SuppressFinalize(this);
         }
 
         public override bool Equals(object obj)
@@ -635,6 +721,12 @@
         public override int GetHashCode()
         {
             return _device.GetHashCode();
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_disposed)
+                throw new ObjectDisposedException(GetType().FullName);
         }
     }
 }
