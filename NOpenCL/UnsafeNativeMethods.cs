@@ -9,7 +9,7 @@
         #region Platforms
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetPlatformIDs(uint numEntries, [In, Out, MarshalAs(UnmanagedType.LPArray)] ClPlatformID[] platforms, out uint numPlatforms);
+        private static extern ErrorCode clGetPlatformIDs(uint numEntries, [Out, MarshalAs(UnmanagedType.LPArray)] ClPlatformID[] platforms, out uint numPlatforms);
 
         public static ClPlatformID[] GetPlatformIDs()
         {
@@ -137,7 +137,7 @@
         #region Devices
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetDeviceIDs(ClPlatformID platform, DeviceType deviceType, uint numEntries, [In, Out, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices, out uint numDevices);
+        private static extern ErrorCode clGetDeviceIDs(ClPlatformID platform, DeviceType deviceType, uint numEntries, [Out, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices, out uint numDevices);
 
         public static ClDeviceID[] GetDeviceIDs(ClPlatformID platform, DeviceType deviceType)
         {
