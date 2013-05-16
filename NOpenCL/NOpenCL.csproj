@@ -39,15 +39,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessQualifier.cs" />
     <Compile Include="AddressingMode.cs" />
+    <Compile Include="AddressQualifier.cs" />
     <Compile Include="AffinityDomain.cs" />
+    <Compile Include="BinaryType.cs" />
+    <Compile Include="BufferCreateType.cs" />
+    <Compile Include="BuildStatus.cs" />
     <Compile Include="CacheType.cs" />
+    <Compile Include="ChannelOrder.cs" />
+    <Compile Include="ChannelType.cs" />
     <Compile Include="CommandQueue.cs" />
     <Compile Include="CommandQueueProperties.cs" />
     <Compile Include="CommandType.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="ContextSafeHandle.cs" />
     <Compile Include="CommandQueueSafeHandle.cs" />
+    <Compile Include="MapFlags.cs" />
+    <Compile Include="MemObjectType.cs" />
     <Compile Include="DisposableCollection`1.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventSafeHandle.cs" />
@@ -58,6 +67,7 @@
     <Compile Include="FilterMode.cs" />
     <Compile Include="KernelSafeHandle.cs" />
     <Compile Include="MemObjectSafeHandle.cs" />
+    <Compile Include="MemoryFlags.cs" />
     <Compile Include="Sampler.cs" />
     <Compile Include="SamplerSafeHandle.cs" />
     <Compile Include="ProgramSafeHandle.cs" />
@@ -72,6 +82,7 @@
     <Compile Include="PartitionProperty.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeQualifiers.cs" />
     <Compile Include="UnsafeNativeMethods.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
