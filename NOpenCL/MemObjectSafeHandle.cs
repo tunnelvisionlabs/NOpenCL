@@ -3,9 +3,9 @@
     using Microsoft.Win32.SafeHandles;
     using ErrorCode = NOpenCL.UnsafeNativeMethods.ErrorCode;
 
-    public sealed class MemObjectSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
+    public abstract class MemObjectSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        public MemObjectSafeHandle()
+        protected MemObjectSafeHandle()
             : base(true)
         {
         }

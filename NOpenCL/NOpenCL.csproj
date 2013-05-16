@@ -45,6 +45,7 @@
     <Compile Include="AffinityDomain.cs" />
     <Compile Include="BinaryType.cs" />
     <Compile Include="BufferCreateType.cs" />
+    <Compile Include="BufferSafeHandle.cs" />
     <Compile Include="BuildStatus.cs" />
     <Compile Include="CacheType.cs" />
     <Compile Include="ChannelOrder.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Context.cs" />
     <Compile Include="ContextSafeHandle.cs" />
     <Compile Include="CommandQueueSafeHandle.cs" />
+    <Compile Include="ImageSafeHandle.cs" />
     <Compile Include="MapFlags.cs" />
     <Compile Include="MemObjectType.cs" />
     <Compile Include="DisposableCollection`1.cs" />
