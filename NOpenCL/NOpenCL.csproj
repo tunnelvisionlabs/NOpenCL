@@ -79,6 +79,7 @@
     <Compile Include="MemObject`1.cs" />
     <Compile Include="MemObjectSafeHandle.cs" />
     <Compile Include="MemoryFlags.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Sampler.cs" />
     <Compile Include="SamplerSafeHandle.cs" />
     <Compile Include="ProgramSafeHandle.cs" />
