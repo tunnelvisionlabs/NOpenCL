@@ -1834,7 +1834,17 @@
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clWaitForEvents(
             uint numEvents,
-            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventList);
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList);
+
+        public static void WaitForEvents(EventSafeHandle[] eventWaitList)
+        {
+            if (eventWaitList == null)
+                throw new ArgumentNullException("eventWaitList");
+            if (eventWaitList.Length == 0)
+                throw new ArgumentException();
+
+            ErrorHandler.ThrowOnFailure(clWaitForEvents((uint)eventWaitList.Length, eventWaitList));
+        }
 
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clGetEventInfo(EventSafeHandle @event, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
