@@ -26,7 +26,7 @@
         }
 
         [DllImport(ExternDll.OpenCL)]
-        public static extern ErrorCode clGetPlatformInfo(ClPlatformID platform, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetPlatformInfo(ClPlatformID platform, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
 
         public static T GetPlatformInfo<T>(ClPlatformID platform, PlatformParameterInfo<T> parameter)
         {
@@ -166,7 +166,7 @@
         }
 
         [DllImport(ExternDll.OpenCL)]
-        public static extern ErrorCode clGetDeviceInfo(ClDeviceID device, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetDeviceInfo(ClDeviceID device, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
 
         public static T GetDeviceInfo<T>(ClDeviceID device, DeviceParameterInfo<T> parameter)
         {
@@ -1046,7 +1046,7 @@
         public static extern ErrorCode clReleaseCommandQueue(IntPtr commandQueue);
 
         [DllImport(ExternDll.OpenCL)]
-        public static extern ErrorCode clGetCommandQueueInfo(CommandQueueSafeHandle commandQueue, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetCommandQueueInfo(CommandQueueSafeHandle commandQueue, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
 
         public static T GetCommandQueueInfo<T>(CommandQueueSafeHandle commandQueue, CommandQueueParameterInfo<T> parameter)
         {
