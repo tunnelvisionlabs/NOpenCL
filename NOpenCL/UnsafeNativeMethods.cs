@@ -1721,6 +1721,14 @@
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clSetUserEventStatus(EventSafeHandle @event, ExecutionStatus executionStatus);
 
+        public static void SetUserEventStatus(EventSafeHandle @event, ExecutionStatus executionStatus)
+        {
+            if (@event == null)
+                throw new ArgumentNullException("event");
+
+            ErrorHandler.ThrowOnFailure(clSetUserEventStatus(@event, executionStatus));
+        }
+
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clWaitForEvents(uint numEvents, [In, MarshalAs(UnmanagedType.LPArray)] EventSafeHandle[] eventList);
 

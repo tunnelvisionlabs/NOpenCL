@@ -99,6 +99,11 @@
             }
         }
 
+        public void SetUserEventStatus(ExecutionStatus status)
+        {
+            UnsafeNativeMethods.SetUserEventStatus(Handle, status);
+        }
+
         public void Dispose()
         {
             _handle.Dispose();
