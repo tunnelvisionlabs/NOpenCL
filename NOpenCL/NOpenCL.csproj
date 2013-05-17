@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -67,6 +69,7 @@
     <Compile Include="MapFlags.cs" />
     <Compile Include="MemObjectType.cs" />
     <Compile Include="SafeHandleArrayMarshaler.cs" />
+    <Compile Include="Kernel.cs" />
     <Compile Include="DisposableCollection`1.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventSafeHandle.cs" />
@@ -75,6 +78,7 @@
     <Compile Include="Extensions\KhrD3D10Sharing.cs" />
     <Compile Include="Extensions\NvDeviceAttributeQuery.cs" />
     <Compile Include="FilterMode.cs" />
+    <Compile Include="KernelArgument.cs" />
     <Compile Include="KernelSafeHandle.cs" />
     <Compile Include="MemObject`1.cs" />
     <Compile Include="MemObjectSafeHandle.cs" />

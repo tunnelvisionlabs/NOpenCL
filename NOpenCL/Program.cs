@@ -134,6 +134,12 @@
             return (BinaryType)UnsafeNativeMethods.GetProgramBuildInfo(Handle, device.ID, UnsafeNativeMethods.ProgramBuildInfo.BinaryType);
         }
 
+        public Kernel CreateKernel(string name)
+        {
+            KernelSafeHandle kernel = UnsafeNativeMethods.CreateKernel(Handle, name);
+            return new Kernel(kernel);
+        }
+
         public void Build(string options)
         {
             UnsafeNativeMethods.BuildProgram(Handle, null, options, null, IntPtr.Zero);
