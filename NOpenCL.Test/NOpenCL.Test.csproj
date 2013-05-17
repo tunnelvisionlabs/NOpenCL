@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="NVidia\Bandwidth.cs" />
     <Compile Include="NVidia\OclUtils.cs" />
+    <Compile Include="NVidia\VectorAdd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestPlatform.cs" />
   </ItemGroup>
