@@ -2,7 +2,7 @@
 {
     using System;
 
-    public abstract class MemObject<THandle> : IDisposable
+    public abstract class MemObject<THandle> : MemObject
         where THandle : MemObjectSafeHandle
     {
         private readonly Context _context;
@@ -85,13 +85,15 @@
             }
         }
 
-        public void Dispose()
+        internal override MemObjectSafeHandle BaseHandle
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            get
+            {
+                return Handle;
+            }
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (disposing)
             {

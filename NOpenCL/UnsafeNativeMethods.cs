@@ -1574,6 +1574,32 @@
         }
 
         [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clEnqueueMigrateMemObjects(
+            CommandQueueSafeHandle commandQueue,
+            uint numMemObjects,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] MemObjectSafeHandle[] memObjects,
+            MigrationFlags flags,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueMigrateMemObjects(
+            CommandQueueSafeHandle commandQueue,
+            MemObjectSafeHandle[] memObjects,
+            MigrationFlags flags,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (memObjects == null)
+                throw new ArgumentNullException("memObjects");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueMigrateMemObjects(commandQueue, (uint)memObjects.Length, memObjects, flags, eventWaitList != null ? (uint)eventWaitList.Length : 0, eventWaitList != null && eventWaitList.Length > 0 ? eventWaitList : null, out result));
+            return result;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clGetMemObjectInfo(MemObjectSafeHandle memObject, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
 
         public static T GetMemObjectInfo<T>(MemObjectSafeHandle memObject, MemObjectParameterInfo<T> parameter)

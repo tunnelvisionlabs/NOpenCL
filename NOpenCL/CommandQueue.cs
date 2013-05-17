@@ -148,6 +148,20 @@
             return new Event(handle);
         }
 
+        public Event EnqueueMigrateMemObjects(MemObject[] memObjects, MigrationFlags flags, params Event[] eventWaitList)
+        {
+            MemObjectSafeHandle[] memHandles = null;
+            if (memObjects != null)
+                memHandles = Array.ConvertAll(memObjects, mem => mem.BaseHandle);
+
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueMigrateMemObjects(this.Handle, memHandles, flags, eventHandles);
+            return new Event(handle);
+        }
+
         public Event EnqueueNDRangeKernel(Kernel kernel, IntPtr globalWorkSize, IntPtr localWorkSize, params Event[] eventWaitList)
         {
             return EnqueueNDRangeKernel(kernel, null, new[] { globalWorkSize }, new[] { localWorkSize }, eventWaitList);

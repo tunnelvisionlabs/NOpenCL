@@ -67,7 +67,9 @@
     <Compile Include="ImageSafeHandle.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="MapFlags.cs" />
+    <Compile Include="MemObject.cs" />
     <Compile Include="MemObjectType.cs" />
+    <Compile Include="MigrationFlags.cs" />
     <Compile Include="SafeHandleArrayMarshaler.cs" />
     <Compile Include="Kernel.cs" />
     <Compile Include="DisposableCollection`1.cs" />
