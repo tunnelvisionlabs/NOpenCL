@@ -1,18 +1,18 @@
-﻿namespace NOpenCL
+﻿namespace NOpenCL.SafeHandles
 {
     using Microsoft.Win32.SafeHandles;
     using ErrorCode = NOpenCL.UnsafeNativeMethods.ErrorCode;
 
-    public sealed class CommandQueueSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
+    public sealed class ContextSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        public CommandQueueSafeHandle()
+        public ContextSafeHandle()
             : base(true)
         {
         }
 
         protected override bool ReleaseHandle()
         {
-            ErrorCode result = UnsafeNativeMethods.clReleaseCommandQueue(handle);
+            ErrorCode result = UnsafeNativeMethods.clReleaseContext(handle);
             return result == ErrorCode.Success;
         }
     }

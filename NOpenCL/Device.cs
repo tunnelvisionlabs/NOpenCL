@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using NOpenCL.SafeHandles;
     using DeviceInfo = NOpenCL.UnsafeNativeMethods.DeviceInfo;
 
     public sealed class Device : IEquatable<Device>, IDisposable

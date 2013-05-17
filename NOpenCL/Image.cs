@@ -1,6 +1,7 @@
 ﻿namespace NOpenCL
 {
     using System;
+    using NOpenCL.SafeHandles;
 
     public sealed class Image : MemObject<ImageSafeHandle>
     {

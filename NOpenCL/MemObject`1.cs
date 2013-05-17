@@ -1,6 +1,7 @@
 ﻿namespace NOpenCL
 {
     using System;
+    using NOpenCL.SafeHandles;
 
     public abstract class MemObject<THandle> : MemObject
         where THandle : MemObjectSafeHandle

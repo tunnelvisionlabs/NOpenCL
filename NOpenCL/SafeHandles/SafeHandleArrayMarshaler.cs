@@ -1,4 +1,4 @@
-﻿namespace NOpenCL
+﻿namespace NOpenCL.SafeHandles
 {
     using System;
     using System.Runtime.InteropServices;

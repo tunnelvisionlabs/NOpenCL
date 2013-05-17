@@ -1,18 +1,18 @@
-﻿namespace NOpenCL
+﻿namespace NOpenCL.SafeHandles
 {
     using Microsoft.Win32.SafeHandles;
     using ErrorCode = NOpenCL.UnsafeNativeMethods.ErrorCode;
 
-    public sealed class KernelSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
+    public abstract class MemObjectSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
-        public KernelSafeHandle()
+        protected MemObjectSafeHandle()
             : base(true)
         {
         }
 
         protected override bool ReleaseHandle()
         {
-            ErrorCode result = UnsafeNativeMethods.clReleaseKernel(handle);
+            ErrorCode result = UnsafeNativeMethods.clReleaseMemObject(handle);
             return result == ErrorCode.Success;
         }
     }

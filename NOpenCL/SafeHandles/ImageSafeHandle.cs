@@ -1,4 +1,4 @@
-﻿namespace NOpenCL
+﻿namespace NOpenCL.SafeHandles
 {
     public sealed class ImageSafeHandle : MemObjectSafeHandle
     {

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using NOpenCL.SafeHandles;
 
     public sealed class Kernel : IDisposable
     {

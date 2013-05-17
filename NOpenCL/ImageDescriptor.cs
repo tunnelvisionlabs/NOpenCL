@@ -2,6 +2,7 @@
 {
     using System;
     using System.Runtime.InteropServices;
+    using NOpenCL.SafeHandles;
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ImageDescriptor

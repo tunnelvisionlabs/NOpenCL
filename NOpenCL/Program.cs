@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using NOpenCL.SafeHandles;
 
     public sealed class Program : IDisposable
     {

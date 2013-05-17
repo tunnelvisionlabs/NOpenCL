@@ -1,6 +1,7 @@
 ﻿namespace NOpenCL
 {
     using System;
+    using NOpenCL.SafeHandles;
 
     /// <summary>
     /// To create an instance of <see cref="Event"/>, call <see cref="NOpenCL.Context.CreateUserEvent"/>.
