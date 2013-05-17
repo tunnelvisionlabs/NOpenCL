@@ -1,16 +1,30 @@
 ﻿namespace NOpenCL
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
 
     public sealed class DisposableCollection<T> : Collection<T>, IDisposable
         where T : IDisposable
     {
+        private readonly bool _reverseOrder;
         private bool _disposed;
+
+        public DisposableCollection()
+            : this(true)
+        {
+        }
+
+        public DisposableCollection(bool reverseOrder)
+        {
+            _reverseOrder = reverseOrder;
+        }
 
         public void Dispose()
         {
-            foreach (T item in this)
+            IEnumerable<T> enumerable = _reverseOrder ? this.Reverse() : this;
+            foreach (T item in enumerable)
             {
                 if (item != null)
                     item.Dispose();

@@ -846,7 +846,7 @@
             uint actual;
             ErrorHandler.ThrowOnFailure(clCreateSubDevices(device, properties, required, devices, out actual));
 
-            DisposableCollection<Device> result = new DisposableCollection<Device>();
+            DisposableCollection<Device> result = new DisposableCollection<Device>(false);
             for (int i = 0; i < actual; i++)
                 result.Add(new Device(devices[i], new DeviceSafeHandle(devices[i])));
 
