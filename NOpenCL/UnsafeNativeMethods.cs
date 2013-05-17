@@ -1771,6 +1771,9 @@
 
         public static SamplerSafeHandle CreateSampler(ContextSafeHandle context, bool normalizedCoordinates, AddressingMode addressingMode, FilterMode filterMode)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
+
             ErrorCode errorCode;
             SamplerSafeHandle handle = clCreateSampler(context, normalizedCoordinates, addressingMode, filterMode, out errorCode);
             ErrorHandler.ThrowOnFailure(errorCode);
@@ -1788,6 +1791,11 @@
 
         public static T GetSamplerInfo<T>(SamplerSafeHandle sampler, SamplerParameterInfo<T> parameter)
         {
+            if (sampler == null)
+                throw new ArgumentNullException("sampler");
+            if (parameter == null)
+                throw new ArgumentNullException("parameter");
+
             int? fixedSize = parameter.ParameterInfo.FixedSize;
 #if DEBUG
             bool verifyFixedSize = true;
