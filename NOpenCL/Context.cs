@@ -107,6 +107,12 @@
             return new Sampler(handle);
         }
 
+        public Program CreateProgramWithSource(params string[] sources)
+        {
+            ProgramSafeHandle handle = UnsafeNativeMethods.CreateProgramWithSource(Handle, sources);
+            return new Program(this, handle);
+        }
+
         public Event CreateUserEvent()
         {
             EventSafeHandle handle = UnsafeNativeMethods.CreateUserEvent(Handle);
