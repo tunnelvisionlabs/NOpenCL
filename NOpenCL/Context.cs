@@ -64,6 +64,27 @@
             return new Context(handle);
         }
 
+        public Buffer CreateBuffer(MemoryFlags flags, long size)
+        {
+            return CreateBuffer(flags, size, IntPtr.Zero);
+        }
+
+        public Buffer CreateBuffer(MemoryFlags flags, long size, IntPtr hostAddress)
+        {
+            if (size < 0)
+                throw new ArgumentOutOfRangeException("size");
+            else if (size == 0)
+                throw new ArgumentException("Invalid buffer size.");
+
+            if (hostAddress == IntPtr.Zero && (flags & (MemoryFlags.UseHostPointer | MemoryFlags.CopyHostPointer)) != 0)
+                throw new ArgumentException("Invalid host address.");
+            if (hostAddress != IntPtr.Zero && (flags & (MemoryFlags.UseHostPointer | MemoryFlags.CopyHostPointer)) == 0)
+                throw new ArgumentException("Invalid host address.");
+
+            BufferSafeHandle handle = UnsafeNativeMethods.CreateBuffer(Handle, flags, (IntPtr)size, hostAddress);
+            return new Buffer(this, handle);
+        }
+
         public Sampler CreateSampler(bool normalizedCoordinates, AddressingMode addressingMode, FilterMode filterMode)
         {
             SamplerSafeHandle handle = UnsafeNativeMethods.CreateSampler(Handle, normalizedCoordinates, addressingMode, filterMode);

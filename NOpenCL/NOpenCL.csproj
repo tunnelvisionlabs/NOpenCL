@@ -44,7 +44,9 @@
     <Compile Include="AddressQualifier.cs" />
     <Compile Include="AffinityDomain.cs" />
     <Compile Include="BinaryType.cs" />
+    <Compile Include="Buffer.cs" />
     <Compile Include="BufferCreateType.cs" />
+    <Compile Include="BufferRegion.cs" />
     <Compile Include="BufferSafeHandle.cs" />
     <Compile Include="BuildStatus.cs" />
     <Compile Include="CacheType.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Extensions\NvDeviceAttributeQuery.cs" />
     <Compile Include="FilterMode.cs" />
     <Compile Include="KernelSafeHandle.cs" />
+    <Compile Include="MemObject`1.cs" />
     <Compile Include="MemObjectSafeHandle.cs" />
     <Compile Include="MemoryFlags.cs" />
     <Compile Include="Sampler.cs" />

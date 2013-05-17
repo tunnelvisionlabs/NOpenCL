@@ -1146,6 +1146,139 @@
         #region Buffer Objects
 
         [DllImport(ExternDll.OpenCL)]
+        private static extern BufferSafeHandle clCreateBuffer(
+            ContextSafeHandle context,
+            MemoryFlags flags,
+            IntPtr size,
+            IntPtr hostPointer,
+            out ErrorCode errorCode);
+
+        public static BufferSafeHandle CreateBuffer(ContextSafeHandle context, MemoryFlags flags, IntPtr size, IntPtr hostPointer)
+        {
+            if (context == null)
+                throw new ArgumentNullException("context");
+
+            ErrorCode errorCode;
+            BufferSafeHandle handle = clCreateBuffer(context, flags, size, hostPointer, out errorCode);
+            ErrorHandler.ThrowOnFailure(errorCode);
+            return handle;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern BufferSafeHandle clCreateSubBuffer(
+            BufferSafeHandle buffer,
+            MemoryFlags flags,
+            BufferCreateType mustBeRegion,
+            [In] ref BufferRegion regionInfo,
+            out ErrorCode errorCode);
+
+        public static BufferSafeHandle CreateSubBuffer(BufferSafeHandle buffer, MemoryFlags flags, BufferRegion regionInfo)
+        {
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+
+            ErrorCode errorCode;
+            BufferSafeHandle handle = clCreateSubBuffer(buffer, flags, BufferCreateType.Region, ref regionInfo, out errorCode);
+            ErrorHandler.ThrowOnFailure(errorCode);
+            return handle;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clGetMemObjectInfo(MemObjectSafeHandle memObject, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+
+        public static T GetMemObjectInfo<T>(MemObjectSafeHandle memObject, MemObjectParameterInfo<T> parameter)
+        {
+            if (memObject == null)
+                throw new ArgumentNullException("memObject");
+            if (parameter == null)
+                throw new ArgumentNullException("parameter");
+
+            int? fixedSize = parameter.ParameterInfo.FixedSize;
+#if DEBUG
+            bool verifyFixedSize = true;
+#else
+            bool verifyFixedSize = false;
+#endif
+
+            UIntPtr requiredSize;
+            if (fixedSize.HasValue && !verifyFixedSize)
+                requiredSize = (UIntPtr)fixedSize;
+            else
+                ErrorHandler.ThrowOnFailure(clGetMemObjectInfo(memObject, parameter.ParameterInfo.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
+
+            if (verifyFixedSize && fixedSize.HasValue)
+            {
+                if (requiredSize.ToUInt64() != (ulong)fixedSize.Value)
+                    throw new ArgumentException("The parameter definition includes a fixed size that does not match the required size according to the runtime.");
+            }
+
+            IntPtr memory = IntPtr.Zero;
+            try
+            {
+                memory = Marshal.AllocHGlobal((int)requiredSize.ToUInt32());
+                UIntPtr actualSize;
+                ErrorHandler.ThrowOnFailure(clGetMemObjectInfo(memObject, parameter.ParameterInfo.Name, requiredSize, memory, out actualSize));
+                return parameter.ParameterInfo.Deserialize(actualSize, memory);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(memory);
+            }
+        }
+
+        public static class MemObjectInfo
+        {
+            public static readonly MemObjectParameterInfo<uint> Type =
+                (MemObjectParameterInfo<uint>)new ParameterInfoUInt32(0x1100);
+            public static readonly MemObjectParameterInfo<ulong> Flags =
+                (MemObjectParameterInfo<ulong>)new ParameterInfoUInt64(0x1101);
+            public static readonly MemObjectParameterInfo<UIntPtr> Size =
+                (MemObjectParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1102);
+            public static readonly MemObjectParameterInfo<IntPtr> HostAddress =
+                (MemObjectParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1103);
+            public static readonly MemObjectParameterInfo<uint> MapCount =
+                (MemObjectParameterInfo<uint>)new ParameterInfoUInt32(0x1104);
+            public static readonly MemObjectParameterInfo<uint> ReferenceCount =
+                (MemObjectParameterInfo<uint>)new ParameterInfoUInt32(0x1105);
+            public static readonly MemObjectParameterInfo<IntPtr> Context =
+                (MemObjectParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1106);
+            public static readonly MemObjectParameterInfo<IntPtr> AssociatedMemObject =
+                (MemObjectParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1107);
+            public static readonly MemObjectParameterInfo<UIntPtr> Offset =
+                (MemObjectParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1108);
+        }
+
+        public sealed class MemObjectParameterInfo<T>
+        {
+            private readonly ParameterInfo<T> _parameterInfo;
+
+            public MemObjectParameterInfo(ParameterInfo<T> parameterInfo)
+            {
+                if (parameterInfo == null)
+                    throw new ArgumentNullException("parameterInfo");
+
+                _parameterInfo = parameterInfo;
+            }
+
+            public static explicit operator MemObjectParameterInfo<T>(ParameterInfo<T> parameterInfo)
+            {
+                MemObjectParameterInfo<T> result = parameterInfo as MemObjectParameterInfo<T>;
+                if (result != null)
+                    return result;
+
+                return new MemObjectParameterInfo<T>(parameterInfo);
+            }
+
+            public ParameterInfo<T> ParameterInfo
+            {
+                get
+                {
+                    return _parameterInfo;
+                }
+            }
+        }
+
+        [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clRetainMemObject(MemObjectSafeHandle memObject);
 
         [DllImport(ExternDll.OpenCL)]
@@ -1864,7 +1997,7 @@
                 IntPtr[] array = new IntPtr[(int)((long)memorySize.ToUInt64() / IntPtr.Size)];
                 Marshal.Copy(memory, array, 0, array.Length);
                 UIntPtr[] result = new UIntPtr[array.Length];
-                Buffer.BlockCopy(array, 0, result, 0, array.Length * IntPtr.Size);
+                System.Buffer.BlockCopy(array, 0, result, 0, array.Length * IntPtr.Size);
                 return result;
             }
         }
