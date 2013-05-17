@@ -99,6 +99,20 @@
             }
         }
 
+        public static void WaitAll(params Event[] events)
+        {
+            if (events == null)
+                throw new ArgumentNullException("events");
+            if (events.Length == 0)
+                throw new ArgumentException();
+
+            EventSafeHandle[] eventHandles = null;
+            if (events != null)
+                eventHandles = Array.ConvertAll(events, @event => @event.Handle);
+
+            UnsafeNativeMethods.WaitForEvents(eventHandles);
+        }
+
         public void SetUserEventStatus(ExecutionStatus status)
         {
             UnsafeNativeMethods.SetUserEventStatus(Handle, status);

@@ -1730,7 +1730,9 @@
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clWaitForEvents(uint numEvents, [In, MarshalAs(UnmanagedType.LPArray)] EventSafeHandle[] eventList);
+        private static extern ErrorCode clWaitForEvents(
+            uint numEvents,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventList);
 
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clGetEventInfo(EventSafeHandle @event, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
@@ -1895,7 +1897,11 @@
         #region Markers, Barriers, and Waiting
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clEnqueueMarkerWithWaitList(CommandQueueSafeHandle commandQueue, uint numEventsInWaitList, EventSafeHandle[] eventWaitList, out EventSafeHandle @event);
+        private static extern ErrorCode clEnqueueMarkerWithWaitList(
+            CommandQueueSafeHandle commandQueue,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
 
         public static EventSafeHandle EnqueueMarkerWithWaitList(CommandQueueSafeHandle commandQueue, EventSafeHandle[] eventWaitList)
         {
@@ -1908,7 +1914,11 @@
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clEnqueueBarrierWithWaitList(CommandQueueSafeHandle commandQueue, uint numEventsInWaitList, EventSafeHandle[] eventWaitList, out EventSafeHandle @event);
+        private static extern ErrorCode clEnqueueBarrierWithWaitList(
+            CommandQueueSafeHandle commandQueue,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
 
         public static EventSafeHandle EnqueueBarrierWithWaitList(CommandQueueSafeHandle commandQueue, EventSafeHandle[] eventWaitList)
         {
