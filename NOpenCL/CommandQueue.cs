@@ -148,6 +148,31 @@
             return new Event(handle);
         }
 
+        public Event EnqueueNDRangeKernel(Kernel kernel, IntPtr globalWorkSize, IntPtr localWorkSize, params Event[] eventWaitList)
+        {
+            return EnqueueNDRangeKernel(kernel, null, new[] { globalWorkSize }, new[] { localWorkSize }, eventWaitList);
+        }
+
+        public Event EnqueueNDRangeKernel(Kernel kernel, IntPtr globalWorkOffset, IntPtr globalWorkSize, IntPtr localWorkSize, params Event[] eventWaitList)
+        {
+            return EnqueueNDRangeKernel(kernel, new[] { globalWorkOffset }, new[] { globalWorkSize }, new[] { localWorkSize }, eventWaitList);
+        }
+
+        public Event EnqueueNDRangeKernel(Kernel kernel, IntPtr[] globalWorkSize, IntPtr[] localWorkSize, params Event[] eventWaitList)
+        {
+            return EnqueueNDRangeKernel(kernel, null, globalWorkSize, localWorkSize, eventWaitList);
+        }
+
+        public Event EnqueueNDRangeKernel(Kernel kernel, IntPtr[] globalWorkOffset, IntPtr[] globalWorkSize, IntPtr[] localWorkSize, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueNDRangeKernel(this.Handle, kernel.Handle, globalWorkOffset, globalWorkSize, localWorkSize, eventHandles);
+            return new Event(handle);
+        }
+
         public Event EnqueueMarker(params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
