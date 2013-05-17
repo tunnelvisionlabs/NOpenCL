@@ -11,7 +11,7 @@
 
         private bool _disposed;
 
-        private Device(UnsafeNativeMethods.ClDeviceID device)
+        internal Device(UnsafeNativeMethods.ClDeviceID device)
         {
             _device = device;
         }
@@ -627,15 +627,6 @@
                 ThrowIfDisposed();
                 return _device;
             }
-        }
-
-        public static Device[] GetDevices(Platform platform, DeviceType deviceType)
-        {
-            if (platform == null)
-                throw new ArgumentNullException("platform");
-
-            UnsafeNativeMethods.ClDeviceID[] devices = UnsafeNativeMethods.GetDeviceIDs(platform.ID, deviceType);
-            return Array.ConvertAll(devices, device => new Device(device));
         }
 
         /// <summary>

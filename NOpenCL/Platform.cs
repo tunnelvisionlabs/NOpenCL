@@ -66,6 +66,12 @@
             return Array.ConvertAll(platforms, platform => new Platform(platform));
         }
 
+        public Device[] GetDevices(DeviceType deviceType)
+        {
+            UnsafeNativeMethods.ClDeviceID[] devices = UnsafeNativeMethods.GetDeviceIDs(ID, deviceType);
+            return Array.ConvertAll(devices, device => new Device(device));
+        }
+
         public override bool Equals(object obj)
         {
             return Equals(obj as Platform);
