@@ -1444,6 +1444,17 @@
             IntPtr hostAddress,
             out ErrorCode errorCode);
 
+        public static ImageSafeHandle CreateImage(ContextSafeHandle context, MemoryFlags flags, ref ImageFormat imageFormat, ref ImageDescriptor imageDescriptor, IntPtr hostAddress)
+        {
+            if (context == null)
+                throw new ArgumentNullException("context");
+
+            ErrorCode errorCode;
+            ImageSafeHandle result = clCreateImage(context, flags, ref imageFormat, ref imageDescriptor, hostAddress, out errorCode);
+            ErrorHandler.ThrowOnFailure(errorCode);
+            return result;
+        }
+
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clGetSupportedImageFormats(ContextSafeHandle context, MemoryFlags flags, MemObjectType imageType, uint numEntries, [Out] ImageFormat[] imageFormats, out uint numImageFormats);
 
@@ -1646,6 +1657,94 @@
                     return result;
 
                 return new MemObjectParameterInfo<T>(parameterInfo);
+            }
+
+            public ParameterInfo<T> ParameterInfo
+            {
+                get
+                {
+                    return _parameterInfo;
+                }
+            }
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clGetImageInfo(ImageSafeHandle image, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+
+        public static T GetImageInfo<T>(ImageSafeHandle image, ImageParameterInfo<T> parameter)
+        {
+            if (image == null)
+                throw new ArgumentNullException("image");
+            if (parameter == null)
+                throw new ArgumentNullException("parameter");
+
+            int? fixedSize = parameter.ParameterInfo.FixedSize;
+#if DEBUG
+            bool verifyFixedSize = true;
+#else
+            bool verifyFixedSize = false;
+#endif
+
+            UIntPtr requiredSize;
+            if (fixedSize.HasValue && !verifyFixedSize)
+                requiredSize = (UIntPtr)fixedSize;
+            else
+                ErrorHandler.ThrowOnFailure(clGetImageInfo(image, parameter.ParameterInfo.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
+
+            if (verifyFixedSize && fixedSize.HasValue)
+            {
+                if (requiredSize.ToUInt64() != (ulong)fixedSize.Value)
+                    throw new ArgumentException("The parameter definition includes a fixed size that does not match the required size according to the runtime.");
+            }
+
+            IntPtr memory = IntPtr.Zero;
+            try
+            {
+                memory = Marshal.AllocHGlobal((int)requiredSize.ToUInt32());
+                UIntPtr actualSize;
+                ErrorHandler.ThrowOnFailure(clGetImageInfo(image, parameter.ParameterInfo.Name, requiredSize, memory, out actualSize));
+                return parameter.ParameterInfo.Deserialize(actualSize, memory);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(memory);
+            }
+        }
+
+        public static class ImageInfo
+        {
+            public static ImageParameterInfo<IntPtr[]> Format = (ImageParameterInfo<IntPtr[]>)new ParameterInfoIntPtrArray(0x1110);
+            public static ImageParameterInfo<UIntPtr> ElementSize = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1111);
+            public static ImageParameterInfo<UIntPtr> RowPitch = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1112);
+            public static ImageParameterInfo<UIntPtr> SlicePitch = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1113);
+            public static ImageParameterInfo<UIntPtr> Width = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1114);
+            public static ImageParameterInfo<UIntPtr> Height = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1115);
+            public static ImageParameterInfo<UIntPtr> Depth = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1116);
+            public static ImageParameterInfo<UIntPtr> ArraySize = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1117);
+            public static ImageParameterInfo<IntPtr> Buffer = (ImageParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1118);
+            public static ImageParameterInfo<uint> NumMipLevels = (ImageParameterInfo<uint>)new ParameterInfoUInt32(0x1119);
+            public static ImageParameterInfo<uint> NumSamples = (ImageParameterInfo<uint>)new ParameterInfoUInt32(0x111A);
+        }
+
+        public sealed class ImageParameterInfo<T>
+        {
+            private readonly ParameterInfo<T> _parameterInfo;
+
+            public ImageParameterInfo(ParameterInfo<T> parameterInfo)
+            {
+                if (parameterInfo == null)
+                    throw new ArgumentNullException("parameterInfo");
+
+                _parameterInfo = parameterInfo;
+            }
+
+            public static explicit operator ImageParameterInfo<T>(ParameterInfo<T> parameterInfo)
+            {
+                ImageParameterInfo<T> result = parameterInfo as ImageParameterInfo<T>;
+                if (result != null)
+                    return result;
+
+                return new ImageParameterInfo<T>(parameterInfo);
             }
 
             public ParameterInfo<T> ParameterInfo

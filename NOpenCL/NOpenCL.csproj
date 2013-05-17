@@ -63,6 +63,7 @@
     <Compile Include="ImageDescriptor.cs" />
     <Compile Include="ImageFormat.cs" />
     <Compile Include="ImageSafeHandle.cs" />
+    <Compile Include="Image.cs" />
     <Compile Include="MapFlags.cs" />
     <Compile Include="MemObjectType.cs" />
     <Compile Include="SafeHandleArrayMarshaler.cs" />

@@ -85,6 +85,22 @@
             return new Buffer(this, handle);
         }
 
+        public Image CreateImage(MemoryFlags flags, ImageFormat format, ImageDescriptor descriptor)
+        {
+            return CreateImage(flags, format, descriptor, IntPtr.Zero);
+        }
+
+        public Image CreateImage(MemoryFlags flags, ImageFormat format, ImageDescriptor descriptor, IntPtr hostAddress)
+        {
+            if (hostAddress == IntPtr.Zero && (flags & (MemoryFlags.UseHostPointer | MemoryFlags.CopyHostPointer)) != 0)
+                throw new ArgumentException("Invalid host address.");
+            if (hostAddress != IntPtr.Zero && (flags & (MemoryFlags.UseHostPointer | MemoryFlags.CopyHostPointer)) == 0)
+                throw new ArgumentException("Invalid host address.");
+
+            ImageSafeHandle handle = UnsafeNativeMethods.CreateImage(Handle, flags, ref format, ref descriptor, hostAddress);
+            return new Image(this, handle);
+        }
+
         public Sampler CreateSampler(bool normalizedCoordinates, AddressingMode addressingMode, FilterMode filterMode)
         {
             SamplerSafeHandle handle = UnsafeNativeMethods.CreateSampler(Handle, normalizedCoordinates, addressingMode, filterMode);
