@@ -45,9 +45,11 @@
     <Compile Include="AffinityDomain.cs" />
     <Compile Include="BinaryType.cs" />
     <Compile Include="Buffer.cs" />
+    <Compile Include="BufferCoordinates.cs" />
     <Compile Include="BufferCreateType.cs" />
     <Compile Include="BufferRegion.cs" />
     <Compile Include="BufferSafeHandle.cs" />
+    <Compile Include="BufferSize.cs" />
     <Compile Include="BuildStatus.cs" />
     <Compile Include="CacheType.cs" />
     <Compile Include="ChannelOrder.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="ImageSafeHandle.cs" />
     <Compile Include="MapFlags.cs" />
     <Compile Include="MemObjectType.cs" />
+    <Compile Include="SafeHandleArrayMarshaler.cs" />
     <Compile Include="DisposableCollection`1.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventSafeHandle.cs" />

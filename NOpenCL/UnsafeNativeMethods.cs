@@ -1184,6 +1184,283 @@
         }
 
         [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clEnqueueReadBuffer(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle buffer,
+            [MarshalAs(UnmanagedType.Bool)] bool blockingRead,
+            IntPtr offset,
+            IntPtr size,
+            IntPtr destination,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueReadBuffer(CommandQueueSafeHandle commandQueue, BufferSafeHandle buffer, bool blocking, IntPtr offset, IntPtr size, IntPtr destination, EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+            if (destination == IntPtr.Zero)
+                throw new ArgumentNullException("destination");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueReadBuffer(commandQueue, buffer, blocking, offset, size, destination, eventWaitList != null ? (uint)eventWaitList.Length : 0, eventWaitList != null && eventWaitList.Length > 0 ? eventWaitList : null, out result));
+            return result;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clEnqueueWriteBuffer(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle buffer,
+            [MarshalAs(UnmanagedType.Bool)] bool blockingWrite,
+            IntPtr offset,
+            IntPtr size,
+            IntPtr source,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueWriteBuffer(CommandQueueSafeHandle commandQueue, BufferSafeHandle buffer, bool blocking, IntPtr offset, IntPtr size, IntPtr source, EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+            if (source == IntPtr.Zero)
+                throw new ArgumentNullException("destination");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueWriteBuffer(commandQueue, buffer, blocking, offset, size, source, eventWaitList != null ? (uint)eventWaitList.Length : 0, eventWaitList != null && eventWaitList.Length > 0 ? eventWaitList : null, out result));
+            return result;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clEnqueueReadBufferRect(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle buffer,
+            [MarshalAs(UnmanagedType.Bool)] bool blockingRead,
+            [In] ref BufferCoordinates bufferOrigin,
+            [In] ref BufferCoordinates hostOrigin,
+            [In] ref BufferSize region,
+            IntPtr bufferRowPitch,
+            IntPtr bufferSlicePitch,
+            IntPtr hostRowPitch,
+            IntPtr hostSlicePitch,
+            IntPtr destination,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueReadBufferRect(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle buffer,
+            bool blocking,
+            ref BufferCoordinates bufferOrigin,
+            ref BufferCoordinates hostOrigin,
+            ref BufferSize region,
+            IntPtr bufferRowPitch,
+            IntPtr bufferSlicePitch,
+            IntPtr hostRowPitch,
+            IntPtr hostSlicePitch,
+            IntPtr destination,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+            if (destination == IntPtr.Zero)
+                throw new ArgumentNullException("destination");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueReadBufferRect(commandQueue, buffer, blocking, ref bufferOrigin, ref hostOrigin, ref region, bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, destination, eventWaitList != null ? (uint)eventWaitList.Length : 0, eventWaitList != null && eventWaitList.Length > 0 ? eventWaitList : null, out result));
+            return result;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clEnqueueWriteBufferRect(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle buffer,
+            [MarshalAs(UnmanagedType.Bool)] bool blockingWrite,
+            [In] ref BufferCoordinates bufferOrigin,
+            [In] ref BufferCoordinates hostOrigin,
+            [In] ref BufferSize region,
+            IntPtr bufferRowPitch,
+            IntPtr bufferSlicePitch,
+            IntPtr hostRowPitch,
+            IntPtr hostSlicePitch,
+            IntPtr source,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueWriteBufferRect(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle buffer,
+            bool blocking,
+            ref BufferCoordinates bufferOrigin,
+            ref BufferCoordinates hostOrigin,
+            ref BufferSize region,
+            IntPtr bufferRowPitch,
+            IntPtr bufferSlicePitch,
+            IntPtr hostRowPitch,
+            IntPtr hostSlicePitch,
+            IntPtr source,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+            if (source == IntPtr.Zero)
+                throw new ArgumentNullException("source");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueWriteBufferRect(commandQueue, buffer, blocking, ref bufferOrigin, ref hostOrigin, ref region, bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, source, eventWaitList != null ? (uint)eventWaitList.Length : 0, eventWaitList != null && eventWaitList.Length > 0 ? eventWaitList : null, out result));
+            return result;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clEnqueueFillBuffer(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle buffer,
+            IntPtr pattern,
+            IntPtr patternSize,
+            IntPtr offset,
+            IntPtr size,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clEnqueueCopyBuffer(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle sourceBuffer,
+            BufferSafeHandle destinationBuffer,
+            IntPtr sourceOffset,
+            IntPtr destinationOffset,
+            IntPtr size,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueCopyBuffer(CommandQueueSafeHandle commandQueue, BufferSafeHandle sourceBuffer, BufferSafeHandle destinationBuffer, IntPtr sourceOffset, IntPtr destinationOffset, IntPtr size, EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (sourceBuffer == null)
+                throw new ArgumentNullException("sourceBuffer");
+            if (destinationBuffer == null)
+                throw new ArgumentNullException("destinationBuffer");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueCopyBuffer(commandQueue, sourceBuffer, destinationBuffer, sourceOffset, destinationOffset, size, eventWaitList != null ? (uint)eventWaitList.Length : 0, eventWaitList != null && eventWaitList.Length > 0 ? eventWaitList : null, out result));
+            return result;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clEnqueueCopyBufferRect(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle sourceBuffer,
+            BufferSafeHandle destinationBuffer,
+            [In] ref BufferCoordinates sourceOrigin,
+            [In] ref BufferCoordinates destinationOrigin,
+            [In] ref BufferSize region,
+            IntPtr sourceRowPitch,
+            IntPtr sourceSlicePitch,
+            IntPtr destinationRowPitch,
+            IntPtr destinationSlicePitch,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueCopyBufferRect(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle sourceBuffer,
+            BufferSafeHandle destinationBuffer,
+            [In] ref BufferCoordinates sourceOrigin,
+            [In] ref BufferCoordinates destinationOrigin,
+            [In] ref BufferSize region,
+            IntPtr sourceRowPitch,
+            IntPtr sourceSlicePitch,
+            IntPtr destinationRowPitch,
+            IntPtr destinationSlicePitch,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (sourceBuffer == null)
+                throw new ArgumentNullException("sourceBuffer");
+            if (destinationBuffer == null)
+                throw new ArgumentNullException("destinationBuffer");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueCopyBufferRect(commandQueue, sourceBuffer, destinationBuffer, ref sourceOrigin, ref destinationOrigin, ref region, sourceRowPitch, sourceSlicePitch, destinationRowPitch, destinationSlicePitch, eventWaitList != null ? (uint)eventWaitList.Length : 0, eventWaitList != null && eventWaitList.Length > 0 ? eventWaitList : null, out result));
+            return result;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern IntPtr clEnqueueMapBuffer(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle buffer,
+            [MarshalAs(UnmanagedType.Bool)] bool blockingMap,
+            MapFlags mapFlags,
+            IntPtr offset,
+            IntPtr size,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event,
+            out ErrorCode errorCode);
+
+        public static EventSafeHandle EnqueueMapBuffer(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle buffer,
+            bool blocking,
+            MapFlags mapFlags,
+            IntPtr offset,
+            IntPtr size,
+            out IntPtr mappedPointer,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+
+            EventSafeHandle result;
+            ErrorCode errorCode;
+            mappedPointer = clEnqueueMapBuffer(commandQueue, buffer, blocking, mapFlags, offset, size, eventWaitList != null ? (uint)eventWaitList.Length : 0, eventWaitList != null && eventWaitList.Length > 0 ? eventWaitList : null, out result, out errorCode);
+            ErrorHandler.ThrowOnFailure(errorCode);
+            return result;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clEnqueueUnmapMemObject(
+            CommandQueueSafeHandle commandQueue,
+            MemObjectSafeHandle memObject,
+            IntPtr mappedPointer,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueUnmapMemObject(
+            CommandQueueSafeHandle commandQueue,
+            MemObjectSafeHandle memObject,
+            IntPtr mappedPointer,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (memObject == null)
+                throw new ArgumentNullException("memObject");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueUnmapMemObject(commandQueue, memObject, mappedPointer, eventWaitList != null ? (uint)eventWaitList.Length : 0, eventWaitList != null && eventWaitList.Length > 0 ? eventWaitList : null, out result));
+            return result;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clGetMemObjectInfo(MemObjectSafeHandle memObject, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
 
         public static T GetMemObjectInfo<T>(MemObjectSafeHandle memObject, MemObjectParameterInfo<T> parameter)

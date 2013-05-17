@@ -67,6 +67,87 @@
             return new CommandQueue(handle);
         }
 
+        public Event EnqueueReadBuffer(Buffer buffer, bool blocking, long offset, long size, IntPtr destination, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueReadBuffer(this.Handle, buffer.Handle, blocking, (IntPtr)offset, (IntPtr)size, destination, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueReadBufferRect(Buffer buffer, bool blocking, BufferCoordinates bufferOrigin, BufferCoordinates hostOrigin, BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, IntPtr destination, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueReadBufferRect(this.Handle, buffer.Handle, blocking, ref bufferOrigin, ref hostOrigin, ref region, (IntPtr)bufferRowPitch, (IntPtr)bufferSlicePitch, (IntPtr)hostRowPitch, (IntPtr)hostSlicePitch, destination, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueWriteBuffer(Buffer buffer, bool blocking, long offset, long size, IntPtr source, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueWriteBuffer(this.Handle, buffer.Handle, blocking, (IntPtr)offset, (IntPtr)size, source, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueWriteBufferRect(Buffer buffer, bool blocking, BufferCoordinates bufferOrigin, BufferCoordinates hostOrigin, BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, IntPtr source, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueWriteBufferRect(this.Handle, buffer.Handle, blocking, ref bufferOrigin, ref hostOrigin, ref region, (IntPtr)bufferRowPitch, (IntPtr)bufferSlicePitch, (IntPtr)hostRowPitch, (IntPtr)hostSlicePitch, source, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueCopyBuffer(Buffer source, Buffer destination, long sourceOffset, long destinationOffset, long size, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyBuffer(this.Handle, source.Handle, destination.Handle, (IntPtr)sourceOffset, (IntPtr)destinationOffset, (IntPtr)size, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueCopyBufferRect(Buffer source, Buffer destination, BufferCoordinates sourceOrigin, BufferCoordinates destinationOrigin, BufferSize region, long sourceRowPitch, long sourceSlicePitch, long destinationRowPitch, long destinationSlicePitch, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyBufferRect(this.Handle, source.Handle, destination.Handle, ref sourceOrigin, ref destinationOrigin, ref region, (IntPtr)sourceRowPitch, (IntPtr)sourceSlicePitch, (IntPtr)destinationRowPitch, (IntPtr)destinationSlicePitch, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueMapBuffer(Buffer buffer, bool blocking, MapFlags mapFlags, long offset, long size, out IntPtr mappedPointer, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueMapBuffer(this.Handle, buffer.Handle, blocking, mapFlags, (IntPtr)offset, (IntPtr)size, out mappedPointer, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueUnmapMemObject<THandle>(MemObject<THandle> memObject, IntPtr mappedPointer, params Event[] eventWaitList)
+            where THandle : MemObjectSafeHandle
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueUnmapMemObject(this.Handle, memObject.Handle, mappedPointer, eventHandles);
+            return new Event(handle);
+        }
+
         public Event EnqueueMarker(params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
