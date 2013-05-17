@@ -58,6 +58,38 @@
             }
         }
 
+        public ulong CommandQueuedTime
+        {
+            get
+            {
+                return UnsafeNativeMethods.GetEventProfilingInfo(Handle, UnsafeNativeMethods.EventProfilingInfo.CommandQueued);
+            }
+        }
+
+        public ulong CommandSubmitTime
+        {
+            get
+            {
+                return UnsafeNativeMethods.GetEventProfilingInfo(Handle, UnsafeNativeMethods.EventProfilingInfo.CommandSubmit);
+            }
+        }
+
+        public ulong CommandStartTime
+        {
+            get
+            {
+                return UnsafeNativeMethods.GetEventProfilingInfo(Handle, UnsafeNativeMethods.EventProfilingInfo.CommandStart);
+            }
+        }
+
+        public ulong CommandEndTime
+        {
+            get
+            {
+                return UnsafeNativeMethods.GetEventProfilingInfo(Handle, UnsafeNativeMethods.EventProfilingInfo.CommandEnd);
+            }
+        }
+
         internal EventSafeHandle Handle
         {
             get
