@@ -647,7 +647,7 @@
         /// specified <paramref name="partitionSizes"/>. For each nonzero count <em>m</em>
         /// in the list, a sub-device is created with <em>m</em> compute units in it.
         /// <para/>
-        /// The number of non-zero count entries in the list may not exceed <see cref="MaxSubDevices"/>.
+        /// The number of non-zero count entries in the list may not exceed <see cref="PartitionMaxSubDevices"/>.
         /// The total number of compute units specified may not exceed <see cref="MaxComputeUnits"/>.
         /// </summary>
         /// <param name="partitionSizes">The size of the partitions to be created.</param>
