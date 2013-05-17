@@ -1787,7 +1787,7 @@
         public static extern ErrorCode clReleaseSampler(IntPtr sampler);
 
         [DllImport(ExternDll.OpenCL)]
-        public static extern ErrorCode clGetSamplerInfo(SamplerSafeHandle sampler, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetSamplerInfo(SamplerSafeHandle sampler, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
 
         public static T GetSamplerInfo<T>(SamplerSafeHandle sampler, SamplerParameterInfo<T> parameter)
         {
