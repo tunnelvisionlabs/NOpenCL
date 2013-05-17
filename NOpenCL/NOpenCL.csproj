@@ -60,6 +60,8 @@
     <Compile Include="Context.cs" />
     <Compile Include="ContextSafeHandle.cs" />
     <Compile Include="CommandQueueSafeHandle.cs" />
+    <Compile Include="ImageDescriptor.cs" />
+    <Compile Include="ImageFormat.cs" />
     <Compile Include="ImageSafeHandle.cs" />
     <Compile Include="MapFlags.cs" />
     <Compile Include="MemObjectType.cs" />
