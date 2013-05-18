@@ -1,4 +1,9 @@
-﻿namespace NOpenCL.Test
+﻿/*
+ * Copyright (c) 2013 Sam Harwell, Tunnel Vision Laboratories LLC
+ * All rights reserved.
+ */
+
+namespace NOpenCL.Test
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,9 @@
-﻿using System.Reflection;
+﻿/*
+ * Copyright (c) 2013 Sam Harwell, Tunnel Vision Laboratories LLC
+ * All rights reserved.
+ */
+
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 

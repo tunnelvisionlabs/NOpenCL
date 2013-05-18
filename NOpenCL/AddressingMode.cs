@@ -1,4 +1,9 @@
-﻿namespace NOpenCL
+﻿/*
+ * Copyright (c) 2013 Sam Harwell, Tunnel Vision Laboratories LLC
+ * All rights reserved.
+ */
+
+namespace NOpenCL
 {
     /// <summary>
     /// Specifies the image addressing-mode i.e. how out-of-range image coordinates are handled.

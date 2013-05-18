@@ -1,4 +1,9 @@
-﻿namespace NOpenCL.Test.Intel
+﻿/*
+ * Copyright (c) 2013 Sam Harwell, Tunnel Vision Laboratories LLC
+ * All rights reserved.
+ */
+
+namespace NOpenCL.Test.Intel
 {
     using System;
     using System.Diagnostics;
