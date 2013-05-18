@@ -87,6 +87,36 @@
             }
         }
 
+        public IReadOnlyList<IntPtr> GetGlobalWorkSize(Device device)
+        {
+            return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.GlobalWorkSize);
+        }
+
+        public IntPtr GetWorkGroupSize(Device device)
+        {
+            return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.WorkGroupSize);
+        }
+
+        public IReadOnlyList<IntPtr> GetCompileWorkGroupSize(Device device)
+        {
+            return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.CompileWorkGroupSize);
+        }
+
+        public ulong GetLocalMemorySize(Device device)
+        {
+            return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.LocalMemorySize);
+        }
+
+        public IntPtr GetPreferredWorkGroupSizeMultiple(Device device)
+        {
+            return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.PreferredWorkGroupSizeMultiple);
+        }
+
+        public ulong GetPrivateMemorySize(Device device)
+        {
+            return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.PrivateMemorySize);
+        }
+
         public void Dispose()
         {
             _handle.Dispose();
