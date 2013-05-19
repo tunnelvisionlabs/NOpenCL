@@ -142,10 +142,6 @@ namespace NOpenCL
 
             public static explicit operator ProgramParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                ProgramParameterInfo<T> result = parameterInfo as ProgramParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new ProgramParameterInfo<T>(parameterInfo);
             }
 
@@ -265,10 +261,6 @@ namespace NOpenCL
 
             public static explicit operator ProgramBuildParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                ProgramBuildParameterInfo<T> result = parameterInfo as ProgramBuildParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new ProgramBuildParameterInfo<T>(parameterInfo);
             }
 

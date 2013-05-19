@@ -110,10 +110,6 @@ namespace NOpenCL
 
             public static explicit operator CommandQueueParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                CommandQueueParameterInfo<T> result = parameterInfo as CommandQueueParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new CommandQueueParameterInfo<T>(parameterInfo);
             }
 

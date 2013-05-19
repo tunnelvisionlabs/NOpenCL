@@ -132,10 +132,6 @@ namespace NOpenCL
 
             public static explicit operator PlatformParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                PlatformParameterInfo<T> result = parameterInfo as PlatformParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new PlatformParameterInfo<T>(parameterInfo);
             }
 

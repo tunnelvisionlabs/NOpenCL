@@ -677,10 +677,6 @@ namespace NOpenCL
 
             public static explicit operator DeviceParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                DeviceParameterInfo<T> result = parameterInfo as DeviceParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new DeviceParameterInfo<T>(parameterInfo);
             }
 

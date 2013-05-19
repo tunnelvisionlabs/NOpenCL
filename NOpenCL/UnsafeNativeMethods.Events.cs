@@ -183,10 +183,6 @@ namespace NOpenCL
 
             public static explicit operator EventParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                EventParameterInfo<T> result = parameterInfo as EventParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new EventParameterInfo<T>(parameterInfo);
             }
 

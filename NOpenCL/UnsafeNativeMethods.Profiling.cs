@@ -97,10 +97,6 @@ namespace NOpenCL
 
             public static explicit operator EventProfilingParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                EventProfilingParameterInfo<T> result = parameterInfo as EventProfilingParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new EventProfilingParameterInfo<T>(parameterInfo);
             }
 

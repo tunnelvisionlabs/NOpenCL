@@ -125,10 +125,6 @@ namespace NOpenCL
 
             public static explicit operator ContextParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                ContextParameterInfo<T> result = parameterInfo as ContextParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new ContextParameterInfo<T>(parameterInfo);
             }
 

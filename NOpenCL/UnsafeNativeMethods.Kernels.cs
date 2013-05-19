@@ -126,10 +126,6 @@ namespace NOpenCL
 
             public static explicit operator KernelArgParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                KernelArgParameterInfo<T> result = parameterInfo as KernelArgParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new KernelArgParameterInfo<T>(parameterInfo);
             }
 
@@ -243,10 +239,6 @@ namespace NOpenCL
 
             public static explicit operator KernelParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                KernelParameterInfo<T> result = parameterInfo as KernelParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new KernelParameterInfo<T>(parameterInfo);
             }
 
@@ -381,10 +373,6 @@ namespace NOpenCL
 
             public static explicit operator KernelWorkGroupParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                KernelWorkGroupParameterInfo<T> result = parameterInfo as KernelWorkGroupParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new KernelWorkGroupParameterInfo<T>(parameterInfo);
             }
 

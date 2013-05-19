@@ -546,10 +546,6 @@ namespace NOpenCL
 
             public static explicit operator MemObjectParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                MemObjectParameterInfo<T> result = parameterInfo as MemObjectParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new MemObjectParameterInfo<T>(parameterInfo);
             }
 
@@ -634,10 +630,6 @@ namespace NOpenCL
 
             public static explicit operator ImageParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                ImageParameterInfo<T> result = parameterInfo as ImageParameterInfo<T>;
-                if (result != null)
-                    return result;
-
                 return new ImageParameterInfo<T>(parameterInfo);
             }
 
