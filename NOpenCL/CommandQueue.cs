@@ -194,6 +194,31 @@ namespace NOpenCL
         }
 
         /// <summary>
+        /// Enqueues a command to execute a <see cref="Kernel"/> on this command queue's <see cref="Device"/>.
+        /// </summary>
+        /// <remarks>
+        /// The kernel is executed using a single work-item.
+        ///
+        /// <para><see cref="EnqueueTask"/> is equivalent to calling
+        /// <see cref="EnqueueNDRangeKernel(Kernel, IntPtr, IntPtr, Event[])"/> with
+        /// <em>globalWorkSize</em> set to 1, and <em>localWorkSize</em> set to 1.</para>
+        /// </remarks>
+        /// <param name="kernel">A valid <see cref="Kernel"/> object.</param>
+        /// <param name="eventWaitList">The events that need to be complete before this
+        /// command is executed. If the list is null or empty, this command does not
+        /// wait on any event to complete.</param>
+        /// <returns>Returns an event object that identifies this particular kernel execution instance.</returns>
+        public Event EnqueueTask(Kernel kernel, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueTask(this.Handle, kernel.Handle, eventHandles);
+            return new Event(handle);
+        }
+
+        /// <summary>
         /// Enqueues a marker command which waits for either a list of events to complete,
         /// or all previously enqueued commands to complete.
         /// </summary>

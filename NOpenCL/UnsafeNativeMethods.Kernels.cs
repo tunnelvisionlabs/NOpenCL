@@ -449,6 +449,21 @@ namespace NOpenCL
             [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
             out EventSafeHandle @event);
 
+        public static EventSafeHandle EnqueueTask(
+            CommandQueueSafeHandle commandQueue,
+            KernelSafeHandle kernel,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (kernel == null)
+                throw new ArgumentNullException("kernel");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueTask(commandQueue, kernel, eventWaitList != null ? (uint)eventWaitList.Length : 0, eventWaitList != null && eventWaitList.Length > 0 ? eventWaitList : null, out result));
+            return result;
+        }
+
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueNativeKernel(
             CommandQueueSafeHandle commandQueue,
