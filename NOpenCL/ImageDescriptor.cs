@@ -12,6 +12,7 @@ namespace NOpenCL
     [StructLayout(LayoutKind.Sequential)]
     public struct ImageDescriptor
     {
+        public readonly MemObjectType Type;
         public readonly UIntPtr Width;
         public readonly UIntPtr Height;
         public readonly UIntPtr Depth;
