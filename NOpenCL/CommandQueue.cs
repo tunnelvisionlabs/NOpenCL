@@ -193,6 +193,23 @@ namespace NOpenCL
             return new Event(handle);
         }
 
+        /// <summary>
+        /// Enqueues a marker command which waits for either a list of events to complete,
+        /// or all previously enqueued commands to complete.
+        /// </summary>
+        /// <remarks>
+        /// Enqueues a marker command which waits for all events in
+        /// <paramref name="eventWaitList"/> to complete, or if
+        /// <paramref name="eventWaitList"/> is empty it waits for all previously enqueued
+        /// commands to complete before it completes. This command returns an event which
+        /// can be waited on, i.e. this event can be waited on to ensure that all events
+        /// either in <paramref name="eventWaitList"/> or all previously enqueued commands,
+        /// queued before this command, have completed.
+        /// </remarks>
+        /// <param name="eventWaitList">The events that need to be complete before this
+        /// command is executed. If the list is null or empty, this command waits until
+        /// all previous enqueued commands have completed.</param>
+        /// <returns>Returns an event object that identifies this particular command.</returns>
         public Event EnqueueMarker(params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
@@ -203,6 +220,23 @@ namespace NOpenCL
             return new Event(handle);
         }
 
+        /// <summary>
+        /// A synchronization point that enqueues a barrier operation.
+        /// </summary>
+        /// <remarks>
+        /// Enqueues a barrier command which waits for all events in
+        /// <paramref name="eventWaitList"/> to complete, or if
+        /// <paramref name="eventWaitList"/> is empty it waits for all previously enqueued
+        /// commands to complete before it completes. This command blocks command execution,
+        /// that is, any commands enqueued after it do not execute until it completes. This
+        /// command returns an event which can be waited on, i.e. this event can be waited
+        /// on to ensure that all events either in the <paramref name="eventWaitList"/>
+        /// or all previously enqueued commands, queued before this command, have completed.
+        /// </remarks>
+        /// <param name="eventWaitList">The events that need to be complete before this
+        /// command is executed. If the list is null or empty, this command waits until
+        /// all previous enqueued commands have completed.</param>
+        /// <returns>Returns an event object that identifies this particular command.</returns>
         public Event EnqueueBarrier(params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
@@ -232,6 +266,26 @@ namespace NOpenCL
         /// Issues all previously queued OpenCL commands in the command-queue to the device
         /// associated with the command-queue.
         /// </summary>
+        /// <remarks>
+        /// <see cref="Flush"/> only guarantees that all queued commands will eventually be
+        /// submitted to the appropriate device. There is no guarantee that they will be
+        /// complete after <see cref="Flush"/> returns.
+        ///
+        /// <para>Any blocking commands queued in a command-queue and <see cref="Dispose"/>
+        /// perform an implicit flush of the command-queue. These blocking commands are
+        /// <see cref="EnqueueReadBuffer"/>, <see cref="EnqueueReadBufferRect"/>, or
+        /// <see cref="EnqueueReadImage"/> with <c>blocking</c> set to <c>true</c>;
+        /// <see cref="EnqueueWriteBuffer"/>, <see cref="EnqueueWriteBufferRect"/>, or
+        /// <see cref="EnqueueWriteImage"/> with <c>blocking_write</c> set to <c>true</c>;
+        /// <see cref="EnqueueMapBuffer"/> or <see cref="EnqueueMapImage"/> with
+        /// <c>blocking_map</c> set to <c>true</c>; or <see cref="Event.WaitAll"/>.</para>
+        ///
+        /// <para>To use event objects that refer to commands enqueued in a command-queue
+        /// as event objects to wait on by commands enqueued in a different command-queue,
+        /// the application must call a <see cref="Flush"/> or any blocking commands that
+        /// perform an implicit flush of the command-queue where the commands that refer
+        /// to these event objects are enqueued.</para>
+        /// </remarks>
         public void Flush()
         {
             ThrowIfDisposed();
