@@ -20,7 +20,7 @@ namespace NOpenCL
             [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
             out EventSafeHandle @event);
 
-        public static EventSafeHandle EnqueueMarkerWithWaitList(CommandQueueSafeHandle commandQueue, EventSafeHandle[] eventWaitList)
+        internal static EventSafeHandle EnqueueMarkerWithWaitList(CommandQueueSafeHandle commandQueue, EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
                 throw new ArgumentNullException("commandQueue");
@@ -37,7 +37,7 @@ namespace NOpenCL
             [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
             out EventSafeHandle @event);
 
-        public static EventSafeHandle EnqueueBarrierWithWaitList(CommandQueueSafeHandle commandQueue, EventSafeHandle[] eventWaitList)
+        internal static EventSafeHandle EnqueueBarrierWithWaitList(CommandQueueSafeHandle commandQueue, EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
                 throw new ArgumentNullException("commandQueue");
@@ -54,7 +54,7 @@ namespace NOpenCL
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clFlush(CommandQueueSafeHandle commandQueue);
 
-        public static void Flush(CommandQueueSafeHandle commandQueue)
+        internal static void Flush(CommandQueueSafeHandle commandQueue)
         {
             ErrorHandler.ThrowOnFailure(clFlush(commandQueue));
         }
@@ -62,7 +62,7 @@ namespace NOpenCL
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clFinish(CommandQueueSafeHandle commandQueue);
 
-        public static void Finish(CommandQueueSafeHandle commandQueue)
+        internal static void Finish(CommandQueueSafeHandle commandQueue)
         {
             ErrorHandler.ThrowOnFailure(clFinish(commandQueue));
         }
