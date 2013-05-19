@@ -13,6 +13,32 @@ namespace NOpenCL
     {
         #region Buffer Objects
 
+        /// <summary>
+        /// Creates a buffer object.
+        /// http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/clCreateBuffer.html
+        /// http://www.khronos.org/registry/cl/specs/opencl-1.2.pdf#page=66
+        /// </summary>
+        /// <param name="context">A valid OpenCL context used to create the buffer object.</param>
+        /// <param name="flags">A bit-field that is used to specify allocation and usage information such as the memory arena that should be used to allocate the buffer object and how it will be used. If value specified for flags is <see cref="MemoryFlags.None"/>, the default is used which is <see cref="MemoryFlags.ReadWrite"/>.</param>
+        /// <param name="size">The size in bytes of the buffer memory object to be allocated.</param>
+        /// <param name="hostPointer">A pointer to the buffer data that may already be allocated by the application. The size of the buffer that <paramref name="hostPointer"/> points to must be ≥ <paramref name="size"/> bytes.</param>
+        /// <param name="errorCode">Returns an appropriate error code.</param>
+        /// <returns>
+        /// Returns a valid non-zero buffer object and <paramref name="errorCode"/> is
+        /// set to <see cref="ErrorCode.Success"/> if the buffer object is created
+        /// successfully. Otherwise, it returns an invalid handle with one of the
+        /// following error values returned in <paramref name="errorCode"/>:
+        ///
+        /// <list type="bullet">
+        /// <item><see cref="ErrorCode.InvalidContext"/> if <paramref name="context"/> is not a valid context.</item>
+        /// <item><see cref="ErrorCode.InvalidValue"/> if values specified in <paramref name="flags"/> are not valid.</item>
+        /// <item><see cref="ErrorCode.InvalidBufferSize"/> if <paramref name="size"/> is <see cref="IntPtr.Zero"/>. Implementations may return <see cref="ErrorCode.InvalidBufferSize"/> if <paramref name="size"/> is greater than the <see cref="DeviceInfo.MaxMemoryAllocationSize"/> value <see cref="GetDeviceInfo"/> for all devices in <paramref name="context"/>.</item>
+        /// <item><see cref="ErrorCode.InvalidHostPtr"/> if <paramref name="hostPointer"/> is <see cref="IntPtr.Zero"/> and <see cref="MemoryFlags.UseHostPointer"/> or <see cref="MemoryFlags.CopyHostPointer"/> are set in <paramref name="flags"/> or if <paramref name="hostPointer"/> is not <see cref="IntPtr.Zero"/> but <see cref="MemoryFlags.CopyHostPointer"/> or <see cref="MemoryFlags.UseHostPointer"/> are not set in <paramref name="flags"/>.</item>
+        /// <item><see cref="ErrorCode.MemObjectAllocationFailure"/> if there is a failure to allocate memory for buffer object.</item>
+        /// <item><see cref="ErrorCode.OutOfResources"/> if there is a failure to allocate resources required by the OpenCL implementation on the device.</item>
+        /// <item><see cref="ErrorCode.OutOfHostMemory"/> if there is a failure to allocate resources required by the OpenCL implementation on the host.</item>
+        /// </list>
+        /// </returns>
         [DllImport(ExternDll.OpenCL)]
         private static extern BufferSafeHandle clCreateBuffer(
             ContextSafeHandle context,
@@ -32,6 +58,34 @@ namespace NOpenCL
             return handle;
         }
 
+        /// <summary>
+        /// Creates a new buffer object (referred to as a sub-buffer object) from an existing buffer object.
+        /// http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/clCreateSubBuffer.html
+        /// http://www.khronos.org/registry/cl/specs/opencl-1.2.pdf#page=69
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="flags"></param>
+        /// <param name="mustBeRegion"></param>
+        /// <param name="regionInfo"></param>
+        /// <param name="errorCode"></param>
+        /// <returns>
+        /// Returns a valid non-zero buffer object and <paramref name="errorCode"/> is set
+        /// to <see cref="ErrorCode.Success"/> if the buffer object is created successfully.
+        /// Otherwise, it returns an invalid handle with one of the following errors in
+        /// <paramref name="errorCode"/>:
+        ///
+        /// <list type="bullet">
+        /// <item><see cref="ErrorCode.InvalidMemObject"/> if <paramref name="buffer"/> is not a valid buffer object or is a sub-buffer object.</item>
+        /// <item><see cref="ErrorCode.InvalidValue"/> if <paramref name="buffer"/> was created with <see cref="MemoryFlags.WriteOnly"/> and <paramref name="flags"/> specifies <see cref="MemoryFlags.ReadWrite"/> or <see cref="MemoryFlags.ReadOnly"/>, or if <paramref name="buffer"/> was created with <see cref="MemoryFlags.ReadOnly"/> and <paramref name="flags"/> specifies <see cref="MemoryFlags.ReadWrite"/> or <see cref="MemoryFlags.WriteOnly"/>, or if <paramref name="flags"/> specifies <see cref="MemoryFlags.UseHostPointer"/> or <see cref="MemoryFlags.AllocateHostPointer"/> or <see cref="MemoryFlags.CopyHostPointer"/>.</item>
+        /// <item><see cref="ErrorCode.InvalidValue"/> if <paramref name="buffer"/> was created with <see cref="MemoryFlags.HostWriteOnly"/> and <paramref name="flags"/> specifies <see cref="MemoryFlags.HostReadOnly"/> or if <paramref name="buffer"/> was created with <see cref="MemoryFlags.HostReadOnly"/> and <paramref name="flags"/> specifies <see cref="MemoryFlags.HostWriteOnly"/>, or if <paramref name="buffer"/> was created with <see cref="MemoryFlags.HostNoAccess"/> and <paramref name="flags"/> specifies <see cref="MemoryFlags.HostReadOnly"/> or <see cref="MemoryFlags.HostWriteOnly"/>.</item>
+        /// <item><see cref="ErrorCode.InvalidValue"/> if value specified in <paramref name="mustBeRegion"/> is not valid.</item>
+        /// <item><see cref="ErrorCode.InvalidValue"/> if value(s) specified in <paramref name="regionInfo"/> (for a given <paramref name="mustBeRegion"/>) is not valid.</item>
+        /// <item><see cref="ErrorCode.InvalidBufferSize"/> if <see cref="BufferRegion.Size"/> is <see cref="IntPtr.Zero"/>.</item>
+        /// <item><see cref="ErrorCode.MemObjectAllocationFailure"/> if there is a failure to allocate memory for sub-buffer object.</item>
+        /// <item><see cref="ErrorCode.OutOfResources"/> if there is a failure to allocate resources required by the OpenCL implementation on the device.</item>
+        /// <item><see cref="ErrorCode.OutOfHostMemory"/> if there is a failure to allocate resources required by the OpenCL implementation on the host.</item>
+        /// </list>
+        /// </returns>
         [DllImport(ExternDll.OpenCL)]
         private static extern BufferSafeHandle clCreateSubBuffer(
             BufferSafeHandle buffer,
@@ -51,6 +105,57 @@ namespace NOpenCL
             return handle;
         }
 
+        /// <summary>
+        /// Enqueue commands to read from a buffer object to host memory.
+        /// http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/clEnqueueReadBuffer.html
+        /// http://www.khronos.org/registry/cl/specs/opencl-1.2.pdf#page=72
+        /// </summary>
+        /// <remarks>
+        /// Calling <see cref="clEnqueueReadBuffer"/> to read a region of the buffer object with
+        /// the <paramref name="destination"/> argument value set to <em>hostPointer</em> + <paramref name="offset"/>,
+        /// where <em>hostPointer</em> is a pointer to the memory region specified when the buffer
+        /// object being read is created with <see cref="MemoryFlags.UseHostPointer"/>, must meet
+        /// the following requirements in order to avoid undefined behavior:
+        ///
+        /// <list type="bullet">
+        /// <item>All commands that use this buffer object or a memory object (buffer or image) created from this buffer object have finished execution before the read command begins execution.</item>
+        /// <item>The buffer object or memory objects created from this buffer object are not mapped.</item>
+        /// <item>The buffer object or memory objects created from this buffer object are not used by any command-queue until the read command has finished execution.</item>
+        /// </list>
+        /// </remarks>
+        /// <param name="commandQueue">Refers to the command-queue in which the read command will be queued. <paramref name="commandQueue"/> and <paramref name="buffer"/> must be created with the same OpenCL context.</param>
+        /// <param name="buffer">Refers to a valid buffer object.</param>
+        /// <param name="blockingRead">
+        /// Indicates if the read operations are blocking or non-blocking.
+        ///
+        /// <para>If <paramref name="blockingRead"/> is <c>true</c> i.e. the read command is blocking, <see cref="clEnqueueReadBuffer"/> does not return until the buffer data has been read and copied into memory pointed to by <paramref name="destination"/>.</para>
+        ///
+        /// <para>If <paramref name="blockingRead"/> is <c>false</c> i.e. the read command is non-blocking, <see cref="clEnqueueReadBuffer"/> queues a non-blocking read command and returns. The contents of the buffer that <paramref name="destination"/> points to cannot be used until the read command has completed. The <paramref name="event"/> argument returns an event object which can be used to query the execution status of the read command. When the read command has completed, the contents of the buffer that <paramref name="destination"/> points to can be used by the application.</para>
+        /// </param>
+        /// <param name="offset">The offset in bytes in the buffer object to read from.</param>
+        /// <param name="size">The size in bytes of data being read.</param>
+        /// <param name="destination">The pointer to buffer in host memory where data is to be read into.</param>
+        /// <param name="numEventsInWaitList"></param>
+        /// <param name="eventWaitList"></param>
+        /// <param name="event">Returns an event object that identifies this particular read command and can be used to query or queue a wait for this particular command to complete.</param>
+        /// <returns>
+        /// <see cref="clEnqueueReadBuffer"/> returns <see cref="ErrorCode.Success"/> if the function
+        /// is executed successfully. Otherwise, it returns one of the following errors:
+        ///
+        /// <list type="bullet">
+        /// <item><see cref="ErrorCode.InvalidCommandQueue"/> if <paramref name="commandQueue"/> is not a valid command-queue.</item>
+        /// <item><see cref="ErrorCode.InvalidContext"/> if the context associated with <paramref name="commandQueue"/> and <paramref name="buffer"/> are not the same or if the context associated with <paramref name="commandQueue"/> and events in <paramref name="eventWaitList"/> are not the same.</item>
+        /// <item><see cref="ErrorCode.InvalidMemObject"/> if <paramref name="buffer"/> is not a valid buffer object.</item>
+        /// <item><see cref="ErrorCode.InvalidValue"/> if the region being read specified by (<paramref name="offset"/>, <paramref name="size"/>) is out of bounds or if <paramref name="destination"/> is <see cref="IntPtr.Zero"/> or if <paramref name="size"/> is 0.</item>
+        /// <item><see cref="ErrorCode.InvalidEventWaitList"/> if <paramref name="eventWaitList"/> is <c>null</c> and <paramref name="numEventsInWaitList"/> greater than 0, or <paramref name="eventWaitList"/> is not <c>null</c> and <paramref name="numEventsInWaitList"/> is 0, or if event objects in <paramref name="eventWaitList"/> are not valid events.</item>
+        /// <item><see cref="ErrorCode.MisalignedSubBufferOffset"/> if <paramref name="buffer"/> is a sub-buffer object and <paramref name="offset"/> specified when the sub-buffer object is created is not aligned to <see cref="DeviceInfo.MemoryBaseAddressAlignment"/> value for device associated with <paramref name="commandQueue"/>.</item>
+        /// <item><see cref="ErrorCode.ExecStatusErrorForEventsInWaitList"/> if the read and write operations are blocking and the <see cref="EventInfo.CommandExecutionStatus"/> of any of the events in <paramref name="eventWaitList"/> is a negative integer value.</item>
+        /// <item><see cref="ErrorCode.MemObjectAllocationFailure"/> if there is a failure to allocate memory for data store associated with <paramref name="buffer"/>.</item>
+        /// <item><see cref="ErrorCode.InvalidOperation"/> if <see cref="clEnqueueReadBuffer"/> is called on <paramref name="buffer"/> which has been created with <see cref="MemoryFlags.HostWriteOnly"/> or <see cref="MemoryFlags.HostNoAccess"/>.</item>
+        /// <item><see cref="ErrorCode.OutOfResources"/> if there is a failure to allocate resources required by the OpenCL implementation on the device.</item>
+        /// <item><see cref="ErrorCode.OutOfHostMemory"/> if there is a failure to allocate resources required by the OpenCL implementation on the host.</item>
+        /// </list>
+        /// </returns>
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueReadBuffer(
             CommandQueueSafeHandle commandQueue,
@@ -512,22 +617,86 @@ namespace NOpenCL
 
         public static class MemObjectInfo
         {
+            /// <summary>
+            /// Returns one of the following values:
+            ///
+            /// <list type="bullet">
+            /// <item><see cref="MemObjectType.Buffer"/> if the memory object was created with <see cref="clCreateBuffer"/> or <see cref="clCreateSubBuffer"/>.</item>
+            /// <item><see cref="ImageDescriptor.Type"/> value if the memory object was created with <see cref="clCreateImage"/>.</item>
+            /// </list>
+            /// </summary>
             public static readonly MemObjectParameterInfo<uint> Type =
                 (MemObjectParameterInfo<uint>)new ParameterInfoUInt32(0x1100);
+
+            /// <summary>
+            /// Returns the <em>flags</em> argument value specified when the memory object was
+            /// created with <see cref="clCreateBuffer"/>, <see cref="clCreateSubBuffer"/>, or
+            /// <see cref="clCreateImage"/>. If the memory object is a sub-buffer the memory
+            /// access qualifiers inherited from parent buffer are also returned.
+            /// </summary>
             public static readonly MemObjectParameterInfo<ulong> Flags =
                 (MemObjectParameterInfo<ulong>)new ParameterInfoUInt64(0x1101);
+
+            /// <summary>
+            /// Return actual size of the data store associated with the memory object in bytes.
+            /// </summary>
             public static readonly MemObjectParameterInfo<UIntPtr> Size =
                 (MemObjectParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1102);
+
+            /// <summary>
+            /// If the memory object was created with <see cref="clCreateBuffer"/> or <see cref="clCreateImage"/>
+            /// and <see cref="MemoryFlags.UseHostPointer"/> is specified in <em>memoryFlags</em>, return the
+            /// <em>hostPointer</em> argument value specified when the memory object was created. Otherwise
+            /// <see cref="IntPtr.Zero"/> is returned.
+            /// 
+            /// <para>If the memory object was created with <see cref="clCreateSubBuffer"/>, return the
+            /// <em>hostPointer</em> + <em>origin</em> value specified when the memory object was created.
+            /// <em>hostPointer</em> is the argument value specified to <see cref="clCreateBuffer"/> and
+            /// <see cref="MemoryFlags.UseHostPointer"/> is specified in <em>memoryFlags</em> for memory
+            /// object from which this memory object was created. Otherwise <see cref="IntPtr.Zero"/> is
+            /// returned.</para>
+            /// </summary>
             public static readonly MemObjectParameterInfo<IntPtr> HostAddress =
                 (MemObjectParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1103);
+
+            /// <summary>
+            /// Map count. The map count returned should be considered immediately stale. It is unsuitable
+            /// for general use in applications. This feature is provided for debugging.
+            /// </summary>
             public static readonly MemObjectParameterInfo<uint> MapCount =
                 (MemObjectParameterInfo<uint>)new ParameterInfoUInt32(0x1104);
+
+            /// <summary>
+            /// Return the reference count of the memory object. The reference count returned should be
+            /// considered immediately stale. It is unsuitable for general use in applications. This
+            /// feature is provided for identifying memory leaks.
+            /// </summary>
             public static readonly MemObjectParameterInfo<uint> ReferenceCount =
                 (MemObjectParameterInfo<uint>)new ParameterInfoUInt32(0x1105);
+
+            /// <summary>
+            /// Return the context specified when the memory object was created. If the memory object was
+            /// created using <see cref="clCreateSubBuffer"/>, the context associated with the memory
+            /// object specified as the buffer argument to <see cref="clCreateSubBuffer"/> is returned.
+            /// </summary>
             public static readonly MemObjectParameterInfo<IntPtr> Context =
                 (MemObjectParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1106);
+
+            /// <summary>
+            /// Return the memory object from which this memory object was created.
+            ///
+            /// <para>This returns the memory object specified as the <em>buffer</em> argument to <see cref="clCreateSubBuffer"/>.</para>
+            ///
+            /// <para>Otherwise <see cref="IntPtr.Zero"/> is returned.</para>
+            /// </summary>
             public static readonly MemObjectParameterInfo<IntPtr> AssociatedMemObject =
                 (MemObjectParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1107);
+
+            /// <summary>
+            /// Return offset if the memory object is a sub-buffer object created using
+            /// <see cref="clCreateSubBuffer"/>. This returns <see cref="UIntPtr.Zero"/>
+            /// if the memory object is not a sub-buffer object.
+            /// </summary>
             public static readonly MemObjectParameterInfo<UIntPtr> Offset =
                 (MemObjectParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1108);
         }
@@ -603,17 +772,77 @@ namespace NOpenCL
 
         public static class ImageInfo
         {
-            public static ImageParameterInfo<IntPtr[]> Format = (ImageParameterInfo<IntPtr[]>)new ParameterInfoIntPtrArray(0x1110);
-            public static ImageParameterInfo<UIntPtr> ElementSize = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1111);
-            public static ImageParameterInfo<UIntPtr> RowPitch = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1112);
-            public static ImageParameterInfo<UIntPtr> SlicePitch = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1113);
-            public static ImageParameterInfo<UIntPtr> Width = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1114);
-            public static ImageParameterInfo<UIntPtr> Height = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1115);
-            public static ImageParameterInfo<UIntPtr> Depth = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1116);
-            public static ImageParameterInfo<UIntPtr> ArraySize = (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1117);
-            public static ImageParameterInfo<IntPtr> Buffer = (ImageParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1118);
-            public static ImageParameterInfo<uint> NumMipLevels = (ImageParameterInfo<uint>)new ParameterInfoUInt32(0x1119);
-            public static ImageParameterInfo<uint> NumSamples = (ImageParameterInfo<uint>)new ParameterInfoUInt32(0x111A);
+            /// <summary>
+            /// Return <see cref="ImageFormat"/> descriptor specified when the image was created with <see cref="clCreateImage"/>.
+            /// </summary>
+            public static ImageParameterInfo<IntPtr[]> Format =
+                (ImageParameterInfo<IntPtr[]>)new ParameterInfoIntPtrArray(0x1110);
+
+            /// <summary>
+            /// Return size of each element of the image memory object. An element is made up of <em>n</em> channels.
+            /// The value of <em>n</em> is given in <see cref="ImageFormat.ChannelOrder"/>.
+            /// </summary>
+            public static ImageParameterInfo<UIntPtr> ElementSize =
+                (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1111);
+
+            /// <summary>
+            /// Return size in bytes of a row of elements of the image object given by the image.
+            /// </summary>
+            public static ImageParameterInfo<UIntPtr> RowPitch =
+                (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1112);
+
+            /// <summary>
+            /// Return calculated slice pitch in bytes of a 2D slice for the 3D image object or
+            /// size of each image in a 1D or 2D image array given by the image. For a 1D image,
+            /// 1D image buffer and 2D image object return <see cref="UIntPtr.Zero"/>.
+            /// </summary>
+            public static ImageParameterInfo<UIntPtr> SlicePitch =
+                (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1113);
+
+            /// <summary>
+            /// Return the width of the image in pixels.
+            /// </summary>
+            public static ImageParameterInfo<UIntPtr> Width =
+                (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1114);
+
+            /// <summary>
+            /// Return the height of the image in pixels. For a 1D image, 1D image buffer and 1D
+            /// image array object, this returns <see cref="UIntPtr.Zero"/>.
+            /// </summary>
+            public static ImageParameterInfo<UIntPtr> Height =
+                (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1115);
+
+            /// <summary>
+            /// Return the depth of the the image in pixels. For a 1D image, 1D image buffer, 2D
+            /// image or 1D and 2D image array object, this returns <see cref="UIntPtr.Zero"/>.
+            /// </summary>
+            public static ImageParameterInfo<UIntPtr> Depth =
+                (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1116);
+
+            /// <summary>
+            /// Return number of images in the image array. If the image is not an image array,
+            /// <see cref="UIntPtr.Zero"/> is returned.
+            /// </summary>
+            public static ImageParameterInfo<UIntPtr> ArraySize =
+                (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1117);
+
+            /// <summary>
+            /// Return the buffer object associated with the image.
+            /// </summary>
+            public static ImageParameterInfo<IntPtr> Buffer =
+                (ImageParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1118);
+
+            /// <summary>
+            /// Return the <see cref="ImageDescriptor.NumMipLevels"/> associated with the image.
+            /// </summary>
+            public static ImageParameterInfo<uint> NumMipLevels =
+                (ImageParameterInfo<uint>)new ParameterInfoUInt32(0x1119);
+
+            /// <summary>
+            /// Return the <see cref="ImageDescriptor.NumSamples"/> associated with the image.
+            /// </summary>
+            public static ImageParameterInfo<uint> NumSamples =
+                (ImageParameterInfo<uint>)new ParameterInfoUInt32(0x111A);
         }
 
         public sealed class ImageParameterInfo<T>
