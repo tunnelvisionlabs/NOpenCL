@@ -10,6 +10,39 @@ namespace NOpenCL
 
     internal static partial class UnsafeNativeMethods
     {
+        /// <summary>
+        /// Helper method to ensure the proper value is passed for the <em>numEventsInWaitList</em>
+        /// argument of several API methods.
+        /// </summary>
+        /// <param name="events">The list of events to wait on, or <c>null</c> if no events are specified.</param>
+        /// <returns>The length <paramref name="events"/>, or 0 if <paramref name="events"/> is <c>null</c>.</returns>
+        private static uint GetNumEventsInWaitList(EventSafeHandle[] events)
+        {
+            if (events == null)
+                return 0;
+
+            return (uint)events.Length;
+        }
+
+        /// <summary>
+        /// Helper method to ensure the proper value is passed for the <em>eventWaitList</em>
+        /// argument of several API methods.
+        /// </summary>
+        /// <remarks>
+        /// This method allows the user to pass a non-null but empty list of events to the
+        /// managed API wrapper methods, which is not allowed by the underlying OpenCL API.
+        /// In this case, the list is treated as though the user passed <c>null</c> instead.
+        /// </remarks>
+        /// <param name="events">The list of events to wait on, or <c>null</c> if no events are specified.</param>
+        /// <returns><paramref name="events"/> if it contains at least one event, otherwise <c>null</c>.</returns>
+        private static EventSafeHandle[] GetEventWaitList(EventSafeHandle[] events)
+        {
+            if (events == null || events.Length == 0)
+                return null;
+
+            return events;
+        }
+
         public abstract class ParameterInfo<T>
         {
             private readonly int _name;
