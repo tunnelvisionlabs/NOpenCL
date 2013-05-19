@@ -29,6 +29,12 @@ namespace NOpenCL
             case ErrorCode.InvalidDevicePartitionCount:
                 throw new InvalidOperationException("Invalid device partition size.");
 
+            case ErrorCode.InvalidCommandQueue:
+                throw new ArgumentException("Invalid command queue.");
+
+            case ErrorCode.InvalidEventWaitList:
+                throw new ArgumentException("The event wait list contained an invalid event.");
+
             case ErrorCode.InvalidDevice:
                 throw new ArgumentException("Invalid device.");
 
