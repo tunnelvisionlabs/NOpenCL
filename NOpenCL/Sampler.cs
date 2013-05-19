@@ -10,6 +10,8 @@ namespace NOpenCL
 
     /// <summary>
     /// To create an instance of <see cref="Sampler"/>, call <see cref="NOpenCL.Context.CreateSampler"/>.
+    /// For more information, see the documentation for
+    /// <a href="http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/sampler_t.html"><c>sampler_t</c></a>.
     /// </summary>
     public sealed class Sampler : IDisposable
     {
@@ -24,6 +26,11 @@ namespace NOpenCL
             _handle = handle;
         }
 
+        /// <summary>
+        /// Get the sampler reference count. The reference count returned should be
+        /// considered immediately stale. It is unsuitable for general use in applications.
+        /// This feature is provided for identifying memory leaks.
+        /// </summary>
         public uint ReferenceCount
         {
             get
@@ -32,6 +39,9 @@ namespace NOpenCL
             }
         }
 
+        /// <summary>
+        /// Get the <see cref="Context"/> specified when this sampler was created.
+        /// </summary>
         public Context Context
         {
             get
@@ -40,6 +50,11 @@ namespace NOpenCL
             }
         }
 
+        /// <summary>
+        /// Get the normalized coordinates value associated with this sampler. This value
+        /// specifies whether the <em>x</em>, <em>y</em> and <em>z</em> coordinates are
+        /// passed in as normalized or unnormalized values.
+        /// </summary>
         public bool NormalizedCoordinates
         {
             get
@@ -48,6 +63,9 @@ namespace NOpenCL
             }
         }
 
+        /// <summary>
+        /// Get the addressing mode value associated with this sampler.
+        /// </summary>
         public AddressingMode AddressingMode
         {
             get
@@ -56,6 +74,9 @@ namespace NOpenCL
             }
         }
 
+        /// <summary>
+        /// Get the filter mode value associated with this sampler.
+        /// </summary>
         public FilterMode FilterMode
         {
             get

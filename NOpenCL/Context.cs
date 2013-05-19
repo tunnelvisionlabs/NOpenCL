@@ -107,6 +107,16 @@ namespace NOpenCL
             return new Image(this, handle);
         }
 
+        /// <summary>
+        /// Creates a sampler object. Samplers contros how elements of an <see cref="Image"/> object are read by
+        /// <a href="http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/imageFunctions.html"><c>read_image{f|i|ui}</c></a>
+        /// </summary>
+        /// <param name="normalizedCoordinates"><c>true</c> to use normalized coordinates, otherwise <c>false</c>.
+        /// For more information, see <see cref="Sampler.NormalizedCoordinates"/>.</param>
+        /// <param name="addressingMode">Specifies the image addressing-mode, i.e.
+        /// how out-of-range image coordinates are handled.</param>
+        /// <param name="filterMode">Specifies the filtering mode to use.</param>
+        /// <returns>A new sampler.</returns>
         public Sampler CreateSampler(bool normalizedCoordinates, AddressingMode addressingMode, FilterMode filterMode)
         {
             SamplerSafeHandle handle = UnsafeNativeMethods.CreateSampler(Handle, normalizedCoordinates, addressingMode, filterMode);
