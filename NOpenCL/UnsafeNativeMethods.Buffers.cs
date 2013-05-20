@@ -880,8 +880,13 @@ namespace NOpenCL
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clSetMemObjectDestructorCallback(MemObjectSafeHandle memObject, MemObjectDestructorCallback notify, IntPtr userData);
 
+        internal static void SetMemObjectDestructorCallback(MemObjectSafeHandle memObject, MemObjectDestructorCallback notify, IntPtr userData)
+        {
+            ErrorHandler.ThrowOnFailure(clSetMemObjectDestructorCallback(memObject, notify, userData));
+        }
+
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void MemObjectDestructorCallback(MemObjectSafeHandle memObject, IntPtr userData);
+        public delegate void MemObjectDestructorCallback(IntPtr memObject, IntPtr userData);
 
         #endregion
     }
