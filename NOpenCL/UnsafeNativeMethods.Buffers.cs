@@ -178,7 +178,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("destination");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueReadBuffer(commandQueue, buffer, blocking, offset, size, destination, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueReadBuffer(commandQueue, buffer, blocking, offset, size, destination, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 
@@ -204,7 +204,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("destination");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueWriteBuffer(commandQueue, buffer, blocking, offset, size, source, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueWriteBuffer(commandQueue, buffer, blocking, offset, size, source, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 
@@ -247,7 +247,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("destination");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueReadBufferRect(commandQueue, buffer, blocking, ref bufferOrigin, ref hostOrigin, ref region, bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, destination, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueReadBufferRect(commandQueue, buffer, blocking, ref bufferOrigin, ref hostOrigin, ref region, bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, destination, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 
@@ -290,7 +290,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("source");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueWriteBufferRect(commandQueue, buffer, blocking, ref bufferOrigin, ref hostOrigin, ref region, bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, source, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueWriteBufferRect(commandQueue, buffer, blocking, ref bufferOrigin, ref hostOrigin, ref region, bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, source, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 
@@ -328,7 +328,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("destinationBuffer");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueCopyBuffer(commandQueue, sourceBuffer, destinationBuffer, sourceOffset, destinationOffset, size, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueCopyBuffer(commandQueue, sourceBuffer, destinationBuffer, sourceOffset, destinationOffset, size, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 
@@ -369,7 +369,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("destinationBuffer");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueCopyBufferRect(commandQueue, sourceBuffer, destinationBuffer, ref sourceOrigin, ref destinationOrigin, ref region, sourceRowPitch, sourceSlicePitch, destinationRowPitch, destinationSlicePitch, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueCopyBufferRect(commandQueue, sourceBuffer, destinationBuffer, ref sourceOrigin, ref destinationOrigin, ref region, sourceRowPitch, sourceSlicePitch, destinationRowPitch, destinationSlicePitch, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 
@@ -403,7 +403,7 @@ namespace NOpenCL
 
             EventSafeHandle result;
             ErrorCode errorCode;
-            mappedPointer = clEnqueueMapBuffer(commandQueue, buffer, blocking, mapFlags, offset, size, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result, out errorCode);
+            mappedPointer = clEnqueueMapBuffer(commandQueue, buffer, blocking, mapFlags, offset, size, GetNumItems(eventWaitList), GetItems(eventWaitList), out result, out errorCode);
             ErrorHandler.ThrowOnFailure(errorCode);
             return result;
         }
@@ -470,7 +470,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("destination");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueReadImage(commandQueue, image, blocking, ref origin, ref region, rowPitch, slicePitch, destination, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueReadImage(commandQueue, image, blocking, ref origin, ref region, rowPitch, slicePitch, destination, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 
@@ -507,7 +507,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("source");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueWriteImage(commandQueue, image, blocking, ref origin, ref region, inputRowPitch, inputSlicePitch, source, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueWriteImage(commandQueue, image, blocking, ref origin, ref region, inputRowPitch, inputSlicePitch, source, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 
@@ -592,7 +592,7 @@ namespace NOpenCL
 
             EventSafeHandle result;
             ErrorCode errorCode;
-            mappedPointer = clEnqueueMapImage(commandQueue, image, blocking, mapFlags, ref origin, ref region, out imageRowPitch, out imageSlicePitch, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result, out errorCode);
+            mappedPointer = clEnqueueMapImage(commandQueue, image, blocking, mapFlags, ref origin, ref region, out imageRowPitch, out imageSlicePitch, GetNumItems(eventWaitList), GetItems(eventWaitList), out result, out errorCode);
             ErrorHandler.ThrowOnFailure(errorCode);
             return result;
         }
@@ -618,7 +618,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("memObject");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueUnmapMemObject(commandQueue, memObject, mappedPointer, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueUnmapMemObject(commandQueue, memObject, mappedPointer, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 
@@ -644,7 +644,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("memObjects");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueMigrateMemObjects(commandQueue, (uint)memObjects.Length, memObjects, flags, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueMigrateMemObjects(commandQueue, (uint)memObjects.Length, memObjects, flags, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 

@@ -55,7 +55,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("commandQueue");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueMarkerWithWaitList(commandQueue, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueMarkerWithWaitList(commandQueue, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 
@@ -102,7 +102,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("commandQueue");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueBarrierWithWaitList(commandQueue, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueBarrierWithWaitList(commandQueue, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 

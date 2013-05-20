@@ -453,7 +453,7 @@ namespace NOpenCL
                 throw new ArgumentException();
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueNDRangeKernel(commandQueue, kernel, (uint)workDim, globalWorkOffset, globalWorkSize, localWorkSize, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueNDRangeKernel(commandQueue, kernel, (uint)workDim, globalWorkOffset, globalWorkSize, localWorkSize, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 
@@ -476,7 +476,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("kernel");
 
             EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueTask(commandQueue, kernel, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            ErrorHandler.ThrowOnFailure(clEnqueueTask(commandQueue, kernel, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             return result;
         }
 
