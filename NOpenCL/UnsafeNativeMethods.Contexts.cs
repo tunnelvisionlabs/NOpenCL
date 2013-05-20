@@ -11,6 +11,23 @@ namespace NOpenCL
 
     partial class UnsafeNativeMethods
     {
+        private static class ContextProperties
+        {
+            /// <summary>
+            /// Specifies the platform to use.
+            /// </summary>
+            internal static readonly IntPtr Platform = (IntPtr)0x1084;
+
+            /// <summary>
+            /// Specifies whether the user is responsible for synchronization between OpenCL and
+            /// other APIs. Please refer to the specific sections in the OpenCL 1.2 extension
+            /// specification that describe sharing with other APIs for restrictions on using
+            /// this flag. If <see cref="InteropUserSync"/> is not specified, a default of
+            /// <c>false</c> is assumed.
+            /// </summary>
+            internal static readonly IntPtr InteropUserSync = (IntPtr)0x1085;
+        }
+
         #region Contexts
 
         [DllImport(ExternDll.OpenCL)]
@@ -22,6 +39,23 @@ namespace NOpenCL
             IntPtr userData,
             out ErrorCode errorCode);
 
+        public static ContextSafeHandle CreateContext(ClDeviceID[] devices, CreateContextCallback pfnNotify, IntPtr userData)
+        {
+            ErrorCode errorCode = ErrorCode.Success;
+            ContextSafeHandle result = clCreateContext(null, (uint)devices.Length, devices, pfnNotify, userData, out errorCode);
+            ErrorHandler.ThrowOnFailure(errorCode);
+            return result;
+        }
+
+        public static ContextSafeHandle CreateContext(ClPlatformID platform, ClDeviceID[] devices, CreateContextCallback pfnNotify, IntPtr userData)
+        {
+            IntPtr[] properties = { ContextProperties.Platform, platform.Handle, IntPtr.Zero };
+            ErrorCode errorCode = ErrorCode.Success;
+            ContextSafeHandle result = clCreateContext(properties, (uint)devices.Length, devices, pfnNotify, userData, out errorCode);
+            ErrorHandler.ThrowOnFailure(errorCode);
+            return result;
+        }
+
         [DllImport(ExternDll.OpenCL)]
         private static extern ContextSafeHandle clCreateContextFromType(
             [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] properties,
@@ -30,10 +64,20 @@ namespace NOpenCL
             IntPtr userData,
             out ErrorCode errorCode);
 
-        public static ContextSafeHandle CreateContext(ClDeviceID[] devices, CreateContextCallback pfnNotify, IntPtr userData)
+        public static ContextSafeHandle CreateContextFromType(DeviceType deviceType, CreateContextCallback pfnNotify, IntPtr userData)
         {
             ErrorCode errorCode = ErrorCode.Success;
-            ContextSafeHandle result = clCreateContext(null, (uint)devices.Length, devices, pfnNotify, userData, out errorCode);
+            ContextSafeHandle result = clCreateContextFromType(null, deviceType, pfnNotify, userData, out errorCode);
+            ErrorHandler.ThrowOnFailure(errorCode);
+            return result;
+        }
+
+        public static ContextSafeHandle CreateContextFromType(ClPlatformID platform, DeviceType deviceType, CreateContextCallback pfnNotify, IntPtr userData)
+        {
+            IntPtr[] properties = { ContextProperties.Platform, platform.Handle, IntPtr.Zero };
+
+            ErrorCode errorCode = ErrorCode.Success;
+            ContextSafeHandle result = clCreateContextFromType(properties, deviceType, pfnNotify, userData, out errorCode);
             ErrorHandler.ThrowOnFailure(errorCode);
             return result;
         }

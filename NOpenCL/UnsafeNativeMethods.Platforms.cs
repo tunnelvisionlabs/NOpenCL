@@ -78,7 +78,7 @@ namespace NOpenCL
         [StructLayout(LayoutKind.Sequential)]
         public struct ClPlatformID
         {
-            private readonly IntPtr _handle;
+            internal readonly IntPtr Handle;
         }
 
         public static class PlatformInfo

@@ -65,8 +65,34 @@ namespace NOpenCL
 
         public static Context Create(params Device[] devices)
         {
+            if (devices == null)
+                throw new ArgumentNullException("devices");
+            if (devices.Length == 0)
+                throw new ArgumentException("No devices specified.");
+
             UnsafeNativeMethods.ClDeviceID[] deviceIDs = Array.ConvertAll(devices, device => device.ID);
             ContextSafeHandle handle = UnsafeNativeMethods.CreateContext(deviceIDs, null, IntPtr.Zero);
+            return new Context(handle);
+        }
+
+        public static Context Create(Platform platform, params Device[] devices)
+        {
+            if (devices == null)
+                throw new ArgumentNullException("devices");
+            if (devices.Length == 0)
+                throw new ArgumentException("No devices specified.");
+
+            UnsafeNativeMethods.ClDeviceID[] deviceIDs = Array.ConvertAll(devices, device => device.ID);
+            ContextSafeHandle handle = UnsafeNativeMethods.CreateContext(platform.ID, deviceIDs, null, IntPtr.Zero);
+            return new Context(handle);
+        }
+
+        public static Context Create(Platform platform, DeviceType deviceType)
+        {
+            if (platform == null)
+                throw new ArgumentNullException("platform");
+
+            ContextSafeHandle handle = UnsafeNativeMethods.CreateContextFromType(platform.ID, deviceType, null, IntPtr.Zero);
             return new Context(handle);
         }
 
