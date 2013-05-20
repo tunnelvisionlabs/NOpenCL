@@ -146,7 +146,7 @@ namespace NOpenCL
         public Sampler CreateSampler(bool normalizedCoordinates, AddressingMode addressingMode, FilterMode filterMode)
         {
             SamplerSafeHandle handle = UnsafeNativeMethods.CreateSampler(Handle, normalizedCoordinates, addressingMode, filterMode);
-            return new Sampler(handle);
+            return new Sampler(handle, this);
         }
 
         public Program CreateProgramWithSource(params string[] sources)

@@ -16,14 +16,18 @@ namespace NOpenCL
     public sealed class Sampler : IDisposable
     {
         private readonly SamplerSafeHandle _handle;
+        private readonly Context _context;
         private bool _disposed;
 
-        internal Sampler(SamplerSafeHandle handle)
+        internal Sampler(SamplerSafeHandle handle, Context context)
         {
             if (handle == null)
                 throw new ArgumentNullException("handle");
+            if (context == null)
+                throw new ArgumentNullException("context");
 
             _handle = handle;
+            _context = context;
         }
 
         /// <summary>
@@ -46,7 +50,8 @@ namespace NOpenCL
         {
             get
             {
-                throw new NotImplementedException();
+                ThrowIfDisposed();
+                return _context;
             }
         }
 
