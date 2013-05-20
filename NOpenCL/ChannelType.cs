@@ -5,6 +5,11 @@
 
 namespace NOpenCL
 {
+    /// <summary>
+    /// Describes the size of the channel data type. The number of bits per element
+    /// determined by the <see cref="ChannelType"/> and <see cref="ChannelOrder"/>
+    /// must be a power of two.
+    /// </summary>
     public enum ChannelType
     {
         /// <summary>

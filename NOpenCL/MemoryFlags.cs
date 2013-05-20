@@ -14,6 +14,9 @@ namespace NOpenCL
     [Flags]
     public enum MemoryFlags : ulong
     {
+        /// <summary>
+        /// No flags are specified.
+        /// </summary>
         None = 0,
 
         /// <summary>

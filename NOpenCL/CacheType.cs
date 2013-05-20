@@ -5,6 +5,9 @@
 
 namespace NOpenCL
 {
+    /// <summary>
+    /// Specifies the type of global memory cache supported.
+    /// </summary>
     public enum CacheType
     {
         None = 0,
