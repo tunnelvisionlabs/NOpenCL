@@ -177,14 +177,13 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueUnmapMemObject<THandle>(MemObject<THandle> memObject, IntPtr mappedPointer, params Event[] eventWaitList)
-            where THandle : MemObjectSafeHandle
+        public Event EnqueueUnmapMemObject(MemObject memObject, IntPtr mappedPointer, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueUnmapMemObject(this.Handle, memObject.Handle, mappedPointer, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueUnmapMemObject(this.Handle, memObject.BaseHandle, mappedPointer, eventHandles);
             return new Event(handle);
         }
 
