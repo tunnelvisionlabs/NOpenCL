@@ -11,21 +11,30 @@ namespace NOpenCL
     public sealed class CommandQueue : IDisposable
     {
         private readonly CommandQueueSafeHandle _handle;
+        private readonly Context _context;
+        private readonly Device _device;
         private bool _disposed;
 
-        private CommandQueue(CommandQueueSafeHandle handle)
+        private CommandQueue(CommandQueueSafeHandle handle, Context context, Device device)
         {
             if (handle == null)
                 throw new ArgumentNullException("handle");
+            if (context == null)
+                throw new ArgumentNullException("context");
+            if (device == null)
+                throw new ArgumentNullException("device");
 
             _handle = handle;
+            _context = context;
+            _device = device;
         }
 
         public Context Context
         {
             get
             {
-                throw new NotImplementedException();
+                ThrowIfDisposed();
+                return _context;
             }
         }
 
@@ -33,7 +42,8 @@ namespace NOpenCL
         {
             get
             {
-                throw new NotImplementedException();
+                ThrowIfDisposed();
+                return _device;
             }
         }
 
@@ -70,7 +80,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("device");
 
             CommandQueueSafeHandle handle = UnsafeNativeMethods.CreateCommandQueue(context.Handle, device.ID, properties);
-            return new CommandQueue(handle);
+            return new CommandQueue(handle, context, device);
         }
 
         public Event EnqueueReadBuffer(Buffer buffer, bool blocking, long offset, long size, IntPtr destination, params Event[] eventWaitList)
