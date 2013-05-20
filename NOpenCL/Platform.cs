@@ -71,6 +71,11 @@ namespace NOpenCL
             return Array.ConvertAll(platforms, platform => new Platform(platform));
         }
 
+        public Device[] GetDevices()
+        {
+            return GetDevices(DeviceType.All);
+        }
+
         public Device[] GetDevices(DeviceType deviceType)
         {
             UnsafeNativeMethods.ClDeviceID[] devices = UnsafeNativeMethods.GetDeviceIDs(ID, deviceType);

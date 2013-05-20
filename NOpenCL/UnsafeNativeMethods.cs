@@ -7,6 +7,7 @@ namespace NOpenCL
 {
     using System;
     using System.Runtime.InteropServices;
+    using NOpenCL.SafeHandles;
 
     internal static partial class UnsafeNativeMethods
     {
