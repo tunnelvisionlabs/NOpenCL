@@ -99,8 +99,42 @@ namespace NOpenCL
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void BuildProgramCallback(ProgramSafeHandle program, IntPtr userData);
 
+        /// <summary>
+        /// Allows the implementation to release the resources allocated by the OpenCL compiler
+        /// for <paramref name="platform"/>.
+        /// http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/clUnloadPlatformCompiler.html
+        /// http://www.khronos.org/registry/cl/specs/opencl-1.2.pdf#page=149
+        /// </summary>
+        /// <remarks>
+        /// This is a hint from the application and does not guarantee that the compiler will
+        /// not be used in the future or that the compiler will actually be unloaded by the
+        /// implementation. Calls to <see cref="clBuildProgram"/>, <see cref="clCompileProgram"/>,
+        /// or <see cref="clLinkProgram"/> after <see cref="clUnloadPlatformCompiler"/> will
+        /// reload the compiler, if necessary, to build the appropriate program executable.
+        /// </remarks>
+        /// <param name="platform">A valid platform.</param>
+        /// <returns>
+        /// <see cref="clUnloadPlatformCompiler"/> returns <see cref="ErrorCode.Success"/>
+        /// if the function is executed successfully. Otherwise, it returns one of the following
+        /// errors:
+        ///
+        /// <list type="bullet">
+        /// <item><see cref="ErrorCode.InvalidPlatform"/> if <paramref name="platform"/> is not a valid platform.</item>
+        /// </list>
+        /// </returns>
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clUnloadPlatformCompiler(ClPlatformID platform);
+
+        /// <summary>
+        /// Invokes <see cref="clUnloadPlatformCompiler"/>, and throws an exception if
+        /// the call does not succeed.
+        /// </summary>
+        /// <param name="platform">A valid platform.</param>
+        /// <seealso cref="Platform.UnloadCompiler"/>
+        public static void UnloadPlatformCompiler(ClPlatformID platform)
+        {
+            ErrorHandler.ThrowOnFailure(clUnloadPlatformCompiler(platform));
+        }
 
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clGetProgramInfo(

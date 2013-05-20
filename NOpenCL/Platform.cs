@@ -82,6 +82,21 @@ namespace NOpenCL
             return Array.ConvertAll(devices, device => new Device(device));
         }
 
+        /// <summary>
+        /// Allows the implementation to release the resources allocated by the OpenCL compiler for this platform.
+        /// </summary>
+        /// <remarks>
+        /// This is a hint from the application and does not guarantee that the compiler will not be used
+        /// in the future or that the compiler will actually be unloaded by the implementation. Calls to
+        /// <see cref="Program.Build"/>, <see cref="Program.Compile"/>, or <see cref="Context.LinkProgram"/>
+        /// after <see cref="UnloadCompiler"/> will reload the compiler, if necessary, to build the
+        /// appropriate program executable.
+        /// </remarks>
+        public void UnloadCompiler()
+        {
+            UnsafeNativeMethods.UnloadPlatformCompiler(ID);
+        }
+
         public override bool Equals(object obj)
         {
             return Equals(obj as Platform);
