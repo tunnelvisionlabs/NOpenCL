@@ -30,6 +30,7 @@ namespace NOpenCL
         {
             get
             {
+                ThrowIfDisposed();
                 return _parent;
             }
         }

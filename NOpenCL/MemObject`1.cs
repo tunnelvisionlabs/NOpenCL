@@ -78,6 +78,7 @@ namespace NOpenCL
         {
             get
             {
+                ThrowIfDisposed();
                 return _context;
             }
         }
@@ -109,7 +110,7 @@ namespace NOpenCL
             _disposed = true;
         }
 
-        private void ThrowIfDisposed()
+        protected void ThrowIfDisposed()
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
