@@ -143,7 +143,7 @@ namespace NOpenCL
         public Kernel CreateKernel(string name)
         {
             KernelSafeHandle kernel = UnsafeNativeMethods.CreateKernel(Handle, name);
-            return new Kernel(kernel);
+            return new Kernel(kernel, this);
         }
 
         public void Build(string options)

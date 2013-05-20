@@ -13,16 +13,20 @@ namespace NOpenCL
     public sealed class Kernel : IDisposable
     {
         private readonly KernelSafeHandle _handle;
+        private readonly Program _program;
 
         private ReadOnlyCollection<KernelArgument> _arguments;
         private bool _disposed;
 
-        internal Kernel(KernelSafeHandle handle)
+        internal Kernel(KernelSafeHandle handle, Program program)
         {
             if (handle == null)
                 throw new ArgumentNullException("handle");
+            if (program == null)
+                throw new ArgumentNullException("program");
 
             _handle = handle;
+            _program = program;
         }
 
         public ReadOnlyCollection<KernelArgument> Arguments
@@ -63,7 +67,8 @@ namespace NOpenCL
         {
             get
             {
-                throw new NotImplementedException();
+                ThrowIfDisposed();
+                return _program.Context;
             }
         }
 
@@ -71,7 +76,8 @@ namespace NOpenCL
         {
             get
             {
-                throw new NotImplementedException();
+                ThrowIfDisposed();
+                return _program;
             }
         }
 
