@@ -14,7 +14,11 @@ namespace NOpenCL
         #region Command Queues
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern CommandQueueSafeHandle clCreateCommandQueue(ContextSafeHandle context, ClDeviceID device, CommandQueueProperties properties, out ErrorCode errorCode);
+        private static extern CommandQueueSafeHandle clCreateCommandQueue(
+            ContextSafeHandle context,
+            ClDeviceID device,
+            CommandQueueProperties properties,
+            out ErrorCode errorCode);
 
         public static CommandQueueSafeHandle CreateCommandQueue(ContextSafeHandle context, ClDeviceID device, CommandQueueProperties properties)
         {
@@ -31,7 +35,12 @@ namespace NOpenCL
         public static extern ErrorCode clReleaseCommandQueue(IntPtr commandQueue);
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetCommandQueueInfo(CommandQueueSafeHandle commandQueue, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetCommandQueueInfo(
+            CommandQueueSafeHandle commandQueue,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetCommandQueueInfo<T>(CommandQueueSafeHandle commandQueue, CommandQueueParameterInfo<T> parameter)
         {

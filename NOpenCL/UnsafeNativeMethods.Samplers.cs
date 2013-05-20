@@ -51,7 +51,12 @@ namespace NOpenCL
         /// </list>
         /// </returns>
         [DllImport(ExternDll.OpenCL)]
-        private static extern SamplerSafeHandle clCreateSampler(ContextSafeHandle context, [MarshalAs(UnmanagedType.Bool)] bool normalizedCoordinates, AddressingMode addressingMode, FilterMode filterMode, out ErrorCode errorCode);
+        private static extern SamplerSafeHandle clCreateSampler(
+            ContextSafeHandle context,
+            [MarshalAs(UnmanagedType.Bool)] bool normalizedCoordinates,
+            AddressingMode addressingMode,
+            FilterMode filterMode,
+            out ErrorCode errorCode);
 
         internal static SamplerSafeHandle CreateSampler(ContextSafeHandle context, bool normalizedCoordinates, AddressingMode addressingMode, FilterMode filterMode)
         {
@@ -132,7 +137,12 @@ namespace NOpenCL
         /// </list>
         /// </returns>
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetSamplerInfo(SamplerSafeHandle sampler, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetSamplerInfo(
+            SamplerSafeHandle sampler,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         internal static T GetSamplerInfo<T>(SamplerSafeHandle sampler, SamplerParameterInfo<T> parameter)
         {

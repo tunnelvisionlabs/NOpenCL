@@ -14,7 +14,10 @@ namespace NOpenCL
         #region Kernel Objects
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern KernelSafeHandle clCreateKernel(ProgramSafeHandle program, string kernelName, out ErrorCode errorCode);
+        private static extern KernelSafeHandle clCreateKernel(
+            ProgramSafeHandle program,
+            string kernelName,
+            out ErrorCode errorCode);
 
         public static KernelSafeHandle CreateKernel(ProgramSafeHandle program, string kernelName)
         {
@@ -32,7 +35,11 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clCreateKernelsInProgram(ProgramSafeHandle program, uint numKernels, [Out, MarshalAs(UnmanagedType.LPArray)] KernelSafeHandle[] kernels, out uint numKernelsRet);
+        private static extern ErrorCode clCreateKernelsInProgram(
+            ProgramSafeHandle program,
+            uint numKernels,
+            [Out, MarshalAs(UnmanagedType.LPArray)] KernelSafeHandle[] kernels,
+            out uint numKernelsRet);
 
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clRetainKernel(KernelSafeHandle kernel);
@@ -41,7 +48,11 @@ namespace NOpenCL
         public static extern ErrorCode clReleaseKernel(IntPtr kernel);
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clSetKernelArg(KernelSafeHandle kernel, int argumentIndex, UIntPtr argSize, IntPtr argValue);
+        private static extern ErrorCode clSetKernelArg(
+            KernelSafeHandle kernel,
+            int argumentIndex,
+            UIntPtr argSize,
+            IntPtr argValue);
 
         public static void SetKernelArg(KernelSafeHandle kernel, int argumentIndex, UIntPtr argSize, IntPtr argValue)
         {
@@ -54,7 +65,13 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetKernelArgInfo(KernelSafeHandle kernel, int argumentIndex, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetKernelArgInfo(
+            KernelSafeHandle kernel,
+            int argumentIndex,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetKernelArgInfo<T>(KernelSafeHandle kernel, int argumentIndex, KernelArgParameterInfo<T> parameter)
         {
@@ -139,7 +156,12 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetKernelInfo(KernelSafeHandle kernel, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetKernelInfo(
+            KernelSafeHandle kernel,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetKernelInfo<T>(KernelSafeHandle kernel, KernelParameterInfo<T> parameter)
         {
@@ -252,7 +274,13 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetKernelWorkGroupInfo(KernelSafeHandle kernel, ClDeviceID device, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetKernelWorkGroupInfo(
+            KernelSafeHandle kernel,
+            ClDeviceID device,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetKernelWorkGroupInfo<T>(KernelSafeHandle kernel, ClDeviceID device, KernelWorkGroupParameterInfo<T> parameter)
         {

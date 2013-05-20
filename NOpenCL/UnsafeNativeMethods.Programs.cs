@@ -35,10 +35,22 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ProgramSafeHandle clCreateProgramWithBinary(ContextSafeHandle context, uint numDevices, [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices, [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] lengths, [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] binaries, [Out, MarshalAs(UnmanagedType.LPArray)] ErrorCode[] binaryStatus, out ErrorCode errorCode);
+        private static extern ProgramSafeHandle clCreateProgramWithBinary(
+            ContextSafeHandle context,
+            uint numDevices,
+            [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices,
+            [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] lengths,
+            [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] binaries,
+            [Out, MarshalAs(UnmanagedType.LPArray)] ErrorCode[] binaryStatus,
+            out ErrorCode errorCode);
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ProgramSafeHandle clCreateProgramWithBuiltInKernels(ContextSafeHandle context, uint numDevices, [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices, string kernelNames, out ErrorCode errorCode);
+        private static extern ProgramSafeHandle clCreateProgramWithBuiltInKernels(
+            ContextSafeHandle context,
+            uint numDevices,
+            [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices,
+            string kernelNames,
+            out ErrorCode errorCode);
 
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clRetainProgram(ProgramSafeHandle program);
@@ -61,10 +73,28 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clCompileProgram(ProgramSafeHandle program, uint numDevices, [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices, string options, uint numInputHeaders, [In, MarshalAs(UnmanagedType.LPArray)] ProgramSafeHandle[] inputHeaders, string[] headerIncludeNames, BuildProgramCallback pfnNotify, IntPtr userData);
+        private static extern ErrorCode clCompileProgram(
+            ProgramSafeHandle program,
+            uint numDevices,
+            [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices,
+            string options,
+            uint numInputHeaders,
+            [In, MarshalAs(UnmanagedType.LPArray)] ProgramSafeHandle[] inputHeaders,
+            string[] headerIncludeNames,
+            BuildProgramCallback pfnNotify,
+            IntPtr userData);
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ProgramSafeHandle clLinkProgram(ContextSafeHandle context, uint numDevices, [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices, string options, uint numInputPrograms, [In, MarshalAs(UnmanagedType.LPArray)] ProgramSafeHandle[] inputPrograms, BuildProgramCallback pfnNotify, IntPtr userData, out ErrorCode errorCode);
+        private static extern ProgramSafeHandle clLinkProgram(
+            ContextSafeHandle context,
+            uint numDevices,
+            [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices,
+            string options,
+            uint numInputPrograms,
+            [In, MarshalAs(UnmanagedType.LPArray)] ProgramSafeHandle[] inputPrograms,
+            BuildProgramCallback pfnNotify,
+            IntPtr userData,
+            out ErrorCode errorCode);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void BuildProgramCallback(ProgramSafeHandle program, IntPtr userData);
@@ -73,7 +103,12 @@ namespace NOpenCL
         private static extern ErrorCode clUnloadPlatformCompiler(ClPlatformID platform);
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetProgramInfo(ProgramSafeHandle program, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetProgramInfo(
+            ProgramSafeHandle program,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetProgramInfo<T>(ProgramSafeHandle program, ProgramParameterInfo<T> parameter)
         {
@@ -155,7 +190,13 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetProgramBuildInfo(ProgramSafeHandle program, ClDeviceID device, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetProgramBuildInfo(
+            ProgramSafeHandle program,
+            ClDeviceID device,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetProgramBuildInfo<T>(ProgramSafeHandle program, ClDeviceID device, ProgramBuildParameterInfo<T> parameter)
         {

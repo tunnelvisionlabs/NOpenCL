@@ -14,10 +14,21 @@ namespace NOpenCL
         #region Contexts
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ContextSafeHandle clCreateContext([In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] properties, uint numDevices, [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices, CreateContextCallback pfnNotify, IntPtr userData, out ErrorCode errorCode);
+        private static extern ContextSafeHandle clCreateContext(
+            [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] properties,
+            uint numDevices,
+            [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices,
+            CreateContextCallback pfnNotify,
+            IntPtr userData,
+            out ErrorCode errorCode);
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ContextSafeHandle clCreateContextFromType([In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] properties, DeviceType deviceType, CreateContextCallback pfnNotify, IntPtr userData, out ErrorCode errorCode);
+        private static extern ContextSafeHandle clCreateContextFromType(
+            [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] properties,
+            DeviceType deviceType,
+            CreateContextCallback pfnNotify,
+            IntPtr userData,
+            out ErrorCode errorCode);
 
         public static ContextSafeHandle CreateContext(ClDeviceID[] devices, CreateContextCallback pfnNotify, IntPtr userData)
         {
@@ -37,7 +48,12 @@ namespace NOpenCL
         public static extern ErrorCode clReleaseContext(IntPtr context);
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetContextInfo(ContextSafeHandle context, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetContextInfo(
+            ContextSafeHandle context,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetContextInfo<T>(ContextSafeHandle context, ContextParameterInfo<T> parameter)
         {

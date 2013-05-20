@@ -13,7 +13,10 @@ namespace NOpenCL
         #region Platforms
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetPlatformIDs(uint numEntries, [Out, MarshalAs(UnmanagedType.LPArray)] ClPlatformID[] platforms, out uint numPlatforms);
+        private static extern ErrorCode clGetPlatformIDs(
+            uint numEntries,
+            [Out, MarshalAs(UnmanagedType.LPArray)] ClPlatformID[] platforms,
+            out uint numPlatforms);
 
         public static ClPlatformID[] GetPlatformIDs()
         {
@@ -30,7 +33,12 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetPlatformInfo(ClPlatformID platform, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetPlatformInfo(
+            ClPlatformID platform,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetPlatformInfo<T>(ClPlatformID platform, PlatformParameterInfo<T> parameter)
         {

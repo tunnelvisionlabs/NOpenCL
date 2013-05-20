@@ -13,7 +13,12 @@ namespace NOpenCL
         #region Devices
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetDeviceIDs(ClPlatformID platform, DeviceType deviceType, uint numEntries, [Out, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices, out uint numDevices);
+        private static extern ErrorCode clGetDeviceIDs(
+            ClPlatformID platform,
+            DeviceType deviceType,
+            uint numEntries,
+            [Out, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices,
+            out uint numDevices);
 
         public static ClDeviceID[] GetDeviceIDs(ClPlatformID platform, DeviceType deviceType)
         {
@@ -30,7 +35,12 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetDeviceInfo(ClDeviceID device, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetDeviceInfo(
+            ClDeviceID device,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetDeviceInfo<T>(ClDeviceID device, DeviceParameterInfo<T> parameter)
         {

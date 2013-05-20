@@ -14,7 +14,12 @@ namespace NOpenCL
         #region Profiling Operations on Memory Objects and Kernels
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetEventProfilingInfo(EventSafeHandle @event, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetEventProfilingInfo(
+            EventSafeHandle @event,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetEventProfilingInfo<T>(EventSafeHandle @event, EventProfilingParameterInfo<T> parameter)
         {

@@ -429,7 +429,13 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetSupportedImageFormats(ContextSafeHandle context, MemoryFlags flags, MemObjectType imageType, uint numEntries, [Out] ImageFormat[] imageFormats, out uint numImageFormats);
+        private static extern ErrorCode clGetSupportedImageFormats(
+            ContextSafeHandle context,
+            MemoryFlags flags,
+            MemObjectType imageType,
+            uint numEntries,
+            [Out] ImageFormat[] imageFormats,
+            out uint numImageFormats);
 
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueReadImage(
@@ -573,7 +579,12 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetMemObjectInfo(MemObjectSafeHandle memObject, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetMemObjectInfo(
+            MemObjectSafeHandle memObject,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetMemObjectInfo<T>(MemObjectSafeHandle memObject, MemObjectParameterInfo<T> parameter)
         {
@@ -728,7 +739,12 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetImageInfo(ImageSafeHandle image, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetImageInfo(
+            ImageSafeHandle image,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetImageInfo<T>(ImageSafeHandle image, ImageParameterInfo<T> parameter)
         {

@@ -15,7 +15,12 @@ namespace NOpenCL
         #region Partition a Device
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clCreateSubDevices(ClDeviceID device, [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] properties, uint numDevices, [Out, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices, out uint numDevicesRet);
+        private static extern ErrorCode clCreateSubDevices(
+            ClDeviceID device,
+            [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] properties,
+            uint numDevices,
+            [Out, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices,
+            out uint numDevicesRet);
 
         private static DisposableCollection<Device> CreateSubDevices(ClDeviceID device, IntPtr[] properties)
         {

@@ -54,7 +54,12 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clGetEventInfo(EventSafeHandle @event, int paramName, UIntPtr paramValueSize, IntPtr paramValue, out UIntPtr paramValueSizeRet);
+        private static extern ErrorCode clGetEventInfo(
+            EventSafeHandle @event,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr paramValue,
+            out UIntPtr paramValueSizeRet);
 
         public static T GetEventInfo<T>(EventSafeHandle @event, EventParameterInfo<T> parameter)
         {
@@ -196,7 +201,11 @@ namespace NOpenCL
         }
 
         [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clSetEventCallback(EventSafeHandle @event, ExecutionStatus executionCallbackType, EventCallback eventNotify, IntPtr userData);
+        private static extern ErrorCode clSetEventCallback(
+            EventSafeHandle @event,
+            ExecutionStatus executionCallbackType,
+            EventCallback eventNotify,
+            IntPtr userData);
 
         public static void SetEventCallback(EventSafeHandle @event, ExecutionStatus executionCallbackType, EventCallback eventNotify, IntPtr userData)
         {
