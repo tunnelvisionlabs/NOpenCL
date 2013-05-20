@@ -16,7 +16,7 @@ namespace NOpenCL
         [DllImport(ExternDll.OpenCL)]
         private static extern KernelSafeHandle clCreateKernel(
             ProgramSafeHandle program,
-            string kernelName,
+            [MarshalAs(UnmanagedType.LPStr)] string kernelName,
             out ErrorCode errorCode);
 
         public static KernelSafeHandle CreateKernel(ProgramSafeHandle program, string kernelName)
@@ -38,7 +38,7 @@ namespace NOpenCL
         private static extern ErrorCode clCreateKernelsInProgram(
             ProgramSafeHandle program,
             uint numKernels,
-            [Out, MarshalAs(UnmanagedType.LPArray)] KernelSafeHandle[] kernels,
+            [Out, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] KernelSafeHandle[] kernels,
             out uint numKernelsRet);
 
         [DllImport(ExternDll.OpenCL)]

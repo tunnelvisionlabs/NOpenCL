@@ -434,7 +434,7 @@ namespace NOpenCL
             MemoryFlags flags,
             MemObjectType imageType,
             uint numEntries,
-            [Out] ImageFormat[] imageFormats,
+            [Out, MarshalAs(UnmanagedType.LPArray)] ImageFormat[] imageFormats,
             out uint numImageFormats);
 
         [DllImport(ExternDll.OpenCL)]

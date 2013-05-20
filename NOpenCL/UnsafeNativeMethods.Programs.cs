@@ -49,7 +49,7 @@ namespace NOpenCL
             ContextSafeHandle context,
             uint numDevices,
             [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices,
-            string kernelNames,
+            [MarshalAs(UnmanagedType.LPStr)] string kernelNames,
             out ErrorCode errorCode);
 
         [DllImport(ExternDll.OpenCL)]
@@ -79,8 +79,8 @@ namespace NOpenCL
             [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices,
             string options,
             uint numInputHeaders,
-            [In, MarshalAs(UnmanagedType.LPArray)] ProgramSafeHandle[] inputHeaders,
-            string[] headerIncludeNames,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] ProgramSafeHandle[] inputHeaders,
+            [In, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr)] string[] headerIncludeNames,
             BuildProgramCallback pfnNotify,
             IntPtr userData);
 
@@ -89,9 +89,9 @@ namespace NOpenCL
             ContextSafeHandle context,
             uint numDevices,
             [In, MarshalAs(UnmanagedType.LPArray)] ClDeviceID[] devices,
-            string options,
+            [MarshalAs(UnmanagedType.LPStr)] string options,
             uint numInputPrograms,
-            [In, MarshalAs(UnmanagedType.LPArray)] ProgramSafeHandle[] inputPrograms,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] ProgramSafeHandle[] inputPrograms,
             BuildProgramCallback pfnNotify,
             IntPtr userData,
             out ErrorCode errorCode);
