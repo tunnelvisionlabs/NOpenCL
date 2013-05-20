@@ -451,6 +451,29 @@ namespace NOpenCL
             [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
             out EventSafeHandle @event);
 
+        public static EventSafeHandle EnqueueReadImage(
+            CommandQueueSafeHandle commandQueue,
+            ImageSafeHandle image,
+            bool blocking,
+            [In] ref BufferCoordinates origin,
+            [In] ref BufferSize region,
+            IntPtr rowPitch,
+            IntPtr slicePitch,
+            IntPtr destination,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (image == null)
+                throw new ArgumentNullException("image");
+            if (destination == IntPtr.Zero)
+                throw new ArgumentNullException("destination");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueReadImage(commandQueue, image, blocking, ref origin, ref region, rowPitch, slicePitch, destination, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            return result;
+        }
+
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueWriteImage(
             CommandQueueSafeHandle commandQueue,
@@ -464,6 +487,29 @@ namespace NOpenCL
             uint numEventsInWaitList,
             [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
             out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueWriteImage(
+            CommandQueueSafeHandle commandQueue,
+            ImageSafeHandle image,
+            bool blocking,
+            [In] ref BufferCoordinates origin,
+            [In] ref BufferSize region,
+            IntPtr inputRowPitch,
+            IntPtr inputSlicePitch,
+            IntPtr source,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (image == null)
+                throw new ArgumentNullException("image");
+            if (source == IntPtr.Zero)
+                throw new ArgumentNullException("source");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueWriteImage(commandQueue, image, blocking, ref origin, ref region, inputRowPitch, inputSlicePitch, source, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result));
+            return result;
+        }
 
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueFillImage(
@@ -526,6 +572,30 @@ namespace NOpenCL
             [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
             out EventSafeHandle @event,
             out ErrorCode errorCode);
+
+        public static EventSafeHandle EnqueueMapImage(
+            CommandQueueSafeHandle commandQueue,
+            ImageSafeHandle image,
+            bool blocking,
+            MapFlags mapFlags,
+            [In] ref BufferCoordinates origin,
+            [In] ref BufferSize region,
+            out IntPtr imageRowPitch,
+            out IntPtr imageSlicePitch,
+            out IntPtr mappedPointer,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (image == null)
+                throw new ArgumentNullException("image");
+
+            EventSafeHandle result;
+            ErrorCode errorCode;
+            mappedPointer = clEnqueueMapImage(commandQueue, image, blocking, mapFlags, ref origin, ref region, out imageRowPitch, out imageSlicePitch, GetNumEventsInWaitList(eventWaitList), GetEventWaitList(eventWaitList), out result, out errorCode);
+            ErrorHandler.ThrowOnFailure(errorCode);
+            return result;
+        }
 
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueUnmapMemObject(

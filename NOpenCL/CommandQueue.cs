@@ -143,6 +143,40 @@ namespace NOpenCL
             return new Event(handle);
         }
 
+        public Event EnqueueReadImage(Image image, bool blocking, BufferCoordinates origin, BufferSize region, long rowPitch, long slicePitch, IntPtr destination, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueReadImage(this.Handle, image.Handle, blocking, ref origin, ref region, (IntPtr)rowPitch, (IntPtr)slicePitch, destination, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueWriteImage(Image image, bool blocking, BufferCoordinates origin, BufferSize region, long inputRowPitch, long inputSlicePitch, IntPtr source, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueWriteImage(this.Handle, image.Handle, blocking, ref origin, ref region, (IntPtr)inputRowPitch, (IntPtr)inputSlicePitch, source, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueMapImage(Image image, bool blocking, MapFlags mapFlags, BufferCoordinates origin, BufferSize region, out long rowPitch, out long slicePitch, out IntPtr mappedPointer, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            IntPtr imageRowPitch;
+            IntPtr imageSlicePitch;
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueMapImage(this.Handle, image.Handle, blocking, mapFlags, ref origin, ref region, out imageRowPitch, out imageSlicePitch, out mappedPointer, eventHandles);
+            rowPitch = imageRowPitch.ToInt64();
+            slicePitch = imageSlicePitch.ToInt64();
+            return new Event(handle);
+        }
+
         public Event EnqueueUnmapMemObject<THandle>(MemObject<THandle> memObject, IntPtr mappedPointer, params Event[] eventWaitList)
             where THandle : MemObjectSafeHandle
         {
