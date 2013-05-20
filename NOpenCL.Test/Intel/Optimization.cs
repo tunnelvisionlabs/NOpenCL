@@ -18,7 +18,7 @@ namespace NOpenCL.Test.Intel
         [TestMethod]
         public void TestOptimization()
         {
-            int taskSize = 1 << 25;
+            int taskSize = 1 << 24;
             int localWorkSize = 32;
             bool warming = true;
             bool gather4 = false;
