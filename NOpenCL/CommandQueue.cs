@@ -29,6 +29,10 @@ namespace NOpenCL
             _device = device;
         }
 
+        /// <summary>
+        /// Gets the <see cref="Context"/> associated with this command queue.
+        /// </summary>
+        /// <exception cref="ObjectDisposedException">if this command queue has been disposed.</exception>
         public Context Context
         {
             get
@@ -38,6 +42,10 @@ namespace NOpenCL
             }
         }
 
+        /// <summary>
+        /// Gets the <see cref="Device"/> associated with this command queue.
+        /// </summary>
+        /// <exception cref="ObjectDisposedException">if this command queue has been disposed.</exception>
         public Device Device
         {
             get
@@ -47,6 +55,14 @@ namespace NOpenCL
             }
         }
 
+        /// <summary>
+        /// Get the command queue reference count.
+        /// </summary>
+        /// <remarks>
+        /// The returned reference count should be considered immediately stale. It is unsuitable
+        /// for general use in applications. This feature is provided for identifying memory leaks.
+        /// </remarks>
+        /// <exception cref="ObjectDisposedException">if this command queue has been disposed.</exception>
         public uint ReferenceCount
         {
             get
@@ -55,6 +71,11 @@ namespace NOpenCL
             }
         }
 
+        /// <summary>
+        /// Get the properties for the command queue. These properties are specified by the
+        /// <em>properties</em> argument in <see cref="CommandQueue.Create"/>.
+        /// </summary>
+        /// <exception cref="ObjectDisposedException">if this command queue has been disposed.</exception>
         public CommandQueueProperties Properties
         {
             get
@@ -63,6 +84,10 @@ namespace NOpenCL
             }
         }
 
+        /// <summary>
+        /// Get the underlying handle for this command queue.
+        /// </summary>
+        /// <exception cref="ObjectDisposedException">if this command queue has been disposed.</exception>
         internal CommandQueueSafeHandle Handle
         {
             get
@@ -427,6 +452,10 @@ namespace NOpenCL
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Throws <see cref="ObjectDisposedException"/> if this command queue has been disposed.
+        /// </summary>
+        /// <exception cref="ObjectDisposedException">if this command queue has been disposed.</exception>
         private void ThrowIfDisposed()
         {
             if (_disposed)

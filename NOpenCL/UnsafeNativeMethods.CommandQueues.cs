@@ -82,26 +82,31 @@ namespace NOpenCL
             /// <summary>
             /// Return the context specified when the command-queue is created.
             /// </summary>
+            /// <seealso cref="CommandQueue.Context"/>
             public static CommandQueueParameterInfo<IntPtr> Context = (CommandQueueParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1090);
 
             /// <summary>
             /// Return the device specified when the command-queue is created.
             /// </summary>
+            /// <seealso cref="CommandQueue.Device"/>
             public static CommandQueueParameterInfo<IntPtr> Device = (CommandQueueParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1091);
 
             /// <summary>
             /// Return the command-queue reference count.
-            /// <para/>
+            /// </summary>
+            /// <remarks>
             /// The reference count returned with <see cref="ReferenceCount"/> should be considered
             /// immediately stale. It is unsuitable for general use in applications. This feature
             /// is provided for identifying memory leaks.
-            /// </summary>
+            /// </remarks>
+            /// <seealso cref="CommandQueue.ReferenceCount"/>
             public static CommandQueueParameterInfo<uint> ReferenceCount = (CommandQueueParameterInfo<uint>)new ParameterInfoUInt32(0x1092);
 
             /// <summary>
             /// Return the currently specified properties for the command-queue. These
             /// properties are specified by the <em>properties</em> argument in <see cref="clCreateCommandQueue"/>.
             /// </summary>
+            /// <seealso cref="CommandQueue.Properties"/>
             public static CommandQueueParameterInfo<ulong> Properties = (CommandQueueParameterInfo<ulong>)new ParameterInfoUInt64(0x1093);
         }
 
