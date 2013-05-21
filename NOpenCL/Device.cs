@@ -7,6 +7,7 @@ namespace NOpenCL
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using NOpenCL.SafeHandles;
     using DeviceInfo = NOpenCL.UnsafeNativeMethods.DeviceInfo;
 
@@ -929,6 +930,7 @@ namespace NOpenCL
         /// Returns the device reference count. If the device is a root-level device,
         /// a reference count of one is returned.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public uint ReferenceCount
         {
             get

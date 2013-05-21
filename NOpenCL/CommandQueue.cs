@@ -6,6 +6,7 @@
 namespace NOpenCL
 {
     using System;
+    using System.ComponentModel;
     using NOpenCL.SafeHandles;
 
     public sealed class CommandQueue : IDisposable
@@ -63,6 +64,7 @@ namespace NOpenCL
         /// for general use in applications. This feature is provided for identifying memory leaks.
         /// </remarks>
         /// <exception cref="ObjectDisposedException">if this command queue has been disposed.</exception>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public uint ReferenceCount
         {
             get

@@ -7,6 +7,7 @@ namespace NOpenCL
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using NOpenCL.SafeHandles;
 
     public sealed class Context : IDisposable
@@ -22,6 +23,7 @@ namespace NOpenCL
             _context = context;
         }
 
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public uint ReferenceCount
         {
             get

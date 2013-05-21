@@ -7,6 +7,7 @@ namespace NOpenCL
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using NOpenCL.SafeHandles;
 
     public sealed class Program : IDisposable
@@ -26,6 +27,7 @@ namespace NOpenCL
             _handle = handle;
         }
 
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public uint ReferenceCount
         {
             get

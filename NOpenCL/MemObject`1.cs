@@ -6,6 +6,7 @@
 namespace NOpenCL
 {
     using System;
+    using System.ComponentModel;
     using NOpenCL.SafeHandles;
 
     public abstract class MemObject<THandle> : MemObject
@@ -58,6 +59,7 @@ namespace NOpenCL
             }
         }
 
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public uint MapCount
         {
             get
@@ -66,6 +68,7 @@ namespace NOpenCL
             }
         }
 
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public uint ReferenceCount
         {
             get

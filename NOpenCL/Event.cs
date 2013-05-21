@@ -6,6 +6,7 @@
 namespace NOpenCL
 {
     using System;
+    using System.ComponentModel;
     using NOpenCL.SafeHandles;
 
     /// <summary>
@@ -56,6 +57,7 @@ namespace NOpenCL
             }
         }
 
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public uint ReferenceCount
         {
             get

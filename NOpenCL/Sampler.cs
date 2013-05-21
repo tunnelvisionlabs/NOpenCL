@@ -6,6 +6,7 @@
 namespace NOpenCL
 {
     using System;
+    using System.ComponentModel;
     using NOpenCL.SafeHandles;
 
     /// <summary>
@@ -35,6 +36,7 @@ namespace NOpenCL
         /// considered immediately stale. It is unsuitable for general use in applications.
         /// This feature is provided for identifying memory leaks.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public uint ReferenceCount
         {
             get
