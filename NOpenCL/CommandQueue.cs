@@ -173,6 +173,66 @@ namespace NOpenCL
             return new Event(handle);
         }
 
+        public Event EnqueueFillImage(Image image, float[] fillColor, BufferCoordinates origin, BufferSize region, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueFillImage(this.Handle, image.Handle, fillColor, ref origin, ref region, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueFillImage(Image image, int[] fillColor, BufferCoordinates origin, BufferSize region, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueFillImage(this.Handle, image.Handle, fillColor, ref origin, ref region, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueFillImage(Image image, uint[] fillColor, BufferCoordinates origin, BufferSize region, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueFillImage(this.Handle, image.Handle, fillColor, ref origin, ref region, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueCopyImage(Image sourceImage, Image destinationImage, BufferCoordinates sourceOrigin, BufferCoordinates destinationOrigin, BufferSize region, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyImage(this.Handle, sourceImage.Handle, destinationImage.Handle, ref sourceOrigin, ref destinationOrigin, ref region, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueCopyImageToBuffer(Image sourceImage, Buffer destinationBuffer, BufferCoordinates sourceOrigin, BufferSize region, long destinationOffset, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyImageToBuffer(this.Handle, sourceImage.Handle, destinationBuffer.Handle, ref sourceOrigin, ref region, (IntPtr)destinationOffset, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueCopyBufferToImage(Buffer sourceBuffer, Image destinationImage, long sourceOffset, BufferCoordinates destinationOrigin, BufferSize region, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
+
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyBufferToImage(this.Handle, sourceBuffer.Handle, destinationImage.Handle, (IntPtr)sourceOffset, ref destinationOrigin, ref region, eventHandles);
+            return new Event(handle);
+        }
+
         public Event EnqueueMapImage(Image image, bool blocking, MapFlags mapFlags, BufferCoordinates origin, BufferSize region, out long rowPitch, out long slicePitch, out IntPtr mappedPointer, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;

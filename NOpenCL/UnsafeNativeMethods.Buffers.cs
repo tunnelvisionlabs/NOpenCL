@@ -306,6 +306,27 @@ namespace NOpenCL
             [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
             out EventSafeHandle @event);
 
+        public static EventSafeHandle EnqueueFillBuffer(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle buffer,
+            IntPtr pattern,
+            IntPtr patternSize,
+            IntPtr offset,
+            IntPtr size,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+            if (pattern == IntPtr.Zero)
+                throw new ArgumentNullException("pattern");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueFillBuffer(commandQueue, buffer, pattern, patternSize, offset, size, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
+            return result;
+        }
+
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueCopyBuffer(
             CommandQueueSafeHandle commandQueue,
@@ -437,6 +458,26 @@ namespace NOpenCL
             [Out, MarshalAs(UnmanagedType.LPArray)] ImageFormat[] imageFormats,
             out uint numImageFormats);
 
+        public static ImageFormat[] GetSupportedImageFormats(
+            ContextSafeHandle context,
+            MemoryFlags flags,
+            MemObjectType imageType)
+        {
+            uint required;
+            ErrorHandler.ThrowOnFailure(clGetSupportedImageFormats(context, flags, imageType, 0, null, out required));
+
+            ImageFormat[] result = new ImageFormat[required];
+            if (required > 0)
+            {
+                uint actual;
+                ErrorHandler.ThrowOnFailure(clGetSupportedImageFormats(context, flags, imageType, required, result, out actual));
+                if (actual != required)
+                    Array.Resize(ref result, (int)actual);
+            }
+
+            return result;
+        }
+
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueReadImage(
             CommandQueueSafeHandle commandQueue,
@@ -515,12 +556,100 @@ namespace NOpenCL
         private static extern ErrorCode clEnqueueFillImage(
             CommandQueueSafeHandle commandQueue,
             ImageSafeHandle image,
-            IntPtr fillColor,
+            [In, MarshalAs(UnmanagedType.LPArray)] float[] fillColor,
             [In] ref BufferCoordinates origin,
             [In] ref BufferSize region,
             uint numEventsInWaitList,
             [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
             out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueFillImage(
+            CommandQueueSafeHandle commandQueue,
+            ImageSafeHandle image,
+            [In] float[] fillColor,
+            [In] ref BufferCoordinates origin,
+            [In] ref BufferSize region,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (image == null)
+                throw new ArgumentNullException("image");
+            if (fillColor == null)
+                throw new ArgumentNullException("fillColor");
+            if (fillColor.Length != 4)
+                throw new ArgumentException();
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueFillImage(commandQueue, image, fillColor, ref origin, ref region, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
+            return result;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clEnqueueFillImage(
+            CommandQueueSafeHandle commandQueue,
+            ImageSafeHandle image,
+            [In, MarshalAs(UnmanagedType.LPArray)] int[] fillColor,
+            [In] ref BufferCoordinates origin,
+            [In] ref BufferSize region,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueFillImage(
+            CommandQueueSafeHandle commandQueue,
+            ImageSafeHandle image,
+            [In] int[] fillColor,
+            [In] ref BufferCoordinates origin,
+            [In] ref BufferSize region,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (image == null)
+                throw new ArgumentNullException("image");
+            if (fillColor == null)
+                throw new ArgumentNullException("fillColor");
+            if (fillColor.Length != 4)
+                throw new ArgumentException();
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueFillImage(commandQueue, image, fillColor, ref origin, ref region, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
+            return result;
+        }
+
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clEnqueueFillImage(
+            CommandQueueSafeHandle commandQueue,
+            ImageSafeHandle image,
+            [In, MarshalAs(UnmanagedType.LPArray)] uint[] fillColor,
+            [In] ref BufferCoordinates origin,
+            [In] ref BufferSize region,
+            uint numEventsInWaitList,
+            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
+            out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueFillImage(
+            CommandQueueSafeHandle commandQueue,
+            ImageSafeHandle image,
+            [In] uint[] fillColor,
+            [In] ref BufferCoordinates origin,
+            [In] ref BufferSize region,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (image == null)
+                throw new ArgumentNullException("image");
+            if (fillColor == null)
+                throw new ArgumentNullException("fillColor");
+            if (fillColor.Length != 4)
+                throw new ArgumentException();
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueFillImage(commandQueue, image, fillColor, ref origin, ref region, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
+            return result;
+        }
 
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueCopyImage(
@@ -534,6 +663,27 @@ namespace NOpenCL
             [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
             out EventSafeHandle @event);
 
+        public static EventSafeHandle EnqueueCopyImage(
+            CommandQueueSafeHandle commandQueue,
+            ImageSafeHandle sourceImage,
+            ImageSafeHandle destinationImage,
+            [In] ref BufferCoordinates sourceOrigin,
+            [In] ref BufferCoordinates destinationOrigin,
+            [In] ref BufferSize region,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (sourceImage == null)
+                throw new ArgumentNullException("sourceImage");
+            if (destinationImage == null)
+                throw new ArgumentNullException("destinationImage");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueCopyImage(commandQueue, sourceImage, destinationImage, ref sourceOrigin, ref destinationOrigin, ref region, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
+            return result;
+        }
+
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueCopyImageToBuffer(
             CommandQueueSafeHandle commandQueue,
@@ -546,6 +696,27 @@ namespace NOpenCL
             [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
             out EventSafeHandle @event);
 
+        public static EventSafeHandle EnqueueCopyImageToBuffer(
+            CommandQueueSafeHandle commandQueue,
+            ImageSafeHandle sourceImage,
+            BufferSafeHandle destinationBuffer,
+            [In] ref BufferCoordinates sourceOrigin,
+            [In] ref BufferSize region,
+            IntPtr destinationOffset,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (sourceImage == null)
+                throw new ArgumentNullException("sourceImage");
+            if (destinationBuffer == null)
+                throw new ArgumentNullException("destinationBuffer");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueCopyImageToBuffer(commandQueue, sourceImage, destinationBuffer, ref sourceOrigin, ref region, destinationOffset, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
+            return result;
+        }
+
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueCopyBufferToImage(
             CommandQueueSafeHandle commandQueue,
@@ -557,6 +728,27 @@ namespace NOpenCL
             uint numEventsInWaitList,
             [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
             out EventSafeHandle @event);
+
+        public static EventSafeHandle EnqueueCopyBufferToImage(
+            CommandQueueSafeHandle commandQueue,
+            BufferSafeHandle sourceBuffer,
+            ImageSafeHandle destinationImage,
+            IntPtr sourceOffset,
+            [In] ref BufferCoordinates destinationOrigin,
+            [In] ref BufferSize region,
+            EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (sourceBuffer == null)
+                throw new ArgumentNullException("sourceBuffer");
+            if (destinationImage == null)
+                throw new ArgumentNullException("destinationImage");
+
+            EventSafeHandle result;
+            ErrorHandler.ThrowOnFailure(clEnqueueCopyBufferToImage(commandQueue, sourceBuffer, destinationImage, sourceOffset, ref destinationOrigin, ref region, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
+            return result;
+        }
 
         [DllImport(ExternDll.OpenCL)]
         private static extern IntPtr clEnqueueMapImage(
