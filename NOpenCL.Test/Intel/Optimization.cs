@@ -206,7 +206,7 @@ namespace NOpenCL.Test.Intel
                     context = Context.Create(device);
                 }
 
-                commandQueue = CommandQueue.Create(context, device, enableProfiling ? CommandQueueProperties.ProfilingEnable : 0);
+                commandQueue = context.CreateCommandQueue(device, enableProfiling ? CommandQueueProperties.ProfilingEnable : 0);
                 disposables.Add(commandQueue);
 
                 string source = @"

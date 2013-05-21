@@ -16,7 +16,7 @@ namespace NOpenCL
         private readonly Device _device;
         private bool _disposed;
 
-        private CommandQueue(CommandQueueSafeHandle handle, Context context, Device device)
+        internal CommandQueue(CommandQueueSafeHandle handle, Context context, Device device)
         {
             if (handle == null)
                 throw new ArgumentNullException("handle");
@@ -97,17 +97,6 @@ namespace NOpenCL
                 ThrowIfDisposed();
                 return _handle;
             }
-        }
-
-        public static CommandQueue Create(Context context, Device device, CommandQueueProperties properties)
-        {
-            if (context == null)
-                throw new ArgumentNullException("context");
-            if (device == null)
-                throw new ArgumentNullException("device");
-
-            CommandQueueSafeHandle handle = UnsafeNativeMethods.CreateCommandQueue(context.Handle, device.ID, properties);
-            return new CommandQueue(handle, context, device);
         }
 
         public Event EnqueueReadBuffer(Buffer buffer, bool blocking, long offset, long size, IntPtr destination, params Event[] eventWaitList)

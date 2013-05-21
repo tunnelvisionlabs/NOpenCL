@@ -57,7 +57,7 @@ namespace NOpenCL.Test.NVidia
             {
                 // create a command queue
                 Console.WriteLine("Get command queue...");
-                using (CommandQueue commandQueue = CommandQueue.Create(context, devices[0], CommandQueueProperties.None))
+                using (CommandQueue commandQueue = context.CreateCommandQueue(devices[0], CommandQueueProperties.None))
                 {
                     Console.WriteLine("Create buffers...");
                     using (Buffer deviceSrcA = context.CreateBuffer(MemoryFlags.ReadOnly, globalWorkSize * sizeof(float)),

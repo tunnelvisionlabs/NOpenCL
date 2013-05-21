@@ -73,7 +73,7 @@ namespace NOpenCL.Test.NVidia
 
         private CommandQueue CreateQueue(Context context, Device device)
         {
-            return CommandQueue.Create(context, device, CommandQueueProperties.ProfilingEnable);
+            return context.CreateCommandQueue(device, CommandQueueProperties.ProfilingEnable);
         }
 
         private void TestBandwidth(Context context, Device[] devices, int start, int end, int increment, TestMode testMode, MemoryCopyKind memoryCopyKind, PrintMode printMode, AccessMode accessMode, MemoryMode memoryMode, int startDevice, int endDevice)
