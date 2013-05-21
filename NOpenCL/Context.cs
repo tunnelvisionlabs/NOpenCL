@@ -98,6 +98,11 @@ namespace NOpenCL
             return new Context(handle);
         }
 
+        public CommandQueue CreateCommandQueue(Device device)
+        {
+            return CreateCommandQueue(device, CommandQueueProperties.None);
+        }
+
         public CommandQueue CreateCommandQueue(Device device, CommandQueueProperties properties)
         {
             if (device == null)

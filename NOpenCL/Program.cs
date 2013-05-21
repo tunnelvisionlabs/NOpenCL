@@ -148,9 +148,19 @@ namespace NOpenCL
             return new Kernel(kernel, this);
         }
 
+        public void Build()
+        {
+            Build(null, null);
+        }
+
         public void Build(string options)
         {
-            UnsafeNativeMethods.BuildProgram(Handle, null, options, null, IntPtr.Zero);
+            Build(null, options);
+        }
+
+        public void Build(Device[] devices)
+        {
+            Build(devices, null);
         }
 
         public void Build(Device[] devices, string options)
