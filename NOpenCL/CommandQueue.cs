@@ -346,21 +346,73 @@ namespace NOpenCL
             return new Event(handle);
         }
 
+        /// <summary>
+        /// Enqueues a command to execute a <see cref="Kernel"/> on a <see cref="Device"/>.
+        /// source: https://www.khronos.org/registry/cl/sdk/1.0/docs/man/xhtml/clEnqueueWriteBuffer.html
+        /// </summary>
+        /// <param name="kernel">A valid <see cref="Kernel"/> object. The OpenCL context associated with kernel and command_queue must be the same.</param>
+        /// <param name="globalWorkSize">Points to an array of work_dim unsigned values that describe the number of global work-items in work_dim dimensions that will execute the kernel function. The total number of global work-items is computed as global_work_size[0] *...* global_work_size[work_dim - 1].</param>
+        /// <param name="localWorkSize">Points to an array of work_dim unsigned values that describe the number of work-items that make up a work-group (also referred to as the size of the work-group) that will execute the kernel specified by kernel. </param>
+        /// <param name="eventWaitList">Specify events that need to complete before this particular command can be executed.</param>
+        /// <returns></returns>
+        public Event EnqueueNDRangeKernel(Kernel kernel, int globalWorkSize, int localWorkSize, params Event[] eventWaitList)
+        {
+            return EnqueueNDRangeKernel(kernel, null, new[] { (IntPtr)globalWorkSize }, new[] { (IntPtr)localWorkSize }, eventWaitList);
+        }
+
+        /// <summary>
+        /// Enqueues a command to execute a <see cref="Kernel"/> on a <see cref="Device"/>.
+        /// source: https://www.khronos.org/registry/cl/sdk/1.0/docs/man/xhtml/clEnqueueWriteBuffer.html
+        /// </summary>
+        /// <param name="kernel">A valid <see cref="Kernel"/> object. The OpenCL context associated with kernel and command_queue must be the same.</param>
+        /// <param name="globalWorkSize">Points to an array of work_dim unsigned values that describe the number of global work-items in work_dim dimensions that will execute the kernel function. The total number of global work-items is computed as global_work_size[0] *...* global_work_size[work_dim - 1].</param>
+        /// <param name="localWorkSize">Points to an array of work_dim unsigned values that describe the number of work-items that make up a work-group (also referred to as the size of the work-group) that will execute the kernel specified by kernel. </param>
+        /// <param name="eventWaitList">Specify events that need to complete before this particular command can be executed.</param>
+        /// <returns></returns>
         public Event EnqueueNDRangeKernel(Kernel kernel, IntPtr globalWorkSize, IntPtr localWorkSize, params Event[] eventWaitList)
         {
             return EnqueueNDRangeKernel(kernel, null, new[] { globalWorkSize }, new[] { localWorkSize }, eventWaitList);
         }
 
+        /// <summary>
+        /// Enqueues a command to execute a <see cref="Kernel"/> on a <see cref="Device"/>.
+        /// source: https://www.khronos.org/registry/cl/sdk/1.0/docs/man/xhtml/clEnqueueWriteBuffer.html
+        /// </summary>
+        /// <param name="kernel">A valid <see cref="Kernel"/> object. The OpenCL context associated with kernel and command_queue must be the same.</param>
+        /// <param name="globalWorkOffset">Must currently be a NULL value. In a future revision of OpenCL, global_work_offset can be used to specify an array of work_dim unsigned values that describe the offset used to calculate the global ID of a work-item instead of having the global IDs always start at offset (0, 0,... 0).</param>
+        /// <param name="globalWorkSize">Points to an array of work_dim unsigned values that describe the number of global work-items in work_dim dimensions that will execute the kernel function. The total number of global work-items is computed as global_work_size[0] *...* global_work_size[work_dim - 1].</param>
+        /// <param name="localWorkSize">Points to an array of work_dim unsigned values that describe the number of work-items that make up a work-group (also referred to as the size of the work-group) that will execute the kernel specified by kernel. </param>
+        /// <param name="eventWaitList">Specify events that need to complete before this particular command can be executed.</param>
+        /// <returns></returns>
         public Event EnqueueNDRangeKernel(Kernel kernel, IntPtr globalWorkOffset, IntPtr globalWorkSize, IntPtr localWorkSize, params Event[] eventWaitList)
         {
             return EnqueueNDRangeKernel(kernel, new[] { globalWorkOffset }, new[] { globalWorkSize }, new[] { localWorkSize }, eventWaitList);
         }
 
+        /// <summary>
+        /// Enqueues a command to execute a <see cref="Kernel"/> on a <see cref="Device"/>.
+        /// source: https://www.khronos.org/registry/cl/sdk/1.0/docs/man/xhtml/clEnqueueWriteBuffer.html
+        /// </summary>
+        /// <param name="kernel">A valid <see cref="Kernel"/> object. The OpenCL context associated with kernel and command_queue must be the same.</param>
+        /// <param name="globalWorkSize">Points to an array of work_dim unsigned values that describe the number of global work-items in work_dim dimensions that will execute the kernel function. The total number of global work-items is computed as global_work_size[0] *...* global_work_size[work_dim - 1].</param>
+        /// <param name="localWorkSize">Points to an array of work_dim unsigned values that describe the number of work-items that make up a work-group (also referred to as the size of the work-group) that will execute the kernel specified by kernel. </param>
+        /// <param name="eventWaitList">Specify events that need to complete before this particular command can be executed.</param>
+        /// <returns></returns>
         public Event EnqueueNDRangeKernel(Kernel kernel, IntPtr[] globalWorkSize, IntPtr[] localWorkSize, params Event[] eventWaitList)
         {
             return EnqueueNDRangeKernel(kernel, null, globalWorkSize, localWorkSize, eventWaitList);
         }
 
+        /// <summary>
+        /// Enqueues a command to execute a <see cref="Kernel"/> on a <see cref="Device"/>.
+        /// source: https://www.khronos.org/registry/cl/sdk/1.0/docs/man/xhtml/clEnqueueWriteBuffer.html
+        /// </summary>
+        /// <param name="kernel">A valid <see cref="Kernel"/> object. The OpenCL context associated with kernel and command_queue must be the same.</param>
+        /// <param name="globalWorkOffset">Must currently be a NULL value. In a future revision of OpenCL, global_work_offset can be used to specify an array of work_dim unsigned values that describe the offset used to calculate the global ID of a work-item instead of having the global IDs always start at offset (0, 0,... 0).</param>
+        /// <param name="globalWorkSize">Points to an array of work_dim unsigned values that describe the number of global work-items in work_dim dimensions that will execute the kernel function. The total number of global work-items is computed as global_work_size[0] *...* global_work_size[work_dim - 1].</param>
+        /// <param name="localWorkSize">Points to an array of work_dim unsigned values that describe the number of work-items that make up a work-group (also referred to as the size of the work-group) that will execute the kernel specified by kernel. </param>
+        /// <param name="eventWaitList">Specify events that need to complete before this particular command can be executed.</param>
+        /// <returns></returns>
         public Event EnqueueNDRangeKernel(Kernel kernel, IntPtr[] globalWorkOffset, IntPtr[] globalWorkSize, IntPtr[] localWorkSize, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
