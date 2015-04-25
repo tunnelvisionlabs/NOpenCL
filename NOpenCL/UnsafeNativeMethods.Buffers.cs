@@ -208,6 +208,31 @@ namespace NOpenCL
             return result;
         }
 
+        public static EventSafeHandle EnqueueWriteBuffer(CommandQueueSafeHandle commandQueue, BufferSafeHandle buffer, bool blocking, IntPtr offset, IntPtr size, Object source, EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+            if (source == null)
+                throw new ArgumentNullException("destination");
+
+            GCHandle pinnedArray = GCHandle.Alloc(source, GCHandleType.Pinned);
+            EventSafeHandle result;
+
+            try
+            {
+                IntPtr pointer = pinnedArray.AddrOfPinnedObject();
+                ErrorHandler.ThrowOnFailure(clEnqueueWriteBuffer(commandQueue, buffer, blocking, offset, size, pointer, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
+            }
+            finally
+            {
+                pinnedArray.Free();
+            }
+
+            return result;
+        }
+
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueReadBufferRect(
             CommandQueueSafeHandle commandQueue,
