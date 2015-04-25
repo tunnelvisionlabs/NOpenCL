@@ -10,7 +10,9 @@ namespace NOpenCL
     using System.ComponentModel;
     using NOpenCL.SafeHandles;
     using DeviceInfo = NOpenCL.UnsafeNativeMethods.DeviceInfo;
+    using System.Diagnostics;
 
+    [DebuggerDisplay("Name = {Name}")]
     public sealed class Device : IEquatable<Device>, IDisposable
     {
         private readonly UnsafeNativeMethods.ClDeviceID _device;
