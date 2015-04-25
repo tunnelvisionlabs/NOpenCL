@@ -8,7 +8,9 @@ namespace NOpenCL
     using System;
     using System.ComponentModel;
     using NOpenCL.SafeHandles;
+    using System.Diagnostics;
 
+    [DebuggerDisplay("Device = {Device.Name}")]
     public sealed class CommandQueue : IDisposable
     {
         private readonly CommandQueueSafeHandle _handle;
