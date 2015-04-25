@@ -282,39 +282,63 @@ namespace NOpenCL
             IntPtr paramValue,
             out UIntPtr paramValueSizeRet);
 
-        public static T GetKernelWorkGroupInfo<T>(KernelSafeHandle kernel, ClDeviceID device, KernelWorkGroupParameterInfo<T> parameter)
+        public static ulong[] GetKernelWorkGroupInfo(KernelSafeHandle kernel, ClDeviceID device, KernelWorkGroupInfo kernelWorkGroupInfo)
         {
             if (kernel == null)
                 throw new ArgumentNullException("kernel");
-            if (parameter == null)
-                throw new ArgumentNullException("parameter");
 
-            int? fixedSize = parameter.ParameterInfo.FixedSize;
-#if DEBUG
-            bool verifyFixedSize = true;
-#else
-            bool verifyFixedSize = false;
-#endif
-
-            UIntPtr requiredSize;
-            if (fixedSize.HasValue && !verifyFixedSize)
-                requiredSize = (UIntPtr)fixedSize;
-            else
-                ErrorHandler.ThrowOnFailure(clGetKernelWorkGroupInfo(kernel, device, parameter.ParameterInfo.Name, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
-
-            if (verifyFixedSize && fixedSize.HasValue)
+            int size = 0;
+            int arrayCt = 0;
+            switch (kernelWorkGroupInfo)
             {
-                if (requiredSize.ToUInt64() != (ulong)fixedSize.Value)
-                    throw new ArgumentException("The parameter definition includes a fixed size that does not match the required size according to the runtime.");
+                case KernelWorkGroupInfo.GlobalWorkSize:
+                    size = UIntPtr.Size;
+                    arrayCt = 3;
+                    break;
+                case KernelWorkGroupInfo.WorkGroupSize:
+                    size = UIntPtr.Size;
+                    arrayCt = 1;
+                    break;
+                case KernelWorkGroupInfo.CompileWorkGroupSize:
+                    size = UIntPtr.Size;
+                    arrayCt = 3;
+                    break;
+                case KernelWorkGroupInfo.LocalMemorySize:
+                    size = sizeof(ulong);
+                    arrayCt = 1;
+                    break;
+                case KernelWorkGroupInfo.PreferredWorkGroupSizeMultiple:
+                    size = UIntPtr.Size;
+                    arrayCt = 1;
+                    break;
+                case KernelWorkGroupInfo.PrivateMemorySize:
+                    size = sizeof(ulong);
+                    arrayCt = 1;
+                    break;
             }
+            int fixedSize = size * arrayCt;
+
+#if DEBUG
+            UIntPtr requiredSize;
+            ErrorHandler.ThrowOnFailure(clGetKernelWorkGroupInfo(kernel, device, (int)kernelWorkGroupInfo, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
+            if (requiredSize.ToUInt64() != (ulong)fixedSize)
+                throw new ArgumentException("The parameter definition includes a fixed size that does not match the required size according to the runtime.");
+#endif
 
             IntPtr memory = IntPtr.Zero;
             try
             {
-                memory = Marshal.AllocHGlobal((int)requiredSize.ToUInt32());
+                memory = Marshal.AllocHGlobal(fixedSize);
                 UIntPtr actualSize;
-                ErrorHandler.ThrowOnFailure(clGetKernelWorkGroupInfo(kernel, device, parameter.ParameterInfo.Name, requiredSize, memory, out actualSize));
-                return parameter.ParameterInfo.Deserialize(actualSize, memory);
+                ErrorHandler.ThrowOnFailure(clGetKernelWorkGroupInfo(kernel, device, (int)kernelWorkGroupInfo, (UIntPtr)fixedSize, memory, out actualSize));
+                IntPtr[] array = new IntPtr[(int)((long)actualSize.ToUInt64() / IntPtr.Size)];
+                Marshal.Copy(memory, array, 0, array.Length);
+
+                ulong[] outArray = new ulong[arrayCt];
+                for (int i = 0; i < arrayCt; i++)
+                    outArray[i] = (ulong)array[i];
+
+                return outArray;
             }
             finally
             {
@@ -322,7 +346,7 @@ namespace NOpenCL
             }
         }
 
-        public static class KernelWorkGroupInfo
+        public enum KernelWorkGroupInfo
         {
             /// <summary>
             /// This provides a mechanism for the application to query the maximum global size
@@ -333,8 +357,7 @@ namespace NOpenCL
             /// If device is not a custom device or kernel is not a built-in kernel,
             /// <see cref="clGetKernelArgInfo"/> returns the error <see cref="ErrorCode.InvalidValue"/>.
             /// </summary>
-            public static readonly KernelWorkGroupParameterInfo<IntPtr[]> GlobalWorkSize =
-                (KernelWorkGroupParameterInfo<IntPtr[]>)new ParameterInfoIntPtrArray(0x11B5);
+            GlobalWorkSize = 0x11B5,
 
             /// <summary>
             /// This provides a mechanism for the application to query the maximum work-group
@@ -342,16 +365,14 @@ namespace NOpenCL
             /// The OpenCL implementation uses the resource requirements of the kernel (register
             /// usage etc.) to determine what this work-group size should be.
             /// </summary>
-            public static readonly KernelWorkGroupParameterInfo<IntPtr> WorkGroupSize =
-                (KernelWorkGroupParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x11B0);
+            WorkGroupSize = 0x11B0,
 
             /// <summary>
             /// Returns the work-group size specified by the <c>__attribute__((reqd_work_group_size(X, Y, Z)))</c>
             /// qualifier. See Function Qualifiers. If the work-group size is not specified
             /// using the above attribute qualifier (0, 0, 0) is returned.
             /// </summary>
-            public static readonly KernelWorkGroupParameterInfo<IntPtr[]> CompileWorkGroupSize =
-                (KernelWorkGroupParameterInfo<IntPtr[]>)new ParameterInfoIntPtrArray(0x11B1);
+            CompileWorkGroupSize = 0x11B1,
 
             /// <summary>
             /// Returns the amount of local memory in bytes being used by a kernel. This includes
@@ -364,8 +385,7 @@ namespace NOpenCL
             /// If the local memory size, for any pointer argument to the kernel declared with the
             /// <c>__local</c> address qualifier, is not specified, its size is assumed to be 0.
             /// </summary>
-            public static readonly KernelWorkGroupParameterInfo<ulong> LocalMemorySize =
-                (KernelWorkGroupParameterInfo<ulong>)new ParameterInfoUInt64(0x11B2);
+            LocalMemorySize = 0x11B2,
 
             /// <summary>
             /// Returns the preferred multiple of workgroup size for launch. This is a performance
@@ -374,8 +394,8 @@ namespace NOpenCL
             /// not fail to enqueue the kernel for execution unless the work-group size specified
             /// is larger than the device maximum.
             /// </summary>
-            public static readonly KernelWorkGroupParameterInfo<IntPtr> PreferredWorkGroupSizeMultiple =
-                (KernelWorkGroupParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x11B3);
+            PreferredWorkGroupSizeMultiple = 0x11B3,
+
 
             /// <summary>
             /// Returns the minimum amount of private memory, in bytes, used by each workitem in
@@ -383,34 +403,7 @@ namespace NOpenCL
             /// to execute the kernel, including that used by the language built-ins and variable
             /// declared inside the kernel with the <c>__private</c> qualifier.
             /// </summary>
-            public static readonly KernelWorkGroupParameterInfo<ulong> PrivateMemorySize =
-                (KernelWorkGroupParameterInfo<ulong>)new ParameterInfoUInt64(0x11B4);
-        }
-
-        public sealed class KernelWorkGroupParameterInfo<T>
-        {
-            private readonly ParameterInfo<T> _parameterInfo;
-
-            public KernelWorkGroupParameterInfo(ParameterInfo<T> parameterInfo)
-            {
-                if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
-
-                _parameterInfo = parameterInfo;
-            }
-
-            public static explicit operator KernelWorkGroupParameterInfo<T>(ParameterInfo<T> parameterInfo)
-            {
-                return new KernelWorkGroupParameterInfo<T>(parameterInfo);
-            }
-
-            public ParameterInfo<T> ParameterInfo
-            {
-                get
-                {
-                    return _parameterInfo;
-                }
-            }
+            PrivateMemorySize = 0x11B4,
         }
 
         #endregion

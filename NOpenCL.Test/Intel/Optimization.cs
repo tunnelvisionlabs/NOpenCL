@@ -102,8 +102,8 @@ namespace NOpenCL.Test.Intel
                         Console.WriteLine("Run-time determines optimal workgroup size");
                     }
 
-                    IntPtr workGroupSizeMaximum = kernel.GetWorkGroupSize(device);
-                    Console.WriteLine("Maximum workgroup size for this kernel  {0}", workGroupSizeMaximum.ToInt64());
+                    ulong workGroupSizeMaximum = kernel.GetWorkGroupSize(device);
+                    Console.WriteLine("Maximum workgroup size for this kernel  {0}", workGroupSizeMaximum);
 
                     if (warming)
                     {
