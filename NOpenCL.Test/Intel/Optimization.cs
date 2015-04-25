@@ -8,7 +8,7 @@ namespace NOpenCL.Test.Intel
     using System;
     using System.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Buffer = NOpenCL.Buffer;
+    using Buffer = NOpenCL.Mem;
 
     [TestClass]
     public class Optimization
@@ -89,7 +89,7 @@ namespace NOpenCL.Test.Intel
             // allocate buffers
             fixed (float* pinput = input, poutput = output)
             {
-                using (Buffer inputBuffer = context.CreateBuffer(inFlags, sizeof(float) * taskSize, (IntPtr)pinput),
+                using (Mem inputBuffer = context.CreateBuffer(inFlags, sizeof(float) * taskSize, (IntPtr)pinput),
                     outputBuffer = context.CreateBuffer(outFlags, sizeof(float) * taskSize, (IntPtr)poutput))
                 {
                     kernel.Arguments[0].SetValue(inputBuffer);
@@ -236,7 +236,7 @@ SimpleKernel4( const __global float4 *input, __global float4 *output)
 
                 Console.WriteLine("Using device {0}...", device.Name);
                 Console.WriteLine("Using {0} compute units...", device.MaxComputeUnits);
-                Console.WriteLine("Buffer alignment required for zero-copying is {0} bytes", device.MemoryBaseAddressAlignment);
+                Console.WriteLine("Mem alignment required for zero-copying is {0} bytes", device.MemoryBaseAddressAlignment);
             }
             catch
             {

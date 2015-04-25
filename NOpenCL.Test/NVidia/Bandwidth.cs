@@ -9,7 +9,7 @@ namespace NOpenCL.Test.NVidia
     using System.Diagnostics;
     using System.Runtime.InteropServices;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Buffer = NOpenCL.Buffer;
+    using Buffer = NOpenCL.Mem;
 
     [TestClass]
     public class Bandwidth
@@ -168,7 +168,7 @@ namespace NOpenCL.Test.NVidia
         private double TestDeviceToHostTransferPinned(Context context, CommandQueue commandQueue, int memSize, AccessMode accessMode)
         {
             // create a host buffer
-            using (Buffer pinnedData = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.AllocateHostPointer, memSize))
+            using (Mem pinnedData = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.AllocateHostPointer, memSize))
             {
                 // get a mapped pointer
                 IntPtr h_data;
@@ -182,7 +182,7 @@ namespace NOpenCL.Test.NVidia
                 commandQueue.EnqueueUnmapMemObject(pinnedData, h_data);
 
                 // allocate device memory
-                using (Buffer deviceData = context.CreateBuffer(MemoryFlags.ReadWrite, memSize))
+                using (Mem deviceData = context.CreateBuffer(MemoryFlags.ReadWrite, memSize))
                 {
                     // initialize device memory
                     commandQueue.EnqueueMapBuffer(pinnedData, true, MapFlags.Write, 0, memSize, out h_data);
@@ -241,7 +241,7 @@ namespace NOpenCL.Test.NVidia
             fixed (byte* pdata = data)
             {
                 // allocate device memory
-                using (Buffer deviceData = context.CreateBuffer(MemoryFlags.ReadWrite, memSize))
+                using (Mem deviceData = context.CreateBuffer(MemoryFlags.ReadWrite, memSize))
                 {
                     // initialize device memory
                     commandQueue.EnqueueWriteBuffer(deviceData, false, 0, memSize, (IntPtr)pdata);
@@ -296,7 +296,7 @@ namespace NOpenCL.Test.NVidia
         private double TestHostToDeviceTransferPinned(Context context, CommandQueue commandQueue, int memSize, AccessMode accessMode)
         {
             // Create a host buffer
-            using (Buffer pinnedData = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.AllocateHostPointer, memSize))
+            using (Mem pinnedData = context.CreateBuffer(MemoryFlags.ReadWrite | MemoryFlags.AllocateHostPointer, memSize))
             {
                 // get a mapped pointer
                 IntPtr h_data;
@@ -310,7 +310,7 @@ namespace NOpenCL.Test.NVidia
                 commandQueue.EnqueueUnmapMemObject(pinnedData, h_data);
 
                 // allocate device memory
-                using (Buffer deviceData = context.CreateBuffer(MemoryFlags.ReadWrite, memSize))
+                using (Mem deviceData = context.CreateBuffer(MemoryFlags.ReadWrite, memSize))
                 {
                     // sync queue to host
                     commandQueue.Finish();
@@ -365,7 +365,7 @@ namespace NOpenCL.Test.NVidia
             fixed (byte* pdata = data)
             {
                 // allocate device memory
-                using (Buffer deviceData = context.CreateBuffer(MemoryFlags.ReadWrite, memSize))
+                using (Mem deviceData = context.CreateBuffer(MemoryFlags.ReadWrite, memSize))
                 {
                     // sync queue to host
                     commandQueue.Finish();
@@ -422,7 +422,7 @@ namespace NOpenCL.Test.NVidia
                 data[i] = 0xFF;
 
             // allocate device input and output memory and initialize the device input memory
-            using (Buffer d_idata = context.CreateBuffer(MemoryFlags.ReadOnly, memorySize),
+            using (Mem d_idata = context.CreateBuffer(MemoryFlags.ReadOnly, memorySize),
                 d_odata = context.CreateBuffer(MemoryFlags.WriteOnly, memorySize))
             {
                 unsafe

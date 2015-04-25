@@ -101,7 +101,7 @@ namespace NOpenCL
             }
         }
 
-        public Event EnqueueReadBuffer(Buffer buffer, bool blocking, long offset, long size, IntPtr destination, params Event[] eventWaitList)
+        public Event EnqueueReadBuffer(Mem buffer, bool blocking, long offset, long size, IntPtr destination, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -111,7 +111,7 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueReadBufferRect(Buffer buffer, bool blocking, BufferCoordinates bufferOrigin, BufferCoordinates hostOrigin, BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, IntPtr destination, params Event[] eventWaitList)
+        public Event EnqueueReadBufferRect(Mem buffer, bool blocking, BufferCoordinates bufferOrigin, BufferCoordinates hostOrigin, BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, IntPtr destination, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -134,7 +134,7 @@ namespace NOpenCL
         /// <param name="sourcePtr">The pointer to buffer in host memory where data is to be written from.</param>
         /// <param name="eventWaitList">eventWaitList specify events that need to complete before this particular command can be executed. If event_wait_list is null, then this particular command does not wait on any event to complete. The events specified in eventWaitList act as synchronization points. The context associated with events in eventWaitList and the CommandQueue must be the same.</param>
         /// <returns>Returns an Event object that identifies this particular write command and can be used to query or queue a wait for this particular command to complete. event can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.</returns>
-        public Event EnqueueWriteBuffer(Buffer buffer, bool blocking, long offset, long size, IntPtr sourcePtr, params Event[] eventWaitList)
+        public Event EnqueueWriteBuffer(Mem buffer, bool blocking, long offset, long size, IntPtr sourcePtr, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -156,7 +156,7 @@ namespace NOpenCL
         /// <param name="offset">The offset in bytes in the buffer object to write to.</param>
         /// <param name="eventWaitList">eventWaitList specify events that need to complete before this particular command can be executed. If event_wait_list is null, then this particular command does not wait on any event to complete. The events specified in eventWaitList act as synchronization points. The context associated with events in eventWaitList and the CommandQueue must be the same.</param>
         /// <returns>Returns an Event object that identifies this particular write command and can be used to query or queue a wait for this particular command to complete. event can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.</returns>
-        public Event EnqueueWriteBuffer(Buffer buffer, bool blocking, int[] source, long offset = 0, params Event[] eventWaitList)
+        public Event EnqueueWriteBuffer(Mem buffer, bool blocking, int[] source, long offset = 0, params Event[] eventWaitList)
         {
             int size = sizeof(int) * source.Length;
             return EnqueueWriteBuffer(buffer, blocking, offset, size, source, eventWaitList);
@@ -175,7 +175,7 @@ namespace NOpenCL
         /// <param name="source">The pointer to buffer in host memory where data is to be written from.</param>
         /// <param name="eventWaitList">eventWaitList specify events that need to complete before this particular command can be executed. If event_wait_list is null, then this particular command does not wait on any event to complete. The events specified in eventWaitList act as synchronization points. The context associated with events in eventWaitList and the CommandQueue must be the same.</param>
         /// <returns>Returns an Event object that identifies this particular write command and can be used to query or queue a wait for this particular command to complete. event can be NULL in which case it will not be possible for the application to query the status of this command or queue a wait for this command to complete.</returns>
-        public Event EnqueueWriteBuffer(Buffer buffer, bool blocking, long offset, long size, object source, params Event[] eventWaitList)
+        public Event EnqueueWriteBuffer(Mem buffer, bool blocking, long offset, long size, object source, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -188,7 +188,7 @@ namespace NOpenCL
         }
 
 
-        public Event EnqueueWriteBufferRect(Buffer buffer, bool blocking, BufferCoordinates bufferOrigin, BufferCoordinates hostOrigin, BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, IntPtr source, params Event[] eventWaitList)
+        public Event EnqueueWriteBufferRect(Mem buffer, bool blocking, BufferCoordinates bufferOrigin, BufferCoordinates hostOrigin, BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, IntPtr source, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -198,7 +198,7 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueCopyBuffer(Buffer source, Buffer destination, long sourceOffset, long destinationOffset, long size, params Event[] eventWaitList)
+        public Event EnqueueCopyBuffer(Mem source, Mem destination, long sourceOffset, long destinationOffset, long size, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -208,7 +208,7 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueCopyBufferRect(Buffer source, Buffer destination, BufferCoordinates sourceOrigin, BufferCoordinates destinationOrigin, BufferSize region, long sourceRowPitch, long sourceSlicePitch, long destinationRowPitch, long destinationSlicePitch, params Event[] eventWaitList)
+        public Event EnqueueCopyBufferRect(Mem source, Mem destination, BufferCoordinates sourceOrigin, BufferCoordinates destinationOrigin, BufferSize region, long sourceRowPitch, long sourceSlicePitch, long destinationRowPitch, long destinationSlicePitch, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -218,7 +218,7 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueMapBuffer(Buffer buffer, bool blocking, MapFlags mapFlags, long offset, long size, out IntPtr mappedPointer, params Event[] eventWaitList)
+        public Event EnqueueMapBuffer(Mem buffer, bool blocking, MapFlags mapFlags, long offset, long size, out IntPtr mappedPointer, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -288,7 +288,7 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueCopyImageToBuffer(Image sourceImage, Buffer destinationBuffer, BufferCoordinates sourceOrigin, BufferSize region, long destinationOffset, params Event[] eventWaitList)
+        public Event EnqueueCopyImageToBuffer(Image sourceImage, Mem destinationBuffer, BufferCoordinates sourceOrigin, BufferSize region, long destinationOffset, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -298,7 +298,7 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueCopyBufferToImage(Buffer sourceBuffer, Image destinationImage, long sourceOffset, BufferCoordinates destinationOrigin, BufferSize region, params Event[] eventWaitList)
+        public Event EnqueueCopyBufferToImage(Mem sourceBuffer, Image destinationImage, long sourceOffset, BufferCoordinates destinationOrigin, BufferSize region, params Event[] eventWaitList)
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)

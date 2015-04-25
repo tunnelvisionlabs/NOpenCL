@@ -11,7 +11,7 @@ namespace NOpenCL
 
     partial class UnsafeNativeMethods
     {
-        #region Buffer Objects
+        #region Mem Objects
 
         /// <summary>
         /// Creates a buffer object.
@@ -919,7 +919,7 @@ namespace NOpenCL
             /// Returns one of the following values:
             ///
             /// <list type="bullet">
-            /// <item><see cref="MemObjectType.Buffer"/> if the memory object was created with <see cref="clCreateBuffer"/> or <see cref="clCreateSubBuffer"/>.</item>
+            /// <item><see cref="MemObjectType.Mem"/> if the memory object was created with <see cref="clCreateBuffer"/> or <see cref="clCreateSubBuffer"/>.</item>
             /// <item><see cref="ImageDescriptor.Type"/> value if the memory object was created with <see cref="clCreateImage"/>.</item>
             /// </list>
             /// </summary>

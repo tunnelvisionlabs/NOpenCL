@@ -6,7 +6,7 @@
 namespace NOpenCL.Test
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Buffer = NOpenCL.Buffer;
+    using Buffer = NOpenCL.Mem;
 
     [TestClass]
     public class TestBuffers
@@ -19,7 +19,7 @@ namespace NOpenCL.Test
             Platform platform = Platform.GetPlatforms()[0];
             using (Context context = Context.Create(platform.GetDevices()))
             {
-                using (Buffer buffer = context.CreateBuffer(MemoryFlags.AllocateHostPointer, 1024))
+                using (Mem buffer = context.CreateBuffer(MemoryFlags.AllocateHostPointer, 1024))
                 {
                     buffer.Destroyed += (sender, e) => destroyed = true;
                     Assert.IsFalse(destroyed);

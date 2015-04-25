@@ -8,16 +8,16 @@ namespace NOpenCL
     using System;
     using NOpenCL.SafeHandles;
 
-    public sealed class Buffer : MemObject<BufferSafeHandle>
+    public sealed class Mem : MemObject<BufferSafeHandle>
     {
-        private readonly Buffer _parent;
+        private readonly Mem _parent;
 
-        internal Buffer(Context context, BufferSafeHandle handle)
+        internal Mem(Context context, BufferSafeHandle handle)
             : base(context, handle)
         {
         }
 
-        internal Buffer(Context context, Buffer parent, BufferSafeHandle handle)
+        internal Mem(Context context, Mem parent, BufferSafeHandle handle)
             : base(context, handle)
         {
             if (parent == null)
@@ -26,7 +26,7 @@ namespace NOpenCL
             _parent = parent;
         }
 
-        public Buffer AssociatedMemObject
+        public Mem AssociatedMemObject
         {
             get
             {
@@ -43,10 +43,10 @@ namespace NOpenCL
             }
         }
 
-        public Buffer CreateSubBuffer(MemoryFlags flags, BufferRegion regionInfo)
+        public Mem CreateSubBuffer(MemoryFlags flags, BufferRegion regionInfo)
         {
             BufferSafeHandle subBuffer = UnsafeNativeMethods.CreateSubBuffer(Handle, flags, regionInfo);
-            return new Buffer(Context, this, subBuffer);
+            return new Mem(Context, this, subBuffer);
         }
     }
 }

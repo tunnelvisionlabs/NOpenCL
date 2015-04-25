@@ -79,7 +79,7 @@ namespace NOpenCL
             }
         }
 
-        public Buffer Buffer
+        public Mem Buffer
         {
             get
             {

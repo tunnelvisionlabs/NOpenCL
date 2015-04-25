@@ -7,7 +7,7 @@ namespace NOpenCL.Test.NVidia
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Buffer = NOpenCL.Buffer;
+    using Buffer = NOpenCL.Mem;
 
     [TestClass]
     public class VectorAdd
@@ -60,7 +60,7 @@ namespace NOpenCL.Test.NVidia
                 using (CommandQueue commandQueue = context.CreateCommandQueue(devices[0], CommandQueueProperties.None))
                 {
                     Console.WriteLine("Create buffers...");
-                    using (Buffer deviceSrcA = context.CreateBuffer(MemoryFlags.ReadOnly, globalWorkSize * sizeof(float)),
+                    using (Mem deviceSrcA = context.CreateBuffer(MemoryFlags.ReadOnly, globalWorkSize * sizeof(float)),
                         deviceSrcB = context.CreateBuffer(MemoryFlags.ReadOnly, globalWorkSize * sizeof(float)),
                         deviceDst = context.CreateBuffer(MemoryFlags.WriteOnly, globalWorkSize * sizeof(float)))
                     {
