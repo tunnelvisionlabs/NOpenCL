@@ -87,11 +87,7 @@ __kernel void VectorAdd(__global const float* a, __global const float* b, __glob
                         using (Program program = context.CreateProgramWithSource(source))
                         {
                             // build the program
-                            string options;
-                            if (false)
-                                options = "-cl-fast-relaxed-math -DMAC";
-                            else
-                                options = "-cl-fast-relaxed-math";
+                            string options = "-cl-fast-relaxed-math";
 
                             program.Build(options);
 
@@ -107,20 +103,14 @@ __kernel void VectorAdd(__global const float* a, __global const float* b, __glob
                                 fixed (float* psrcA = srcA, psrcB = srcB, pdst = dst)
                                 {
                                     // asynchronous write of data to GPU device
-                                    using (commandQueue.EnqueueWriteBuffer(deviceSrcA, false, 0, sizeof(float) * globalWorkSize, (IntPtr)psrcA))
-                                    using (commandQueue.EnqueueWriteBuffer(deviceSrcB, false, 0, sizeof(float) * globalWorkSize, (IntPtr)psrcB))
-                                    {
-                                    }
+                                    commandQueue.EnqueueWriteBuffer(deviceSrcA, false, 0, sizeof(float) * globalWorkSize, (IntPtr)psrcA);
+                                    commandQueue.EnqueueWriteBuffer(deviceSrcB, false, 0, sizeof(float) * globalWorkSize, (IntPtr)psrcB);
 
                                     // launch kernel
-                                    using (commandQueue.EnqueueNDRangeKernel(kernel, (IntPtr)globalWorkSize, (IntPtr)localWorkSize))
-                                    {
-                                    }
+                                    commandQueue.EnqueueNDRangeKernel(kernel, (IntPtr)globalWorkSize, (IntPtr)localWorkSize);
 
                                     // synchronous/blocking read of results, and check accumulated errors
-                                    using (commandQueue.EnqueueReadBuffer(deviceDst, true, 0, sizeof(float) * globalWorkSize, (IntPtr)pdst))
-                                    {
-                                    }
+                                    commandQueue.EnqueueReadBuffer(deviceDst, true, 0, sizeof(float) * globalWorkSize, (IntPtr)pdst);
                                 }
                             }
                         }

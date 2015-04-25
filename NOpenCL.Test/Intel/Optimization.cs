@@ -108,10 +108,7 @@ namespace NOpenCL.Test.Intel
                     if (warming)
                     {
                         Console.Write("Warming up OpenCL execution...");
-                        using (commandQueue.EnqueueNDRangeKernel(kernel, new[] { (IntPtr)globalWorkSize }, autoGroupSize ? null : new[] { (IntPtr)localWorkSize }))
-                        {
-                        }
-
+                        commandQueue.EnqueueNDRangeKernel(kernel, new[] { (IntPtr)globalWorkSize }, autoGroupSize ? null : new[] { (IntPtr)localWorkSize });
                         commandQueue.Finish();
                         Console.WriteLine("Done");
                     }
@@ -143,20 +140,13 @@ namespace NOpenCL.Test.Intel
                     if (useHostPointer)
                     {
                         IntPtr tmpPtr;
-                        using (commandQueue.EnqueueMapBuffer(outputBuffer, true, MapFlags.Read, 0, sizeof(float) * taskSize, out tmpPtr))
-                        {
-                        }
-
+                        commandQueue.EnqueueMapBuffer(outputBuffer, true, MapFlags.Read, 0, sizeof(float) * taskSize, out tmpPtr);
                         Assert.AreEqual((IntPtr)poutput, tmpPtr, "EnqueueMapBuffer failed to return original pointer");
-                        using (commandQueue.EnqueueUnmapMemObject(outputBuffer, tmpPtr))
-                        {
-                        }
+                        commandQueue.EnqueueUnmapMemObject(outputBuffer, tmpPtr);
                     }
                     else
                     {
-                        using (commandQueue.EnqueueReadBuffer(outputBuffer, true, 0, sizeof(float) * taskSize, (IntPtr)poutput))
-                        {
-                        }
+                        commandQueue.EnqueueReadBuffer(outputBuffer, true, 0, sizeof(float) * taskSize, (IntPtr)poutput);
                     }
 
                     commandQueue.Finish();

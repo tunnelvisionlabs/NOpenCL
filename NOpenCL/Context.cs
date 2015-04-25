@@ -150,7 +150,7 @@ namespace NOpenCL
         }
 
         /// <summary>
-        /// Creates a sampler object. Samplers contros how elements of an <see cref="Image"/> object are read by
+        /// Creates a sampler object. Samplers controls how elements of an <see cref="Image"/> object are read by
         /// <a href="http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/imageFunctions.html"><c>read_image{f|i|ui}</c></a>
         /// </summary>
         /// <param name="normalizedCoordinates"><c>true</c> to use normalized coordinates, otherwise <c>false</c>.

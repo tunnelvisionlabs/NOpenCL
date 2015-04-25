@@ -214,7 +214,7 @@ namespace NOpenCL.Test.NVidia
                         commandQueue.EnqueueUnmapMemObject(deviceData, dm_idata);
                     }
 
-                    //get the the elapsed time in seconds
+                    //get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
                     // Calculate bandwidth in MB/s 
@@ -272,7 +272,7 @@ namespace NOpenCL.Test.NVidia
                         commandQueue.EnqueueUnmapMemObject(deviceData, dm_idata);
                     }
 
-                    //get the the elapsed time in seconds
+                    //get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
                     // Calculate bandwidth in MB/s 
@@ -342,7 +342,7 @@ namespace NOpenCL.Test.NVidia
                         commandQueue.EnqueueUnmapMemObject(deviceData, dm_idata);
                     }
 
-                    //get the the elapsed time in seconds
+                    //get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
                     // Calculate bandwidth in MB/s 
@@ -393,7 +393,7 @@ namespace NOpenCL.Test.NVidia
                         commandQueue.EnqueueUnmapMemObject(deviceData, dm_idata);
                     }
 
-                    //get the the elapsed time in seconds
+                    //get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
                     // Calculate bandwidth in MB/s 
@@ -429,9 +429,7 @@ namespace NOpenCL.Test.NVidia
                 {
                     fixed (byte* rawData = data)
                     {
-                        using (commandQueue.EnqueueWriteBuffer(d_idata, true, 0, memorySize, (IntPtr)rawData))
-                        {
-                        }
+                        commandQueue.EnqueueWriteBuffer(d_idata, true, 0, memorySize, (IntPtr)rawData);
                     }
                 }
 
@@ -440,9 +438,7 @@ namespace NOpenCL.Test.NVidia
                 Stopwatch timer = Stopwatch.StartNew();
                 for (int i = 0; i < MemoryCopyIterations; i++)
                 {
-                    using (commandQueue.EnqueueCopyBuffer(d_idata, d_odata, 0, 0, memorySize))
-                    {
-                    }
+                    commandQueue.EnqueueCopyBuffer(d_idata, d_odata, 0, 0, memorySize);
                 }
 
                 // sync with GPU

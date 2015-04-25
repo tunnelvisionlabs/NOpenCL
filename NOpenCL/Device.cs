@@ -100,7 +100,7 @@ namespace NOpenCL
         /// precision floating-point capability is 0.
         /// <para/>
         /// If double precision is supported by the device, then the minimum double
-        /// precision floatingpoint capability must be:
+        /// precision floating-point capability must be:
         /// <c><see cref="FloatingPointConfiguration.Fma"/> | <see cref="FloatingPointConfiguration.RoundToNearest"/> | <see cref="FloatingPointConfiguration.RoundToZero"/> | <see cref="FloatingPointConfiguration.RoundToInf"/> | <see cref="FloatingPointConfiguration.InfNaN"/> | <see cref="FloatingPointConfiguration.Denorm"/></c>
         /// .
         /// </summary>
@@ -679,7 +679,7 @@ namespace NOpenCL
         }
 
         /// <summary>
-        /// Returns the the parent <see cref="Device"/> to which this sub-device belongs.
+        /// Returns the parent <see cref="Device"/> to which this sub-device belongs.
         /// If device is a root-level device, this property is <c>null</c>.
         /// </summary>
         public Device Parent
