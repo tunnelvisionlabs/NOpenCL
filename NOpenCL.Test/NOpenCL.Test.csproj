@@ -52,6 +52,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="GeneralTest1.cs" />
     <Compile Include="Intel\Optimization.cs" />
     <Compile Include="NVidia\Bandwidth.cs" />
     <Compile Include="NVidia\OclUtils.cs" />
