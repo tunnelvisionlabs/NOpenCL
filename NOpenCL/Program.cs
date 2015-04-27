@@ -36,6 +36,24 @@ namespace NOpenCL
             }
         }
 
+        /// <summary>
+        /// Compiles a program’s source for specific device(s) in the OpenCL context associated with program.
+        /// </summary>
+        /// <param name="devices">A pointer to a list of devices associated with program. If device_list is 
+        /// a NULL value, the compile is performed for all devices associated with program. If device_list 
+        /// is a non-NULL value, the compile is performed for devices specified in this list.</param>
+        /// <param name="options">A pointer to a null-terminated string of characters that describes the 
+        /// compilation options to be used for building the program executable. The list of supported options 
+        /// is as described below.</param>
+        /// <param name="inputHeaders">An array of program embedded headers created with 
+        /// <see cref="clCreateProgramWithSource"/>.</param>
+        /// <param name="headerIncludeNames">An array that has a one to one correspondence with input_headers. 
+        /// Each entry in header_include_names specifies the include name used by source in program that comes 
+        /// from an embedded header. The corresponding entry in input_headers identifies the program object 
+        /// which contains the header source to be used. The embedded headers are first searched before the 
+        /// headers in the list of directories specified by the –I compile option (as described in section 
+        /// 5.8.4.1). If multiple entries in header_include_names refer to the same header name, the first one 
+        /// encountered will be used.</param>
         public void Compile(Device[] devices, string options, ProgramSafeHandle[] inputHeaders, string[] headerNames)
         {
             UnsafeNativeMethods.ClDeviceID[] deviceIDs = null;
@@ -45,6 +63,21 @@ namespace NOpenCL
             UnsafeNativeMethods.CompileProgram(_handle, deviceIDs, options, inputHeaders, headerNames, null, IntPtr.Zero);
         }
 
+        /// <summary>
+        /// Compiles a program’s source for specific device(s) in the OpenCL context associated with program.
+        /// </summary>
+        /// <param name="devices">A pointer to a list of devices associated with program. If device_list is 
+        /// a NULL value, the compile is performed for all devices associated with program. If device_list 
+        /// is a non-NULL value, the compile is performed for devices specified in this list.</param>
+        /// <param name="inputHeaders">An array of program embedded headers created with 
+        /// <see cref="clCreateProgramWithSource"/>.</param>
+        /// <param name="headerIncludeNames">An array that has a one to one correspondence with input_headers. 
+        /// Each entry in header_include_names specifies the include name used by source in program that comes 
+        /// from an embedded header. The corresponding entry in input_headers identifies the program object 
+        /// which contains the header source to be used. The embedded headers are first searched before the 
+        /// headers in the list of directories specified by the –I compile option (as described in section 
+        /// 5.8.4.1). If multiple entries in header_include_names refer to the same header name, the first one 
+        /// encountered will be used.</param>
         public void Compile(Device[] devices, ProgramSafeHandle[] inputHeaders, string[] headerNames)
         {
             UnsafeNativeMethods.ClDeviceID[] deviceIDs = null;
@@ -54,16 +87,46 @@ namespace NOpenCL
             UnsafeNativeMethods.CompileProgram(_handle, deviceIDs, "", inputHeaders, headerNames, null, IntPtr.Zero);
         }
 
+        /// <summary>
+        /// Compiles a program’s source for all the devices.
+        /// </summary>
+        /// <param name="options">A pointer to a null-terminated string of characters that describes the 
+        /// compilation options to be used for building the program executable. The list of supported options 
+        /// is as described below.</param>
+        /// <param name="inputHeaders">An array of program embedded headers created with 
+        /// <see cref="clCreateProgramWithSource"/>.</param>
+        /// <param name="headerIncludeNames">An array that has a one to one correspondence with input_headers. 
+        /// Each entry in header_include_names specifies the include name used by source in program that comes 
+        /// from an embedded header. The corresponding entry in input_headers identifies the program object 
+        /// which contains the header source to be used. The embedded headers are first searched before the 
+        /// headers in the list of directories specified by the –I compile option (as described in section 
+        /// 5.8.4.1). If multiple entries in header_include_names refer to the same header name, the first one 
+        /// encountered will be used.</param>
         public void Compile(string options, ProgramSafeHandle[] inputHeaders, string[] headerNames)
         {
             UnsafeNativeMethods.CompileProgram(_handle, null, options, inputHeaders, headerNames, null, IntPtr.Zero);
         }
 
+        /// <summary>
+        /// Compiles a program’s source for all the devices.
+        /// </summary>
+        /// <param name="inputHeaders">An array of program embedded headers created with 
+        /// <see cref="clCreateProgramWithSource"/>.</param>
+        /// <param name="headerIncludeNames">An array that has a one to one correspondence with input_headers. 
+        /// Each entry in header_include_names specifies the include name used by source in program that comes 
+        /// from an embedded header. The corresponding entry in input_headers identifies the program object 
+        /// which contains the header source to be used. The embedded headers are first searched before the 
+        /// headers in the list of directories specified by the –I compile option (as described in section 
+        /// 5.8.4.1). If multiple entries in header_include_names refer to the same header name, the first one 
+        /// encountered will be used.</param>
         public void Compile(ProgramSafeHandle[] inputHeaders, string[] headerNames)
         {
             UnsafeNativeMethods.CompileProgram(_handle, null, "", inputHeaders, headerNames, null, IntPtr.Zero);
         }
 
+        /// <summary>
+        /// Compiles a program’s source for all the devices.
+        /// </summary>
         public void Compile()
         {
             ProgramSafeHandle[] inputHeaders = new ProgramSafeHandle[0];
@@ -71,6 +134,9 @@ namespace NOpenCL
             UnsafeNativeMethods.CompileProgram(_handle, null, "", inputHeaders, headerNames, null, IntPtr.Zero);
         }
 
+        /// <summary>
+        /// Gets the current programs Context.
+        /// </summary>
         public Context Context
         {
             get
@@ -80,6 +146,9 @@ namespace NOpenCL
             }
         }
 
+        /// <summary>
+        /// Gets the number of devices a
+        /// </summary>
         public uint NumDevices
         {
             get
