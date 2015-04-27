@@ -151,6 +151,9 @@ namespace NOpenCL
             ErrorHandler.ThrowOnFailure(clBuildProgram(program, devices != null && devices.Length > 0 ? (uint)devices.Length : 0, devices, options, notify, userData));
         }
 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate void CompileProgramCallback(ProgramSafeHandle program, IntPtr userData);
+
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clCompileProgram(
             ProgramSafeHandle program,
@@ -160,8 +163,54 @@ namespace NOpenCL
             uint numInputHeaders,
             [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] ProgramSafeHandle[] inputHeaders,
             [In, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr)] string[] headerIncludeNames,
-            BuildProgramCallback pfnNotify,
-            IntPtr userData);
+            [MarshalAs(UnmanagedType.FunctionPtr)] CompileProgramCallback callbackPointer, IntPtr userData);
+
+        //untested
+        /// <summary>
+        /// Compiles a program’s source for all the devices or a specific device(s) in the OpenCL context associated with program.
+        /// </summary>
+        /// <param name="program">The program object that is the compilation target.</param>
+        /// <param name="devices">A pointer to a list of devices associated with program. If device_list is 
+        /// a NULL value, the compile is performed for all devices associated with program. If device_list 
+        /// is a non-NULL value, the compile is performed for devices specified in this list.</param>
+        /// <param name="options">A pointer to a null-terminated string of characters that describes the 
+        /// compilation options to be used for building the program executable. The list of supported options 
+        /// is as described below.</param>
+        /// <param name="inputHeaders">An array of program embedded headers created with 
+        /// <see cref="clCreateProgramWithSource"/>.</param>
+        /// <param name="headerIncludeNames">An array that has a one to one correspondence with input_headers. 
+        /// Each entry in header_include_names specifies the include name used by source in program that comes 
+        /// from an embedded header. The corresponding entry in input_headers identifies the program object 
+        /// which contains the header source to be used. The embedded headers are first searched before the 
+        /// headers in the list of directories specified by the –I compile option (as described in section 
+        /// 5.8.4.1). If multiple entries in header_include_names refer to the same header name, the first one 
+        /// encountered will be used.</param>
+        /// <param name="pfnNotify">A function pointer to a notification routine. The notification routine is 
+        /// a callback function that an application can register and which will be called when the program 
+        /// executable has been built (successfully or unsuccessfully). If pfnNotify is not NULL, 
+        /// clCompileProgram does not need to wait for the compiler to complete and can return immediately 
+        /// once the compilation can begin. The compilation can begin if the context, program whose sources 
+        /// are being compiled, list of devices, input headers, programs that describe input headers and 
+        /// compiler options specified are all valid and appropriate host and device resources needed to 
+        /// perform the compile are available. If pfn_notify is NULL, clCompileProgram does not return until 
+        /// the compiler has completed. This callback function may be called asynchronously by the OpenCL 
+        /// implementation. It is the application’s responsibility to ensure that the callback function is 
+        /// thread-safe.</param>
+        /// <param name="userData">Passed as an argument when pfnNotify is called. user_data can be NULL.</param>
+        public static void CompileProgram(ProgramSafeHandle program, ClDeviceID[] devices, string options, ProgramSafeHandle[] inputHeaders,
+            string[] headerIncludeNames, CompileProgramCallback pfnNotify, IntPtr userData)
+        {
+            ErrorHandler.ThrowOnFailure(clCompileProgram(
+                program,
+                (devices != null && devices.Length > 0) ? (uint)devices.Length : 0,
+                devices,
+                options,
+                (uint)inputHeaders.Length,
+                inputHeaders,
+                headerIncludeNames,
+                pfnNotify,
+                userData));
+        }
 
         [DllImport(ExternDll.OpenCL)]
         private static extern ProgramSafeHandle clLinkProgram(
