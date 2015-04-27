@@ -84,8 +84,14 @@ namespace NOpenCL
         /// </returns>
         public static ProgramSafeHandle CreateProgramWithBinary(ContextSafeHandle context, ClDeviceID[] devices, byte[][] bins)
         {
+            if (context == null)
+                throw new ArgumentNullException("context");
             if (bins == null)
                 throw new ArgumentNullException("bins");
+            if (devices == null)
+                throw new ArgumentNullException("devices");
+            if (devices.Length == 0)
+                throw new ArgumentException("No devices specified.");
 
             uint devCt = (devices != null && devices.Length > 0) ? (uint)devices.Length : 0;
 
