@@ -10,7 +10,7 @@ namespace NOpenCL
     /// on the specified program and device.
     /// </summary>
     /// <seealso cref="Program.Build()"/>
-    /// <seealso cref="Program.Compile"/>
+    /// <seealso cref="Program.Compile()"/>
     /// <seealso cref="Program.Link"/>
     public enum BuildStatus
     {

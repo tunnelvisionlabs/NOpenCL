@@ -36,6 +36,41 @@ namespace NOpenCL
             }
         }
 
+        public void Compile(Device[] devices, string options, ProgramSafeHandle[] inputHeaders, string[] headerNames)
+        {
+            UnsafeNativeMethods.ClDeviceID[] deviceIDs = null;
+            if (devices != null)
+                deviceIDs = Array.ConvertAll(devices, device => device.ID);
+            
+            UnsafeNativeMethods.CompileProgram(_handle, deviceIDs, options, inputHeaders, headerNames, null, IntPtr.Zero);
+        }
+
+        public void Compile(Device[] devices, ProgramSafeHandle[] inputHeaders, string[] headerNames)
+        {
+            UnsafeNativeMethods.ClDeviceID[] deviceIDs = null;
+            if (devices != null)
+                deviceIDs = Array.ConvertAll(devices, device => device.ID);
+
+            UnsafeNativeMethods.CompileProgram(_handle, deviceIDs, "", inputHeaders, headerNames, null, IntPtr.Zero);
+        }
+
+        public void Compile(string options, ProgramSafeHandle[] inputHeaders, string[] headerNames)
+        {
+            UnsafeNativeMethods.CompileProgram(_handle, null, options, inputHeaders, headerNames, null, IntPtr.Zero);
+        }
+
+        public void Compile(ProgramSafeHandle[] inputHeaders, string[] headerNames)
+        {
+            UnsafeNativeMethods.CompileProgram(_handle, null, "", inputHeaders, headerNames, null, IntPtr.Zero);
+        }
+
+        public void Compile()
+        {
+            ProgramSafeHandle[] inputHeaders = new ProgramSafeHandle[0];
+            string[] headerNames = new string[0];
+            UnsafeNativeMethods.CompileProgram(_handle, null, "", inputHeaders, headerNames, null, IntPtr.Zero);
+        }
+
         public Context Context
         {
             get
