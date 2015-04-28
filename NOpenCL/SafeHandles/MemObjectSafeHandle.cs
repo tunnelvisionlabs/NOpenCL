@@ -6,7 +6,6 @@
 namespace NOpenCL.SafeHandles
 {
     using Microsoft.Win32.SafeHandles;
-    using ErrorCode = NOpenCL.UnsafeNativeMethods.ErrorCode;
 
     public abstract class MemObjectSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
     {

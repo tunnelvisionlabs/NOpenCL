@@ -54,6 +54,7 @@
     <Compile Include="BufferCoordinates.cs" />
     <Compile Include="BufferCreateType.cs" />
     <Compile Include="BufferRegion.cs" />
+    <Compile Include="ErrorCode.cs" />
     <Compile Include="EventStatusEventArgs.cs" />
     <Compile Include="UnsafeNativeMethods.Profiling.cs" />
     <Compile Include="UnsafeNativeMethods.Synchronization.cs" />
