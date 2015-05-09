@@ -9,6 +9,7 @@ namespace NOpenCL
     using System.ComponentModel;
     using NOpenCL.SafeHandles;
     using System.Diagnostics;
+    using System.Runtime.InteropServices;
 
     [DebuggerDisplay("Device = {Device.Name}")]
     public sealed class CommandQueue : IDisposable
@@ -107,6 +108,15 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueReadBuffer(this.Handle, buffer.Handle, blocking, (IntPtr)offset, (IntPtr)size, destination, eventHandles);
+            return new Event(handle);
+        }
+
+        public Event EnqueueReadBuffer(Mem buffer, bool blocking, long offset, long size, Object destination, params Event[] eventWaitList)
+        {
+            EventSafeHandle[] eventHandles = null;
+            if (eventWaitList != null)
+                eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
             EventSafeHandle handle = UnsafeNativeMethods.EnqueueReadBuffer(this.Handle, buffer.Handle, blocking, (IntPtr)offset, (IntPtr)size, destination, eventHandles);
             return new Event(handle);
         }

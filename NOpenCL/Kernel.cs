@@ -105,7 +105,7 @@ namespace NOpenCL
             return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.GlobalWorkSize);
         }
 
-        public ulong GetWorkGroupSize(Device device)
+        public ulong GetWorkGroupSize(Device device) 
         {
             return (ulong)UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.WorkGroupSize)[0];
         }

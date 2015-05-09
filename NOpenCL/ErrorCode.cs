@@ -1,5 +1,5 @@
-﻿// This information in this file is from the OpenCL 2.1 documentation.
-// Source: all comments from https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf#page=58
+﻿// The comment information in this file is from the OpenCL 2.1 documentation.
+// Source: all comments from https://www.khronos.org/registry/cl/specs/opencl-2.1.pdf
 
 namespace NOpenCL
 {
@@ -156,6 +156,10 @@ namespace NOpenCL
         /// Raised in: clGetKernelArgInfo
         /// </summary>
         KernelArgInfoNotAvailable = -19,
+
+
+
+
         InvalidValue = -30,
         /// <summary>
         /// ErrorCode if device_type is not a valid value.

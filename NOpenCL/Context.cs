@@ -66,7 +66,7 @@ namespace NOpenCL
         }
 
         /// <summary>
-        /// Creates a program object for a <paramref name="context"/>, and loads specified binary 
+        /// Creates a program object for a <see cref="Context"/>, and loads specified binary 
         /// data into the <see cref="Program"/> object.
         /// </summary>
         /// <remarks>

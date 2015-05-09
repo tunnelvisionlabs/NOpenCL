@@ -182,6 +182,31 @@ namespace NOpenCL
             return result;
         }
 
+
+        public static EventSafeHandle EnqueueReadBuffer(CommandQueueSafeHandle commandQueue, BufferSafeHandle buffer, bool blocking, IntPtr offset, IntPtr size, Object destination, EventSafeHandle[] eventWaitList)
+        {
+            if (commandQueue == null)
+                throw new ArgumentNullException("commandQueue");
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+            if (destination == null)
+                throw new ArgumentNullException("destination");
+
+            GCHandle pinnedDest = GCHandle.Alloc(destination, GCHandleType.Pinned);
+            EventSafeHandle result;
+
+            try
+            {
+                IntPtr destPtr = pinnedDest.AddrOfPinnedObject();
+                ErrorHandler.ThrowOnFailure(clEnqueueWriteBuffer(commandQueue, buffer, blocking, offset, size, destPtr, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
+            }
+            finally
+            {
+                pinnedDest.Free();
+            }
+            return result;
+        }
+
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clEnqueueWriteBuffer(
             CommandQueueSafeHandle commandQueue,
@@ -922,21 +947,24 @@ namespace NOpenCL
             /// <item><see cref="MemObjectType.Mem"/> if the memory object was created with <see cref="clCreateBuffer"/> or <see cref="clCreateSubBuffer"/>.</item>
             /// <item><see cref="ImageDescriptor.Type"/> value if the memory object was created with <see cref="clCreateImage"/>.</item>
             /// </list>
+            /// (aka MEM_TYPE)
             /// </summary>
             public static readonly MemObjectParameterInfo<uint> Type =
                 (MemObjectParameterInfo<uint>)new ParameterInfoUInt32(0x1100);
-
+            
             /// <summary>
             /// Returns the <em>flags</em> argument value specified when the memory object was
             /// created with <see cref="clCreateBuffer"/>, <see cref="clCreateSubBuffer"/>, or
             /// <see cref="clCreateImage"/>. If the memory object is a sub-buffer the memory
             /// access qualifiers inherited from parent buffer are also returned.
+            /// (aka MEM_FLAGS)
             /// </summary>
             public static readonly MemObjectParameterInfo<ulong> Flags =
                 (MemObjectParameterInfo<ulong>)new ParameterInfoUInt64(0x1101);
 
             /// <summary>
             /// Return actual size of the data store associated with the memory object in bytes.
+            /// (aka MEM_SIZE)
             /// </summary>
             public static readonly MemObjectParameterInfo<UIntPtr> Size =
                 (MemObjectParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1102);
@@ -953,13 +981,15 @@ namespace NOpenCL
             /// <see cref="MemoryFlags.UseHostPointer"/> is specified in <em>memoryFlags</em> for memory
             /// object from which this memory object was created. Otherwise <see cref="IntPtr.Zero"/> is
             /// returned.</para>
-            /// </summary>
+            /// (aka MEM_OBJECT_IMAGE1D)
+            /// </summary>            
             public static readonly MemObjectParameterInfo<IntPtr> HostAddress =
                 (MemObjectParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1103);
 
             /// <summary>
             /// Map count. The map count returned should be considered immediately stale. It is unsuitable
             /// for general use in applications. This feature is provided for debugging.
+            /// (aka MEM_OBJECT_IMAGE1D)
             /// </summary>
             public static readonly MemObjectParameterInfo<uint> MapCount =
                 (MemObjectParameterInfo<uint>)new ParameterInfoUInt32(0x1104);
@@ -968,6 +998,7 @@ namespace NOpenCL
             /// Return the reference count of the memory object. The reference count returned should be
             /// considered immediately stale. It is unsuitable for general use in applications. This
             /// feature is provided for identifying memory leaks.
+            /// (aka MEM_OBJECT_IMAGE1D_ARRAY)
             /// </summary>
             public static readonly MemObjectParameterInfo<uint> ReferenceCount =
                 (MemObjectParameterInfo<uint>)new ParameterInfoUInt32(0x1105);
@@ -976,6 +1007,7 @@ namespace NOpenCL
             /// Return the context specified when the memory object was created. If the memory object was
             /// created using <see cref="clCreateSubBuffer"/>, the context associated with the memory
             /// object specified as the buffer argument to <see cref="clCreateSubBuffer"/> is returned.
+            /// (aka MEM_OBJECT_IMAGE1D_BUFFER)
             /// </summary>
             public static readonly MemObjectParameterInfo<IntPtr> Context =
                 (MemObjectParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1106);
@@ -1116,7 +1148,7 @@ namespace NOpenCL
                 (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1115);
 
             /// <summary>
-            /// Return the depth of the the image in pixels. For a 1D image, 1D image buffer, 2D
+            /// Return the depth of the image in pixels. For a 1D image, 1D image buffer, 2D
             /// image or 1D and 2D image array object, this returns <see cref="UIntPtr.Zero"/>.
             /// </summary>
             public static ImageParameterInfo<UIntPtr> Depth =

@@ -9,6 +9,7 @@ namespace NOpenCL
     using System.Collections.Generic;
     using System.ComponentModel;
     using NOpenCL.SafeHandles;
+    using System.Runtime.InteropServices;
 
     public sealed class Program : IDisposable
     {
@@ -22,7 +23,7 @@ namespace NOpenCL
                 throw new ArgumentNullException("context");
             if (handle == null)
                 throw new ArgumentNullException("handle");
-
+            
             _context = context;
             _handle = handle;
         }
@@ -46,8 +47,8 @@ namespace NOpenCL
         /// compilation options to be used for building the program executable. The list of supported options 
         /// is as described below.</param>
         /// <param name="inputHeaders">An array of program embedded headers created with 
-        /// <see cref="clCreateProgramWithSource"/>.</param>
-        /// <param name="headerIncludeNames">An array that has a one to one correspondence with input_headers. 
+        /// <see cref="UnsafeNativeMethods.clCreateProgramWithSource"/>.</param>
+        /// <param name="headerNames">An array that has a one to one correspondence with input_headers. 
         /// Each entry in header_include_names specifies the include name used by source in program that comes 
         /// from an embedded header. The corresponding entry in input_headers identifies the program object 
         /// which contains the header source to be used. The embedded headers are first searched before the 
@@ -70,8 +71,8 @@ namespace NOpenCL
         /// a NULL value, the compile is performed for all devices associated with program. If device_list 
         /// is a non-NULL value, the compile is performed for devices specified in this list.</param>
         /// <param name="inputHeaders">An array of program embedded headers created with 
-        /// <see cref="clCreateProgramWithSource"/>.</param>
-        /// <param name="headerIncludeNames">An array that has a one to one correspondence with input_headers. 
+        /// <see cref="UnsafeNativeMethods.clCreateProgramWithSource"/>.</param>
+        /// <param name="headerNames">An array that has a one to one correspondence with input_headers. 
         /// Each entry in header_include_names specifies the include name used by source in program that comes 
         /// from an embedded header. The corresponding entry in input_headers identifies the program object 
         /// which contains the header source to be used. The embedded headers are first searched before the 
@@ -94,8 +95,8 @@ namespace NOpenCL
         /// compilation options to be used for building the program executable. The list of supported options 
         /// is as described below.</param>
         /// <param name="inputHeaders">An array of program embedded headers created with 
-        /// <see cref="clCreateProgramWithSource"/>.</param>
-        /// <param name="headerIncludeNames">An array that has a one to one correspondence with input_headers. 
+        /// <see cref="UnsafeNativeMethods.clCreateProgramWithSource"/>.</param>
+        /// <param name="headerNames">An array that has a one to one correspondence with input_headers. 
         /// Each entry in header_include_names specifies the include name used by source in program that comes 
         /// from an embedded header. The corresponding entry in input_headers identifies the program object 
         /// which contains the header source to be used. The embedded headers are first searched before the 
@@ -111,8 +112,8 @@ namespace NOpenCL
         /// Compiles a program’s source for all the devices.
         /// </summary>
         /// <param name="inputHeaders">An array of program embedded headers created with 
-        /// <see cref="clCreateProgramWithSource"/>.</param>
-        /// <param name="headerIncludeNames">An array that has a one to one correspondence with input_headers. 
+        /// <see cref="UnsafeNativeMethods.clCreateProgramWithSource"/>.</param>
+        /// <param name="headerNames">An array that has a one to one correspondence with input_headers. 
         /// Each entry in header_include_names specifies the include name used by source in program that comes 
         /// from an embedded header. The corresponding entry in input_headers identifies the program object 
         /// which contains the header source to be used. The embedded headers are first searched before the 
@@ -147,7 +148,7 @@ namespace NOpenCL
         }
 
         /// <summary>
-        /// Gets the number of devices a
+        /// Gets the number of devices for the given program.
         /// </summary>
         public uint NumDevices
         {
@@ -181,7 +182,30 @@ namespace NOpenCL
             }
         }
 
-        public IReadOnlyList<IntPtr> Binaries
+        /// <summary>
+        /// Returns an array of binaries.
+        /// </summary>
+        public Binary[] Binaries
+        {
+            get
+            {
+                uint deviceCt = NumDevices;
+                Binary[] bins = new Binary[deviceCt];
+
+                var binarySizeForEachDevice = BinarySizes;
+                var unmanagedBins = BinariesAsIntPtrList;
+
+                for (int d = 0; d < deviceCt; d++)
+                {
+                    bins[d] = new byte[(uint)binarySizeForEachDevice[d]];
+                    Marshal.Copy(unmanagedBins[d], bins[d], 0, bins[d].bytes.Length);
+                }
+
+                return bins;
+            }
+        }
+
+        public IReadOnlyList<IntPtr> BinariesAsIntPtrList
         {
             get
             {
@@ -287,6 +311,29 @@ namespace NOpenCL
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
+        }
+    }
+
+    /// <summary>
+    /// Contains a Binary in a simple byte array.
+    /// </summary>
+    public struct Binary
+    {
+        public byte[] bytes;
+
+        private Binary(byte[] value)
+        {
+            this.bytes = value;
+        }
+
+        public static implicit operator Binary(byte[] bin)
+        {
+            return new Binary(bin);
+        }
+
+        public static implicit operator byte[] (Binary bin)
+        {
+            return bin.bytes;
         }
     }
 }
