@@ -146,7 +146,7 @@ namespace NOpenCL.Test.Intel
                     }
                     else
                     {
-                        commandQueue.EnqueueReadBuffer(outputBuffer, true, 0, sizeof(float) * taskSize, (IntPtr)poutput);
+                        commandQueue.EnqueueReadBufferAndWait(outputBuffer, (IntPtr)poutput, sizeof(float) * taskSize);
                     }
 
                     commandQueue.Finish();

@@ -82,6 +82,11 @@ namespace NOpenCL
         {
             private readonly IntPtr _handle;
 
+            public ClDeviceID(IntPtr handle)
+            {
+                _handle = handle;
+            }
+
             public IntPtr Handle
             {
                 get

@@ -110,7 +110,7 @@ __kernel void VectorAdd(__global const float* a, __global const float* b, __glob
                                     commandQueue.EnqueueNDRangeKernel(kernel, (IntPtr)globalWorkSize, (IntPtr)localWorkSize);
 
                                     // synchronous/blocking read of results, and check accumulated errors
-                                    commandQueue.EnqueueReadBuffer(deviceDst, true, 0, sizeof(float) * globalWorkSize, (IntPtr)pdst);
+                                    commandQueue.EnqueueReadBufferAndWait(deviceDst, (IntPtr)pdst, sizeof(float) * globalWorkSize);
                                 }
                             }
                         }

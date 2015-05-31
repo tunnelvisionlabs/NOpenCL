@@ -69,7 +69,7 @@ namespace Examples
             // Read back the results
             int[] results = new int[N];
             IntPtr dest = Marshal.AllocHGlobal(N * 4);
-            commandQueue.EnqueueReadBuffer(output, true, 0, N * 4, dest);
+            commandQueue.EnqueueReadBufferAndWait(output, dest, N * 4);
             Marshal.Copy(dest, results, 0, results.Length);
 
             // Validate our results

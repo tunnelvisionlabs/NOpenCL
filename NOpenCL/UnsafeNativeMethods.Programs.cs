@@ -44,7 +44,6 @@ namespace NOpenCL
             [Out, MarshalAs(UnmanagedType.LPArray)] ErrorCode[] binaryStatus,
             out ErrorCode errorCode);
 
-        //todo: untested
         /// <summary>
         /// Creates a program object for a <paramref name="context"/>, and loads specified binary 
         /// data into the <see cref="Program"/> object.
@@ -97,37 +96,31 @@ namespace NOpenCL
 
             int binCt = bins.Length;
 
-            IntPtr[] lengths = new IntPtr[binCt];
-
-            for (int i = 0; i < binCt; i++)
-            {
-                if (bins[i] == null)
-                    throw new ArgumentNullException("bins"); 
-                lengths[i] = (IntPtr)bins[i].Length;
-            }
+            IntPtr[] lengths = Array.ConvertAll(bins, b => (IntPtr)b.Length);
 
             ErrorCode errorCode;
             ErrorCode[] binaryStatus = new ErrorCode[binCt];
-            IntPtr[] binaries = new IntPtr[binCt];
+            GCHandle[] gh = null;
 
             ProgramSafeHandle handle;
             try
             {
-                for (int i = 0; i < binCt; i++)
-                    binaries[i] = Marshal.AllocHGlobal(binCt);
+                gh = Array.ConvertAll(bins, b => GCHandle.Alloc(b, GCHandleType.Pinned));
+                IntPtr[] binaries = Array.ConvertAll(gh, h => h.AddrOfPinnedObject());
 
                 handle = clCreateProgramWithBinary(context, devCt, devices, lengths, binaries, binaryStatus, out errorCode);
             }
             finally
             {
-                for (int i = 0; i < binCt; i++)
-                    Marshal.FreeHGlobal(binaries[i]);
+                for (int i = 0; i < gh.Length; i++)
+                    gh[i].Free();
             }
             
             ErrorHandler.ThrowOnFailure(errorCode);
 
             return handle;
         }
+
 
         [DllImport(ExternDll.OpenCL)]
         private static extern ProgramSafeHandle clCreateProgramWithBuiltInKernels(
@@ -171,7 +164,6 @@ namespace NOpenCL
             [In, MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr)] string[] headerIncludeNames,
             [MarshalAs(UnmanagedType.FunctionPtr)] CompileProgramCallback callbackPointer, IntPtr userData);
 
-        //untested
         /// <summary>
         /// Compiles a program’s source for all the devices or a specific device(s) in the OpenCL context associated with program.
         /// </summary>
@@ -278,6 +270,14 @@ namespace NOpenCL
             IntPtr paramValue,
             out UIntPtr paramValueSizeRet);
 
+        [DllImport(ExternDll.OpenCL)]
+        private static extern ErrorCode clGetProgramInfo(
+            ProgramSafeHandle program,
+            int paramName,
+            UIntPtr paramValueSize,
+            IntPtr[] paramValue,
+            out UIntPtr paramValueSizeRet);
+
         public static T GetProgramInfo<T>(ProgramSafeHandle program, ProgramParameterInfo<T> parameter)
         {
             if (program == null)
@@ -318,16 +318,147 @@ namespace NOpenCL
             }
         }
 
+        /// <summary>
+        /// Returns an array that contains the size in bytes of the program binary for each device associated with program. The size of the array is the number of devices associated with program. If a binary is not available for a device(s), a size of zero is returned.
+        /// </summary>
+        /// <remarks>
+        /// If program is created using clCreateProgramWithBuiltInKernels, the implementation may return zero in any entries of the returned array.
+        /// </remarks>
+        public static int[] GetBinarySizes(ProgramSafeHandle program)
+        {
+            IntPtr memory = IntPtr.Zero;
+            UIntPtr actualSize;
+            try
+            {
+                memory = Marshal.AllocHGlobal(IntPtr.Size);
+                ErrorHandler.ThrowOnFailure(clGetProgramInfo(program, 0x1165, (UIntPtr)UIntPtr.Size, memory, out actualSize));
+                IntPtr[] array = new IntPtr[1];
+                Marshal.Copy(memory, array, 0, array.Length);
+                return Array.ConvertAll(array, p => (int)p);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(memory);
+            }
+        }
+
+        public static Binary[] GetBinaries(ProgramSafeHandle program)
+        {
+            int[] sizes = GetBinarySizes(program);
+            GCHandle[] gh = Array.ConvertAll(sizes, s => GCHandle.Alloc(new byte[s], GCHandleType.Pinned));
+            IntPtr[] binaries2 = Array.ConvertAll(gh, h => h.AddrOfPinnedObject());
+
+            int progCt = sizes.Length;
+            UIntPtr actual = UIntPtr.Zero;
+            try
+            {
+                ErrorHandler.ThrowOnFailure(clGetProgramInfo(program, 0x1166, new UIntPtr((uint)(UIntPtr.Size * progCt)), binaries2, out actual));
+
+                if (IntPtr.Size * progCt != actual.ToUInt32())
+                    throw new Exception(string.Format("unexpected clGetProgramInfo size: {0}!={1}", actual.ToUInt32(), IntPtr.Size * progCt));
+
+                return Array.ConvertAll(gh, g => new Binary((byte[])g.Target));
+            }
+            finally
+            {
+                for (int i = 0; i < progCt; i++)
+                    gh[i].Free();
+            }
+        }
+
+        public static Device[] GetDevices(ProgramSafeHandle program)
+        {
+            UIntPtr requiredSize;
+            int val = 0x1163;
+            ErrorHandler.ThrowOnFailure(clGetProgramInfo(program, val, UIntPtr.Zero, IntPtr.Zero, out requiredSize));
+
+            uint size = requiredSize.ToUInt32();
+            if (size == 0)
+                return new Device[0];
+
+            IntPtr memory = IntPtr.Zero;
+            try
+            {
+                memory = Marshal.AllocHGlobal((int)requiredSize.ToUInt32());
+                UIntPtr actualSize;
+                ErrorHandler.ThrowOnFailure(clGetProgramInfo(program, val, requiredSize, memory, out actualSize));
+                IntPtr[] array = new IntPtr[(int)((long)actualSize.ToUInt64() / IntPtr.Size)];
+                Marshal.Copy(memory, array, 0, array.Length);
+
+                return Array.ConvertAll(array, d => new Device(d));
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(memory);
+            }
+        }
+
+        /// <summary>
+        /// Specifies the information to query when using GetProgramInfo(..) (aka clGetProgramInfo(..))
+        /// </summary>
         public static class ProgramInfo
         {
+            /// <summary>
+            /// Return the program reference count.
+            /// <see href="https://www.khronos.org/registry/cl/sdk/2.0/docs/man/xhtml/clGetProgramInfo.html"/>
+            /// </summary>
+            /// <remarks>
+            /// The reference count returned should be considered immediately stale. It is unsuitable for general use in applications. This feature is provided for identifying memory leaks.
+            /// </remarks>
             public static readonly ProgramParameterInfo<uint> ReferenceCount = (ProgramParameterInfo<uint>)new ParameterInfoUInt32(0x1160);
+            /// <summary>
+            /// Return the context specified when the program object is created.
+            /// <see href="https://www.khronos.org/registry/cl/sdk/2.0/docs/man/xhtml/clGetProgramInfo.html"/>
+            /// </summary>
             public static readonly ProgramParameterInfo<IntPtr> Context = (ProgramParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1161);
+            /// <summary>
+            /// Return the number of devices associated with program.
+            /// </summary>
+            /// <remarks>
+            /// The actual number of characters that represents the program source code including the null terminator is returned in param_value_size_ret.
+            /// </remarks>
+            /// <see href="https://www.khronos.org/registry/cl/sdk/2.0/docs/man/xhtml/clGetProgramInfo.html"/>
             public static readonly ProgramParameterInfo<uint> NumDevices = (ProgramParameterInfo<uint>)new ParameterInfoUInt32(0x1162);
+            /// <summary>
+            /// Return the list of devices associated with the program object. This can be the devices associated with context on which the program object has been created or can be a subset of devices that are specified when a progam object is created using clCreateProgramWithBinary.
+            /// <see href="https://www.khronos.org/registry/cl/sdk/2.0/docs/man/xhtml/clGetProgramInfo.html"/>
+            /// </summary>
             public static readonly ProgramParameterInfo<IntPtr[]> Devices = (ProgramParameterInfo<IntPtr[]>)new ParameterInfoIntPtrArray(0x1163);
+            /// <summary>
+            /// Return the program source code specified by clCreateProgramWithSource. The source string returned is a concatenation of all source strings specified to clCreateProgramWithSource with a null terminator. The concatenation strips any nulls in the original source strings.
+            /// <see href="https://www.khronos.org/registry/cl/sdk/2.0/docs/man/xhtml/clGetProgramInfo.html"/>
+            /// </summary>
+            /// <remarks>
+            /// If program is created using clCreateProgramWithBinary or clCreateProgramWithBuiltInKernels, a null string or the appropriate program source code is returned depending on whether or not the program source code is stored in the binary.
+            /// The actual number of characters that represents the program source code including the null terminator is returned in param_value_size_ret.
+            /// </remarks>
             public static readonly ProgramParameterInfo<string> Source = (ProgramParameterInfo<string>)new ParameterInfoString(0x1164);
+            /// <summary>
+            /// Returns an array that contains the size in bytes of the program binary for each device associated with program. The size of the array is the number of devices associated with program. If a binary is not available for a device(s), a size of zero is returned.
+            /// <see href="https://www.khronos.org/registry/cl/sdk/2.0/docs/man/xhtml/clGetProgramInfo.html"/>
+            /// </summary>
+            /// <remarks>
+            /// If program is created using clCreateProgramWithBuiltInKernels, the implementation may return zero in any entries of the returned array.
+            /// </remarks>
             public static readonly ProgramParameterInfo<UIntPtr[]> BinarySizes = (ProgramParameterInfo<UIntPtr[]>)new ParameterInfoUIntPtrArray(0x1165);
+            /// <summary>
+            /// Return the program binaries for all devices associated with program. For each device in program, the binary returned can be the binary specified for the device when program is created with clCreateProgramWithBinary or it can be the executable binary generated by clBuildProgram. If program is created with clCreateProgramWithSource, the binary returned is the binary generated by clBuildProgram. The bits returned can be an implementation-specific intermediate representation (a.k.a. IR) or device specific executable bits or both. The decision on which information is returned in the binary is up to the OpenCL implementation.
+            /// <see href="https://www.khronos.org/registry/cl/sdk/2.0/docs/man/xhtml/clGetProgramInfo.html"/>
+            /// </summary>
+            /// <remarks>
+            /// param_value points to an array of n pointers where n is the number of devices associated with program. The buffer sizes needed to allocate the memory that these n pointers refer to can be queried using the CL_PROGRAM_BINARY_SIZES query as described in this table.
+            /// Each entry in this array is used by the implementation as the location in memory where to copy the program binary for a specific device, if there is a binary available. To find out which device the program binary in the array refers to, use the CL_PROGRAM_DEVICES query to get the list of devices. There is a one-to-one correspondence between the array of n pointers returned by CL_PROGRAM_BINARIES and array of devices returned by CL_PROGRAM_DEVICES.
+            /// </remarks>
             public static readonly ProgramParameterInfo<IntPtr[]> Binaries = (ProgramParameterInfo<IntPtr[]>)new ParameterInfoIntPtrArray(0x1166);
+            /// <summary>
+            /// Returns the number of kernels declared in program that can be created with clCreateKernel. This information is only available after a successful program executable has been built for at least one device in the list of devices associated with program.
+            /// <see href="https://www.khronos.org/registry/cl/sdk/2.0/docs/man/xhtml/clGetProgramInfo.html"/>
+            /// </summary>
             public static readonly ProgramParameterInfo<IntPtr> NumKernels = (ProgramParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1167);
+            /// <summary>
+            /// Returns a semi-colon separated list of kernel names in program that can be created with clCreateKernel. This information is only available after a successful program executable has been built for at least one device in the list of devices associated with program.
+            /// <see href="https://www.khronos.org/registry/cl/sdk/2.0/docs/man/xhtml/clGetProgramInfo.html"/>
+            /// </summary>
             public static readonly ProgramParameterInfo<string> KernelNames = (ProgramParameterInfo<string>)new ParameterInfoString(0x1168);
         }
 

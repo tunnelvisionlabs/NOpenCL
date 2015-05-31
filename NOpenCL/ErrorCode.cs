@@ -68,8 +68,8 @@ namespace NOpenCL
         /// ErrorCode if src_buffer and dst_buffer are the same buffer or subbuffer object and the source 
         /// and destination regions overlap or if src_buffer and dst_buffer are different sub-buffers 
         /// of the same associated buffer object and they overlap. The regions overlap if 
-        /// src_offset <= dst_offset <= src_offset + size – 1 or if dst_offset <= src_offset <= 
-        /// dst_offset + size – 1.
+        /// src_offset lessOrEqual dst_offset lessOrEqual src_offset + size – 1 or if dst_offset lessOrEqual
+        /// src_offset lessOrEqual dst_offset + size – 1.
         /// aka CL_MEM_COPY_OVERLAP
         /// Raised in: clEnqueueCopyBuffer clEnqueueCopyBufferRect clEnqueueCopyImage
         /// </summary>

@@ -198,7 +198,7 @@ namespace NOpenCL
             try
             {
                 IntPtr destPtr = pinnedDest.AddrOfPinnedObject();
-                ErrorHandler.ThrowOnFailure(clEnqueueWriteBuffer(commandQueue, buffer, blocking, offset, size, destPtr, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
+                ErrorHandler.ThrowOnFailure(clEnqueueReadBuffer(commandQueue, buffer, blocking, offset, size, destPtr, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
             }
             finally
             {
@@ -944,7 +944,7 @@ namespace NOpenCL
             /// Returns one of the following values:
             ///
             /// <list type="bullet">
-            /// <item><see cref="MemObjectType.Mem"/> if the memory object was created with <see cref="clCreateBuffer"/> or <see cref="clCreateSubBuffer"/>.</item>
+            /// <item><see cref="MemObjectType.Buffer"/> if the memory object was created with <see cref="clCreateBuffer"/> or <see cref="clCreateSubBuffer"/>.</item>
             /// <item><see cref="ImageDescriptor.Type"/> value if the memory object was created with <see cref="clCreateImage"/>.</item>
             /// </list>
             /// (aka MEM_TYPE)

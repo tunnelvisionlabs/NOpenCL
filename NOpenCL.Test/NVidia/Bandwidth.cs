@@ -196,7 +196,7 @@ namespace NOpenCL.Test.NVidia
                         // DIRECT: API access to device buffer
                         for (int i = 0; i < MemoryCopyIterations; i++)
                         {
-                            commandQueue.EnqueueReadBuffer(deviceData, false, 0, memSize, h_data);
+                            commandQueue.EnqueueReadBufferAndWait(deviceData, h_data, memSize);
                         }
 
                         commandQueue.Finish();
@@ -254,7 +254,7 @@ namespace NOpenCL.Test.NVidia
                         // DIRECT: API access to device buffer
                         for (int i = 0; i < MemoryCopyIterations; i++)
                         {
-                            commandQueue.EnqueueReadBuffer(deviceData, false, 0, memSize, (IntPtr)pdata);
+                            commandQueue.EnqueueReadBuffer(deviceData, (IntPtr)pdata, memSize);
                         }
 
                         commandQueue.Finish();

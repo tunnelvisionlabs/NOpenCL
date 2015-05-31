@@ -162,7 +162,10 @@ namespace NOpenCL
         {
             get
             {
-                throw new NotImplementedException();
+                //return UnsafeNativeMethods.GetProgramDevices(Handle);
+
+                IntPtr[] devices = UnsafeNativeMethods.GetProgramInfo(Handle, UnsafeNativeMethods.ProgramInfo.Devices);
+                return Array.ConvertAll(devices, device => new Device(device));
             }
         }
 
@@ -189,18 +192,8 @@ namespace NOpenCL
         {
             get
             {
-                uint deviceCt = NumDevices;
-                Binary[] bins = new Binary[deviceCt];
-
-                var binarySizeForEachDevice = BinarySizes;
-                var unmanagedBins = BinariesAsIntPtrList;
-
-                for (int d = 0; d < deviceCt; d++)
-                {
-                    bins[d] = new byte[(uint)binarySizeForEachDevice[d]];
-                    Marshal.Copy(unmanagedBins[d], bins[d], 0, bins[d].bytes.Length);
-                }
-
+                Binary[] bins = UnsafeNativeMethods.GetBinaries(Handle);
+                
                 return bins;
             }
         }
@@ -321,9 +314,14 @@ namespace NOpenCL
     {
         public byte[] bytes;
 
-        private Binary(byte[] value)
+        public Binary(byte[] value)
         {
             this.bytes = value;
+        }
+
+        public Binary(int size)
+        {
+            this.bytes = new byte[size];
         }
 
         public static implicit operator Binary(byte[] bin)

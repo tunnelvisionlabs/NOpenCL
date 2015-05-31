@@ -88,7 +88,7 @@ namespace NOpenCL
         /// <remarks>
         /// This is a hint from the application and does not guarantee that the compiler will not be used
         /// in the future or that the compiler will actually be unloaded by the implementation. Calls to
-        /// <see cref="Program.Build"/>, <see cref="Program.Compile"/>, or <see cref="Context.LinkProgram"/>
+        /// <see cref="Program.Build()"/>, <see cref="Program.Compile()"/>, or <see cref="Context.LinkProgram"/>
         /// after <see cref="UnloadCompiler"/> will reload the compiler, if necessary, to build the
         /// appropriate program executable.
         /// </remarks>
