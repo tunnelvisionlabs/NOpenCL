@@ -6,7 +6,7 @@ namespace NOpenCL.Test.Intel
     using System;
     using System.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Buffer = NOpenCL.Buffer;
+    using Buffer = NOpenCL.Mem;
 
     [TestClass]
     public class Optimization
@@ -87,7 +87,7 @@ namespace NOpenCL.Test.Intel
             // allocate buffers
             fixed (float* pinput = input, poutput = output)
             {
-                using (Buffer inputBuffer = context.CreateBuffer(inFlags, sizeof(float) * taskSize, (IntPtr)pinput),
+                using (Mem inputBuffer = context.CreateBuffer(inFlags, sizeof(float) * taskSize, (IntPtr)pinput),
                     outputBuffer = context.CreateBuffer(outFlags, sizeof(float) * taskSize, (IntPtr)poutput))
                 {
                     kernel.Arguments[0].SetValue(inputBuffer);
@@ -100,16 +100,13 @@ namespace NOpenCL.Test.Intel
                         Console.WriteLine("Run-time determines optimal workgroup size");
                     }
 
-                    IntPtr workGroupSizeMaximum = kernel.GetWorkGroupSize(device);
-                    Console.WriteLine("Maximum workgroup size for this kernel  {0}", workGroupSizeMaximum.ToInt64());
+                    ulong workGroupSizeMaximum = kernel.GetWorkGroupSize(device);
+                    Console.WriteLine("Maximum workgroup size for this kernel  {0}", workGroupSizeMaximum);
 
                     if (warming)
                     {
                         Console.Write("Warming up OpenCL execution...");
-                        using (commandQueue.EnqueueNDRangeKernel(kernel, new[] { (IntPtr)globalWorkSize }, autoGroupSize ? null : new[] { (IntPtr)localWorkSize }))
-                        {
-                        }
-
+                        commandQueue.EnqueueNDRangeKernel(kernel, new[] { (IntPtr)globalWorkSize }, autoGroupSize ? null : new[] { (IntPtr)localWorkSize });
                         commandQueue.Finish();
                         Console.WriteLine("Done");
                     }
@@ -141,20 +138,13 @@ namespace NOpenCL.Test.Intel
                     if (useHostPointer)
                     {
                         IntPtr tmpPtr;
-                        using (commandQueue.EnqueueMapBuffer(outputBuffer, true, MapFlags.Read, 0, sizeof(float) * taskSize, out tmpPtr))
-                        {
-                        }
-
+                        commandQueue.EnqueueMapBuffer(outputBuffer, true, MapFlags.Read, 0, sizeof(float) * taskSize, out tmpPtr);
                         Assert.AreEqual((IntPtr)poutput, tmpPtr, "EnqueueMapBuffer failed to return original pointer");
-                        using (commandQueue.EnqueueUnmapMemObject(outputBuffer, tmpPtr))
-                        {
-                        }
+                        commandQueue.EnqueueUnmapMemObject(outputBuffer, tmpPtr);
                     }
                     else
                     {
-                        using (commandQueue.EnqueueReadBuffer(outputBuffer, true, 0, sizeof(float) * taskSize, (IntPtr)poutput))
-                        {
-                        }
+                        commandQueue.EnqueueReadBufferAndWait(outputBuffer, (IntPtr)poutput, sizeof(float) * taskSize);
                     }
 
                     commandQueue.Finish();
@@ -234,7 +224,7 @@ SimpleKernel4( const __global float4 *input, __global float4 *output)
 
                 Console.WriteLine("Using device {0}...", device.Name);
                 Console.WriteLine("Using {0} compute units...", device.MaxComputeUnits);
-                Console.WriteLine("Buffer alignment required for zero-copying is {0} bytes", device.MemoryBaseAddressAlignment);
+                Console.WriteLine("Mem alignment required for zero-copying is {0} bytes", device.MemoryBaseAddressAlignment);
             }
             catch
             {

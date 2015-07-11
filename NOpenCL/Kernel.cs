@@ -98,34 +98,34 @@ namespace NOpenCL
             }
         }
 
-        public IReadOnlyList<IntPtr> GetGlobalWorkSize(Device device)
+        public ulong[] GetGlobalWorkSize(Device device)
         {
             return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.GlobalWorkSize);
         }
 
-        public IntPtr GetWorkGroupSize(Device device)
+        public ulong GetWorkGroupSize(Device device) 
         {
-            return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.WorkGroupSize);
+            return (ulong)UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.WorkGroupSize)[0];
         }
 
-        public IReadOnlyList<IntPtr> GetCompileWorkGroupSize(Device device)
+        public ulong[] GetCompileWorkGroupSize(Device device)
         {
             return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.CompileWorkGroupSize);
         }
 
         public ulong GetLocalMemorySize(Device device)
         {
-            return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.LocalMemorySize);
+            return (ulong)UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.LocalMemorySize)[0];
         }
 
-        public IntPtr GetPreferredWorkGroupSizeMultiple(Device device)
+        public ulong GetPreferredWorkGroupSizeMultiple(Device device)
         {
-            return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.PreferredWorkGroupSizeMultiple);
+            return (ulong)UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.PreferredWorkGroupSizeMultiple)[0];
         }
 
         public ulong GetPrivateMemorySize(Device device)
         {
-            return UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.PrivateMemorySize);
+            return (ulong)UnsafeNativeMethods.GetKernelWorkGroupInfo(Handle, device.ID, UnsafeNativeMethods.KernelWorkGroupInfo.PrivateMemorySize)[0];
         }
 
         public void Dispose()

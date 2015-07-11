@@ -63,6 +63,39 @@ namespace NOpenCL
             }
         }
 
+        /// <summary>
+        /// Creates a program object for a <see cref="Context"/>, and loads specified binary 
+        /// data into the <see cref="Program"/> object.
+        /// </summary>
+        /// <remarks>
+        /// OpenCL allows applications to create a program object using the program source or binary 
+        /// and build appropriate program executables. This allows applications to determine whether 
+        /// they want to use the pre-built offline binary or load and compile the program source 
+        /// and use the executable compiled/linked online as the program executable. This can be 
+        /// very useful as it allows applications to load and build program executables online on 
+        /// its first instance for appropriate OpenCL devices in the system. These executables can 
+        /// now be queried and cached by the application. Future instances of the application 
+        /// launching will no longer need to compile and build the program executables. The cached 
+        /// executables can be read and loaded by the application, which can help significantly 
+        /// reduce the application initialization time.
+        /// </remarks>
+        /// <param name="devices">A pointer to a list of devices that are in context. device_list 
+        /// must be a non-NULL value. The binaries are loaded for devices specified in this list.</param>
+        /// <param name="bins">An array of pointers to program binaries to be loaded for devices 
+        /// specified by device_list. For each device given by device_list[i], the pointer to the 
+        /// program binary for that device is given by binaries[i] and the length of this 
+        /// corresponding binary is given by lengths[i]. lengths[i] cannot be zero and binaries[i] 
+        /// cannot be a NULL pointer.</param>
+        /// <returns>
+        /// <see cref="Program"/>
+        /// </returns>
+        public Program CreateProgramWithBinary(byte[][] bins, params Device[] devices)
+        {
+            UnsafeNativeMethods.ClDeviceID[] deviceIDs = Array.ConvertAll(devices, device => device.ID);
+            ProgramSafeHandle handle = UnsafeNativeMethods.CreateProgramWithBinary(_context, deviceIDs, bins);
+            return new Program(this, handle);
+        }
+
         public static Context Create(params Device[] devices)
         {
             if (devices == null)
@@ -110,12 +143,12 @@ namespace NOpenCL
             return new CommandQueue(handle, this, device);
         }
 
-        public Buffer CreateBuffer(MemoryFlags flags, long size)
+        public Mem CreateBuffer(MemoryFlags flags, long size)
         {
             return CreateBuffer(flags, size, IntPtr.Zero);
         }
 
-        public Buffer CreateBuffer(MemoryFlags flags, long size, IntPtr hostAddress)
+        public Mem CreateBuffer(MemoryFlags flags, long size, IntPtr hostAddress)
         {
             if (size < 0)
                 throw new ArgumentOutOfRangeException("size");
@@ -128,7 +161,7 @@ namespace NOpenCL
                 throw new ArgumentException("Invalid host address.");
 
             BufferSafeHandle handle = UnsafeNativeMethods.CreateBuffer(Handle, flags, (IntPtr)size, hostAddress);
-            return new Buffer(this, handle);
+            return new Mem(this, handle);
         }
 
         public Image CreateImage(MemoryFlags flags, ImageFormat format, ImageDescriptor descriptor)
@@ -148,7 +181,7 @@ namespace NOpenCL
         }
 
         /// <summary>
-        /// Creates a sampler object. Samplers contros how elements of an <see cref="Image"/> object are read by
+        /// Creates a sampler object. Samplers controls how elements of an <see cref="Image"/> object are read by
         /// <a href="http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/imageFunctions.html"><c>read_image{f|i|ui}</c></a>
         /// </summary>
         /// <param name="normalizedCoordinates"><c>true</c> to use normalized coordinates, otherwise <c>false</c>.

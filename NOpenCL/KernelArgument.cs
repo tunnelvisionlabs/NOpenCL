@@ -77,7 +77,7 @@ namespace NOpenCL
             }
         }
 
-        public void SetValue(Buffer buffer)
+        public void SetValue(Mem buffer)
         {
             if (buffer == null)
                 throw new ArgumentNullException("buffer");

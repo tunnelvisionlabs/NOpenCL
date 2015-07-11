@@ -80,6 +80,11 @@ namespace NOpenCL
         {
             private readonly IntPtr _handle;
 
+            public ClDeviceID(IntPtr handle)
+            {
+                _handle = handle;
+            }
+
             public IntPtr Handle
             {
                 get
@@ -133,7 +138,7 @@ namespace NOpenCL
             /// precision floating-point capability is 0.
             /// <para/>
             /// If double precision is supported by the device, then the minimum double
-            /// precision floatingpoint capability must be:
+            /// precision floating-point capability must be:
             /// <c><see cref="FloatingPointConfiguration.Fma"/> | <see cref="FloatingPointConfiguration.RoundToNearest"/> | <see cref="FloatingPointConfiguration.RoundToZero"/> | <see cref="FloatingPointConfiguration.RoundToInf"/> | <see cref="FloatingPointConfiguration.InfNaN"/> | <see cref="FloatingPointConfiguration.Denorm"/></c>
             /// .
             /// </summary>
@@ -498,7 +503,7 @@ namespace NOpenCL
 
             /// <summary>
             /// Returns the properties argument specified in <see cref="clCreateSubDevices"/>
-            /// if device is a subdevice. Otherwise the implementation may either return a
+            /// if device is a sub-device. Otherwise the implementation may either return a
             /// <em>param_value_size_ret</em> of 0 i.e. there is no partition type associated
             /// with device or can return a property value of 0 (where 0 is used to terminate
             /// the partition property list) in the memory that <em>param_value</em> points to.

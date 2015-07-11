@@ -10,6 +10,9 @@ namespace NOpenCL
     /// <summary>
     /// To create an instance of <see cref="Event"/>, call <see cref="NOpenCL.Context.CreateUserEvent"/>.
     /// </summary>
+    /// <remarks>
+    /// If dispose(..) or a "using(..){..}" is not used, garbage cleanup will automatically dispose.
+    /// </remarks>
     public sealed class Event : IDisposable
     {
         private readonly EventSafeHandle _handle;

@@ -4,7 +4,7 @@
 namespace NOpenCL
 {
     /// <summary>
-    /// Describes the type of buffer object to be created by <see cref="Buffer.CreateSubBuffer"/>.
+    /// Describes the type of buffer object to be created by <see cref="Mem.CreateSubBuffer"/>.
     /// </summary>
     public enum BufferCreateType
     {

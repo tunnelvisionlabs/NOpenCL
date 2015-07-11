@@ -8,13 +8,25 @@ namespace NOpenCL
     using System.ComponentModel;
     using NOpenCL.SafeHandles;
     using DeviceInfo = NOpenCL.UnsafeNativeMethods.DeviceInfo;
+    using System.Diagnostics;
 
+    [DebuggerDisplay("Name = {Name}")]
     public sealed class Device : IEquatable<Device>, IDisposable
     {
-        private readonly UnsafeNativeMethods.ClDeviceID _device;
+        /// <summary>
+        /// _handle is in case anything needs to be cleaned up.
+        /// </summary>
         private readonly DeviceSafeHandle _handle;
 
+        private readonly UnsafeNativeMethods.ClDeviceID _device;
+
         private bool _disposed;
+
+
+        internal Device(IntPtr device)
+        {
+            _device = new UnsafeNativeMethods.ClDeviceID(device);
+        }
 
         internal Device(UnsafeNativeMethods.ClDeviceID device)
         {
@@ -96,7 +108,7 @@ namespace NOpenCL
         /// precision floating-point capability is 0.
         /// <para/>
         /// If double precision is supported by the device, then the minimum double
-        /// precision floatingpoint capability must be:
+        /// precision floating-point capability must be:
         /// <c><see cref="FloatingPointConfiguration.Fma"/> | <see cref="FloatingPointConfiguration.RoundToNearest"/> | <see cref="FloatingPointConfiguration.RoundToZero"/> | <see cref="FloatingPointConfiguration.RoundToInf"/> | <see cref="FloatingPointConfiguration.InfNaN"/> | <see cref="FloatingPointConfiguration.Denorm"/></c>
         /// .
         /// </summary>
@@ -478,7 +490,7 @@ namespace NOpenCL
         /// <summary>
         /// Maximum number of work-items in a work-group executing a kernel on a single
         /// compute unit, using the data parallel execution model.
-        /// (Refer to <see cref="CommandQueue.EnqueueNDRangeKernel"/>). The minimum value is 1.
+        /// (Refer to <see cref="O:CommandQueue.EnqueueNDRangeKernel"/>). The minimum value is 1.
         /// </summary>
         public UIntPtr MaxWorkGroupSize
         {
@@ -490,7 +502,7 @@ namespace NOpenCL
 
         /// <summary>
         /// Maximum dimensions that specify the global and local work-item IDs used by
-        /// the data parallel execution model. (Refer to <see cref="CommandQueue.EnqueueNDRangeKernel"/>). The
+        /// the data parallel execution model. (Refer to <see cref="O:CommandQueue.EnqueueNDRangeKernel"/>). The
         /// minimum value is 3 for devices that are not of type <see cref="NOpenCL.DeviceType.Custom"/>.
         /// </summary>
         public uint MaxWorkItemDimensions
@@ -503,7 +515,7 @@ namespace NOpenCL
 
         /// <summary>
         /// Maximum number of work-items that can be specified in each dimension of
-        /// the work-group to <see cref="CommandQueue.EnqueueNDRangeKernel"/>.
+        /// the work-group to <see cref="O:CommandQueue.EnqueueNDRangeKernel"/>.
         /// <para/>
         /// Returns <em>n</em> <see cref="IntPtr"/> entries, where <em>n</em> is the
         /// value returned by the query for <see cref="MaxWorkItemDimensions"/>.
@@ -675,7 +687,7 @@ namespace NOpenCL
         }
 
         /// <summary>
-        /// Returns the the parent <see cref="Device"/> to which this sub-device belongs.
+        /// Returns the parent <see cref="Device"/> to which this sub-device belongs.
         /// If device is a root-level device, this property is <c>null</c>.
         /// </summary>
         public Device Parent

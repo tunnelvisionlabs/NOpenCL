@@ -4,7 +4,6 @@
 namespace NOpenCL
 {
     using System;
-    using ErrorCode = NOpenCL.UnsafeNativeMethods.ErrorCode;
 
     internal static class ErrorHandler
     {

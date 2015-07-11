@@ -4,7 +4,6 @@
 namespace NOpenCL.SafeHandles
 {
     using Microsoft.Win32.SafeHandles;
-    using ErrorCode = NOpenCL.UnsafeNativeMethods.ErrorCode;
 
     public sealed class EventSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
     {

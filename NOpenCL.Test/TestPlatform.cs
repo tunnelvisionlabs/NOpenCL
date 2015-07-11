@@ -48,7 +48,7 @@ namespace NOpenCL.Test
             }
 
             string version = platform.Version;
-            StringAssert.Matches(version, new Regex("^OpenCL 1.[12] .*$"));
+            StringAssert.Matches(version, new Regex("^OpenCL (1.[12]|2.[01]) .*$")); 
 
             string name = platform.Name;
             Assert.IsNotNull(name);
