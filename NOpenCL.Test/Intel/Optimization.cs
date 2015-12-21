@@ -77,8 +77,22 @@ namespace NOpenCL.Test.Intel
             }
         }
 
-        private unsafe void ExecuteKernel(Context context, Device device, CommandQueue commandQueue, Kernel kernel, float[] input, float[] output, int globalWorkSize, int localWorkSize, bool warming, bool useHostPointer, bool autoGroupSize, bool enableProfiling,
-            out TimeSpan stopwatchTime, out TimeSpan profiledTime, out TimeSpan readTime)
+        private unsafe void ExecuteKernel(
+            Context context,
+            Device device,
+            CommandQueue commandQueue,
+            Kernel kernel,
+            float[] input,
+            float[] output,
+            int globalWorkSize,
+            int localWorkSize,
+            bool warming,
+            bool useHostPointer,
+            bool autoGroupSize,
+            bool enableProfiling,
+            out TimeSpan stopwatchTime,
+            out TimeSpan profiledTime,
+            out TimeSpan readTime)
         {
             MemoryFlags inFlags = (useHostPointer ? MemoryFlags.UseHostPointer : MemoryFlags.CopyHostPointer) | MemoryFlags.ReadOnly;
             MemoryFlags outFlags = (useHostPointer ? MemoryFlags.UseHostPointer : MemoryFlags.CopyHostPointer) | MemoryFlags.ReadWrite;
