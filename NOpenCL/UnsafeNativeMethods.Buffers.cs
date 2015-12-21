@@ -62,11 +62,12 @@ namespace NOpenCL
         /// http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/clCreateSubBuffer.html
         /// http://www.khronos.org/registry/cl/specs/opencl-1.2.pdf#page=69
         /// </summary>
-        /// <param name="buffer"></param>
-        /// <param name="flags"></param>
-        /// <param name="mustBeRegion"></param>
-        /// <param name="regionInfo"></param>
-        /// <param name="errorCode"></param>
+        /// <param name="buffer">A valid object and cannot be a sub-buffer object.</param>
+        /// <param name="flags">A bit-field that is used to specify allocation and usage information about the sub-buffer memory object being created.</param>
+        /// <param name="mustBeRegion">Must be <see cref="BufferCreateType.Region"/>.</param>
+        /// <param name="regionInfo">A <see cref="BufferRegion"/> instance defining the region in
+        /// <paramref name="buffer"/> for which to create a sub-buffer.</param>
+        /// <param name="errorCode">Returns an appropriate error code.</param>
         /// <returns>
         /// Returns a valid non-zero buffer object and <paramref name="errorCode"/> is set
         /// to <see cref="ErrorCode.Success"/> if the buffer object is created successfully.
@@ -134,8 +135,13 @@ namespace NOpenCL
         /// <param name="offset">The offset in bytes in the buffer object to read from.</param>
         /// <param name="size">The size in bytes of data being read.</param>
         /// <param name="destination">The pointer to buffer in host memory where data is to be read into.</param>
-        /// <param name="numEventsInWaitList"></param>
-        /// <param name="eventWaitList"></param>
+        /// <param name="numEventsInWaitList">The number of events in <paramref name="eventWaitList"/>.</param>
+        /// <param name="eventWaitList">The events that need to complete before this particular command can be executed.
+        /// If <paramref name="eventWaitList"/> is <see langword="null"/>, then this particular command does not wait on
+        /// any event to complete. If <paramref name="eventWaitList"/> is <see langword="null"/>,
+        /// <paramref name="numEventsInWaitList"/> must be 0. If <paramref name="eventWaitList"/> is not
+        /// <see langword="null"/>, the list of events pointed to by <paramref name="eventWaitList"/> must be valid and
+        /// <paramref name="numEventsInWaitList"/> must be greater than 0.</param>
         /// <param name="event">Returns an event object that identifies this particular read command and can be used to query or queue a wait for this particular command to complete.</param>
         /// <returns>
         /// <see cref="clEnqueueReadBuffer"/> returns <see cref="ErrorCode.Success"/> if the function

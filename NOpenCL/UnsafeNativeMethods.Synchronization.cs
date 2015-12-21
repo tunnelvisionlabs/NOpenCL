@@ -27,8 +27,13 @@ namespace NOpenCL
         /// <paramref name="commandQueue"/>, have completed.
         /// </remarks>
         /// <param name="commandQueue">A valid command-queue.</param>
-        /// <param name="numEventsInWaitList"></param>
-        /// <param name="eventWaitList"></param>
+        /// <param name="numEventsInWaitList">The number of events in <paramref name="eventWaitList"/>.</param>
+        /// <param name="eventWaitList">The events that need to complete before this particular command can be executed.
+        /// If <paramref name="eventWaitList"/> is <see langword="null"/>, then this particular command does not wait on
+        /// any event to complete. If <paramref name="eventWaitList"/> is <see langword="null"/>,
+        /// <paramref name="numEventsInWaitList"/> must be 0. If <paramref name="eventWaitList"/> is not
+        /// <see langword="null"/>, the list of events pointed to by <paramref name="eventWaitList"/> must be valid and
+        /// <paramref name="numEventsInWaitList"/> must be greater than 0.</param>
         /// <param name="event">Returns an event object that identifies this particular command.</param>
         /// <returns>
         /// Returns <see cref="ErrorCode.Success"/> if the function executed successfully,
@@ -74,8 +79,13 @@ namespace NOpenCL
         /// queued before this command to <paramref name="commandQueue"/>, have completed.
         /// </remarks>
         /// <param name="commandQueue">A valid command-queue.</param>
-        /// <param name="numEventsInWaitList"></param>
-        /// <param name="eventWaitList"></param>
+        /// <param name="numEventsInWaitList">The number of events in <paramref name="eventWaitList"/>.</param>
+        /// <param name="eventWaitList">The events that need to complete before this particular command can be executed.
+        /// If <paramref name="eventWaitList"/> is <see langword="null"/>, then this particular command does not wait on
+        /// any event to complete. If <paramref name="eventWaitList"/> is <see langword="null"/>,
+        /// <paramref name="numEventsInWaitList"/> must be 0. If <paramref name="eventWaitList"/> is not
+        /// <see langword="null"/>, the list of events pointed to by <paramref name="eventWaitList"/> must be valid and
+        /// <paramref name="numEventsInWaitList"/> must be greater than 0.</param>
         /// <param name="event">Returns an event object that identifies this particular command.</param>
         /// <returns>
         /// Returns <see cref="ErrorCode.Success"/> if the function executed successfully,

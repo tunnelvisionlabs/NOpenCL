@@ -1087,7 +1087,7 @@ namespace NOpenCL
         ///
         /// The user may determine what happened by checking <see cref="PartitionType"/> on the sub-devices.
         /// </summary>
-        /// <param name="affinityDomain"></param>
+        /// <param name="affinityDomain">Specifies the cache hierarchy shared by the partitioned compute units.</param>
         /// <returns>A collection of sub-devices representing the created partitions.</returns>
         public DisposableCollection<Device> PartitionByAffinityDomain(AffinityDomain affinityDomain)
         {
