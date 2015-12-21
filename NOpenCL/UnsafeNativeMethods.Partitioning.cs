@@ -8,10 +8,11 @@ namespace NOpenCL
     using System.Runtime.InteropServices;
     using NOpenCL.SafeHandles;
 
-    partial class UnsafeNativeMethods
+    /// <content>
+    /// Partitioning a device.
+    /// </content>
+    internal partial class UnsafeNativeMethods
     {
-        #region Partition a Device
-
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clCreateSubDevices(
             ClDeviceID device,
@@ -75,7 +76,5 @@ namespace NOpenCL
 
         [DllImport(ExternDll.OpenCL)]
         public static extern ErrorCode clReleaseDevice(IntPtr device);
-
-        #endregion
     }
 }

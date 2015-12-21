@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NOpenCL", "NOpenCL\NOpenCL.csproj", "{C94F61DD-9361-4B1F-B1A8-DAD72BD6FD51}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NOpenCL.Test", "NOpenCL.Test\NOpenCL.Test.csproj", "{E3049450-381D-42F5-AB04-16628C8C85BB}"
@@ -9,6 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		LICENSE.md = LICENSE.md
 		README.md = README.md
+		stylecop.json = stylecop.json
+		TunnelVisionLabs.NOpenCL.ruleset = TunnelVisionLabs.NOpenCL.ruleset
+		TunnelVisionLabs.NOpenCL.UnitTest.ruleset = TunnelVisionLabs.NOpenCL.UnitTest.ruleset
 	EndProjectSection
 EndProject
 Global

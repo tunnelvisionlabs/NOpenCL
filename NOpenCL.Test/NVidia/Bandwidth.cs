@@ -13,7 +13,7 @@ namespace NOpenCL.Test.NVidia
     public class Bandwidth
     {
         private const int DefaultSize = 32 * (1 << 20); // 32 M
-        private const int DefaultIncrement = (1 << 22); // 4 M
+        private const int DefaultIncrement = 1 << 22; // 4 M
         private const int MemoryCopyIterations = 100;
 
         [TestMethod]
@@ -102,7 +102,7 @@ namespace NOpenCL.Test.NVidia
 
         private void TestBandwidthRange(Context context, Device[] devices, int start, int end, int increment, MemoryCopyKind memoryCopyKind, PrintMode printMode, AccessMode accessMode, MemoryMode memoryMode, int startDevice, int endDevice)
         {
-            //count the number of copies we're going to run
+            // count the number of copies we're going to run
             int count = 1 + ((end - start) / increment);
             int[] memSizes = new int[count];
             double[] bandwidths = new double[count];
@@ -117,10 +117,10 @@ namespace NOpenCL.Test.NVidia
                 // Allocate command queue for the device (dealloc first if already allocated)
                 using (CommandQueue queue = CreateQueue(context, devices[currentDevice]))
                 {
-                    //run each of the copies
+                    // run each of the copies
                     for (int i = 0; i < count; i++)
                     {
-                        memSizes[i] = start + i * increment;
+                        memSizes[i] = start + (i * increment);
                         switch (memoryCopyKind)
                         {
                         case MemoryCopyKind.DeviceToHost:
@@ -139,14 +139,14 @@ namespace NOpenCL.Test.NVidia
                 }
             } // Complete the bandwidth computation on all the devices
 
-            //print results
+            // print results
             if (printMode == PrintMode.Csv)
             {
-                PrintResultsCsv(memSizes, bandwidths, count, memoryCopyKind, accessMode, memoryMode, (1 + endDevice - startDevice));
+                PrintResultsCsv(memSizes, bandwidths, count, memoryCopyKind, accessMode, memoryMode, 1 + endDevice - startDevice);
             }
             else
             {
-                PrintResultsReadable(memSizes, bandwidths, count, memoryCopyKind, accessMode, memoryMode, (1 + endDevice - startDevice));
+                PrintResultsReadable(memSizes, bandwidths, count, memoryCopyKind, accessMode, memoryMode, 1 + endDevice - startDevice);
             }
         }
 
@@ -212,11 +212,11 @@ namespace NOpenCL.Test.NVidia
                         commandQueue.EnqueueUnmapMemObject(deviceData, dm_idata);
                     }
 
-                    //get the the elapsed time in seconds
+                    // get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
-                    // Calculate bandwidth in MB/s 
-                    //      This is for kernels that read and write GMEM simultaneously 
+                    // Calculate bandwidth in MB/s
+                    //      This is for kernels that read and write GMEM simultaneously
                     //      Obtained Throughput for unidirectional block copies will be 1/2 of this #
                     double bandwidthInMBs = 2.0 * ((double)memSize * (double)MemoryCopyIterations) / (elapsedTimeInSeconds * (double)(1 << 20));
 
@@ -226,7 +226,7 @@ namespace NOpenCL.Test.NVidia
         }
 
         [DllImport("kernel32.dll")]
-        //[SuppressUnmanagedCodeSecurity]
+        ////[SuppressUnmanagedCodeSecurity]
         private static extern void CopyMemory(IntPtr destination, IntPtr source, UIntPtr length);
 
         private unsafe double TestDeviceToHostTransferPaged(Context context, CommandQueue commandQueue, int memSize, AccessMode accessMode)
@@ -270,11 +270,11 @@ namespace NOpenCL.Test.NVidia
                         commandQueue.EnqueueUnmapMemObject(deviceData, dm_idata);
                     }
 
-                    //get the the elapsed time in seconds
+                    // get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
-                    // Calculate bandwidth in MB/s 
-                    //      This is for kernels that read and write GMEM simultaneously 
+                    // Calculate bandwidth in MB/s
+                    //      This is for kernels that read and write GMEM simultaneously
                     //      Obtained Throughput for unidirectional block copies will be 1/2 of this #
                     double bandwidthInMBs = 2.0 * ((double)memSize * (double)MemoryCopyIterations) / (elapsedTimeInSeconds * (double)(1 << 20));
 
@@ -340,11 +340,11 @@ namespace NOpenCL.Test.NVidia
                         commandQueue.EnqueueUnmapMemObject(deviceData, dm_idata);
                     }
 
-                    //get the the elapsed time in seconds
+                    // get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
-                    // Calculate bandwidth in MB/s 
-                    //      This is for kernels that read and write GMEM simultaneously 
+                    // Calculate bandwidth in MB/s
+                    //      This is for kernels that read and write GMEM simultaneously
                     //      Obtained Throughput for unidirectional block copies will be 1/2 of this #
                     double bandwidthInMBs = 2.0 * ((double)memSize * (double)MemoryCopyIterations) / (elapsedTimeInSeconds * (double)(1 << 20));
 
@@ -391,11 +391,11 @@ namespace NOpenCL.Test.NVidia
                         commandQueue.EnqueueUnmapMemObject(deviceData, dm_idata);
                     }
 
-                    //get the the elapsed time in seconds
+                    // get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
-                    // Calculate bandwidth in MB/s 
-                    //      This is for kernels that read and write GMEM simultaneously 
+                    // Calculate bandwidth in MB/s
+                    //      This is for kernels that read and write GMEM simultaneously
                     //      Obtained Throughput for unidirectional block copies will be 1/2 of this #
                     double bandwidthInMBs = 2.0 * ((double)memSize * (double)MemoryCopyIterations) / (elapsedTimeInSeconds * (double)(1 << 20));
 
@@ -449,8 +449,8 @@ namespace NOpenCL.Test.NVidia
                 // get the elapsed time in seconds
                 elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
-                // Calculate bandwidth in MB/s 
-                //      This is for kernels that read and write GMEM simultaneously 
+                // Calculate bandwidth in MB/s
+                //      This is for kernels that read and write GMEM simultaneously
                 //      Obtained Throughput for unidirectional block copies will be 1/2 of this #
                 bandwidthInMBs = 2.0 * ((double)memorySize * (double)MemoryCopyIterations) / (elapsedTimeInSeconds * (double)(1 << 20));
             }
@@ -497,7 +497,7 @@ namespace NOpenCL.Test.NVidia
             Console.WriteLine("   Transfer size (bytes)\tBandwidth (MB/s)");
             for (int i = 0; i < count; i++)
             {
-                Console.WriteLine("   {0}\t\t\t{1}{2}", memSizes[i], memSizes[i] < 10000 ? "\t" : "", bandwidths[i]);
+                Console.WriteLine("   {0}\t\t\t{1}{2}", memSizes[i], memSizes[i] < 10000 ? "\t" : string.Empty, bandwidths[i]);
             }
 
             Console.WriteLine();

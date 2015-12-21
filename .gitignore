@@ -2,3 +2,6 @@ obj/
 bin/
 *.csproj.user
 *.suo
+
+.vs/
+packages/

@@ -7,10 +7,11 @@ namespace NOpenCL
     using System.Runtime.InteropServices;
     using NOpenCL.SafeHandles;
 
-    partial class UnsafeNativeMethods
+    /// <content>
+    /// Profiling operations on memory objects and kernels.
+    /// </content>
+    internal partial class UnsafeNativeMethods
     {
-        #region Profiling Operations on Memory Objects and Kernels
-
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clGetEventProfilingInfo(
             EventSafeHandle @event,
@@ -111,7 +112,5 @@ namespace NOpenCL
                 }
             }
         }
-
-        #endregion
     }
 }

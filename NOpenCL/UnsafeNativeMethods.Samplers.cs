@@ -7,10 +7,11 @@ namespace NOpenCL
     using System.Runtime.InteropServices;
     using NOpenCL.SafeHandles;
 
-    partial class UnsafeNativeMethods
+    /// <content>
+    /// Sampler objects.
+    /// </content>
+    internal partial class UnsafeNativeMethods
     {
-        #region Sampler Objects
-
         /// <summary>
         /// Creates a sampler object.
         /// http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/clCreateSampler.html
@@ -246,7 +247,5 @@ namespace NOpenCL
                 }
             }
         }
-
-        #endregion
     }
 }

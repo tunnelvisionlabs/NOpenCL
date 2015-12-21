@@ -51,7 +51,7 @@ namespace NOpenCL
         {
             get
             {
-                return UnsafeNativeMethods.GetPlatformInfo(_platform, UnsafeNativeMethods.PlatformInfo.Extensions).Split(new [] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                return UnsafeNativeMethods.GetPlatformInfo(_platform, UnsafeNativeMethods.PlatformInfo.Extensions).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
 

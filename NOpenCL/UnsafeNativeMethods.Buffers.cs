@@ -7,10 +7,11 @@ namespace NOpenCL
     using System.Runtime.InteropServices;
     using NOpenCL.SafeHandles;
 
-    partial class UnsafeNativeMethods
+    /// <content>
+    /// Buffer objects.
+    /// </content>
+    internal partial class UnsafeNativeMethods
     {
-        #region Buffer Objects
-
         /// <summary>
         /// Creates a buffer object.
         /// http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/clCreateBuffer.html
@@ -61,11 +62,12 @@ namespace NOpenCL
         /// http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/clCreateSubBuffer.html
         /// http://www.khronos.org/registry/cl/specs/opencl-1.2.pdf#page=69
         /// </summary>
-        /// <param name="buffer"></param>
-        /// <param name="flags"></param>
-        /// <param name="mustBeRegion"></param>
-        /// <param name="regionInfo"></param>
-        /// <param name="errorCode"></param>
+        /// <param name="buffer">A valid object and cannot be a sub-buffer object.</param>
+        /// <param name="flags">A bit-field that is used to specify allocation and usage information about the sub-buffer memory object being created.</param>
+        /// <param name="mustBeRegion">Must be <see cref="BufferCreateType.Region"/>.</param>
+        /// <param name="regionInfo">A <see cref="BufferRegion"/> instance defining the region in
+        /// <paramref name="buffer"/> for which to create a sub-buffer.</param>
+        /// <param name="errorCode">Returns an appropriate error code.</param>
         /// <returns>
         /// Returns a valid non-zero buffer object and <paramref name="errorCode"/> is set
         /// to <see cref="ErrorCode.Success"/> if the buffer object is created successfully.
@@ -133,8 +135,13 @@ namespace NOpenCL
         /// <param name="offset">The offset in bytes in the buffer object to read from.</param>
         /// <param name="size">The size in bytes of data being read.</param>
         /// <param name="destination">The pointer to buffer in host memory where data is to be read into.</param>
-        /// <param name="numEventsInWaitList"></param>
-        /// <param name="eventWaitList"></param>
+        /// <param name="numEventsInWaitList">The number of events in <paramref name="eventWaitList"/>.</param>
+        /// <param name="eventWaitList">The events that need to complete before this particular command can be executed.
+        /// If <paramref name="eventWaitList"/> is <see langword="null"/>, then this particular command does not wait on
+        /// any event to complete. If <paramref name="eventWaitList"/> is <see langword="null"/>,
+        /// <paramref name="numEventsInWaitList"/> must be 0. If <paramref name="eventWaitList"/> is not
+        /// <see langword="null"/>, the list of events pointed to by <paramref name="eventWaitList"/> must be valid and
+        /// <paramref name="numEventsInWaitList"/> must be greater than 0.</param>
         /// <param name="event">Returns an event object that identifies this particular read command and can be used to query or queue a wait for this particular command to complete.</param>
         /// <returns>
         /// <see cref="clEnqueueReadBuffer"/> returns <see cref="ErrorCode.Success"/> if the function
@@ -919,7 +926,7 @@ namespace NOpenCL
             /// and <see cref="MemoryFlags.UseHostPointer"/> is specified in <em>memoryFlags</em>, return the
             /// <em>hostPointer</em> argument value specified when the memory object was created. Otherwise
             /// <see cref="IntPtr.Zero"/> is returned.
-            /// 
+            ///
             /// <para>If the memory object was created with <see cref="clCreateSubBuffer"/>, return the
             /// <em>hostPointer</em> + <em>origin</em> value specified when the memory object was created.
             /// <em>hostPointer</em> is the argument value specified to <see cref="clCreateBuffer"/> and
@@ -1051,20 +1058,20 @@ namespace NOpenCL
             /// <summary>
             /// Return <see cref="ImageFormat"/> descriptor specified when the image was created with <see cref="clCreateImage"/>.
             /// </summary>
-            public static ImageParameterInfo<IntPtr[]> Format =
+            public static ImageParameterInfo<IntPtr[]> Format { get; } =
                 (ImageParameterInfo<IntPtr[]>)new ParameterInfoIntPtrArray(0x1110);
 
             /// <summary>
             /// Return size of each element of the image memory object. An element is made up of <em>n</em> channels.
             /// The value of <em>n</em> is given in <see cref="ImageFormat.ChannelOrder"/>.
             /// </summary>
-            public static ImageParameterInfo<UIntPtr> ElementSize =
+            public static ImageParameterInfo<UIntPtr> ElementSize { get; } =
                 (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1111);
 
             /// <summary>
             /// Return size in bytes of a row of elements of the image object given by the image.
             /// </summary>
-            public static ImageParameterInfo<UIntPtr> RowPitch =
+            public static ImageParameterInfo<UIntPtr> RowPitch { get; } =
                 (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1112);
 
             /// <summary>
@@ -1072,52 +1079,52 @@ namespace NOpenCL
             /// size of each image in a 1D or 2D image array given by the image. For a 1D image,
             /// 1D image buffer and 2D image object return <see cref="UIntPtr.Zero"/>.
             /// </summary>
-            public static ImageParameterInfo<UIntPtr> SlicePitch =
+            public static ImageParameterInfo<UIntPtr> SlicePitch { get; } =
                 (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1113);
 
             /// <summary>
             /// Return the width of the image in pixels.
             /// </summary>
-            public static ImageParameterInfo<UIntPtr> Width =
+            public static ImageParameterInfo<UIntPtr> Width { get; } =
                 (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1114);
 
             /// <summary>
             /// Return the height of the image in pixels. For a 1D image, 1D image buffer and 1D
             /// image array object, this returns <see cref="UIntPtr.Zero"/>.
             /// </summary>
-            public static ImageParameterInfo<UIntPtr> Height =
+            public static ImageParameterInfo<UIntPtr> Height { get; } =
                 (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1115);
 
             /// <summary>
             /// Return the depth of the the image in pixels. For a 1D image, 1D image buffer, 2D
             /// image or 1D and 2D image array object, this returns <see cref="UIntPtr.Zero"/>.
             /// </summary>
-            public static ImageParameterInfo<UIntPtr> Depth =
+            public static ImageParameterInfo<UIntPtr> Depth { get; } =
                 (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1116);
 
             /// <summary>
             /// Return number of images in the image array. If the image is not an image array,
             /// <see cref="UIntPtr.Zero"/> is returned.
             /// </summary>
-            public static ImageParameterInfo<UIntPtr> ArraySize =
+            public static ImageParameterInfo<UIntPtr> ArraySize { get; } =
                 (ImageParameterInfo<UIntPtr>)new ParameterInfoUIntPtr(0x1117);
 
             /// <summary>
             /// Return the buffer object associated with the image.
             /// </summary>
-            public static ImageParameterInfo<IntPtr> Buffer =
+            public static ImageParameterInfo<IntPtr> Buffer { get; } =
                 (ImageParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1118);
 
             /// <summary>
             /// Return the <see cref="ImageDescriptor.NumMipLevels"/> associated with the image.
             /// </summary>
-            public static ImageParameterInfo<uint> NumMipLevels =
+            public static ImageParameterInfo<uint> NumMipLevels { get; } =
                 (ImageParameterInfo<uint>)new ParameterInfoUInt32(0x1119);
 
             /// <summary>
             /// Return the <see cref="ImageDescriptor.NumSamples"/> associated with the image.
             /// </summary>
-            public static ImageParameterInfo<uint> NumSamples =
+            public static ImageParameterInfo<uint> NumSamples { get; } =
                 (ImageParameterInfo<uint>)new ParameterInfoUInt32(0x111A);
         }
 
@@ -1163,7 +1170,5 @@ namespace NOpenCL
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void MemObjectDestructorCallback(IntPtr memObject, IntPtr userData);
-
-        #endregion
     }
 }

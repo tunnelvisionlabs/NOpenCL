@@ -6,10 +6,11 @@ namespace NOpenCL
     using System;
     using System.Runtime.InteropServices;
 
-    partial class UnsafeNativeMethods
+    /// <content>
+    /// Devices.
+    /// </content>
+    internal partial class UnsafeNativeMethods
     {
-        #region Devices
-
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clGetDeviceIDs(
             ClPlatformID platform,
@@ -696,7 +697,5 @@ namespace NOpenCL
                 }
             }
         }
-
-        #endregion
     }
 }

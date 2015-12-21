@@ -11,7 +11,7 @@ namespace NOpenCL.Test.Intel
     [TestClass]
     public class Optimization
     {
-        private readonly Random Random = new Random();
+        private readonly Random _random = new Random();
 
         [TestMethod]
         public void TestOptimization()
@@ -49,7 +49,7 @@ namespace NOpenCL.Test.Intel
                 double minimum = -255.0;
                 double maximum = 255.0;
                 for (int i = 0; i < input.Length; i++)
-                    input[i] = (float)(Random.NextDouble() * (maximum - minimum) + minimum);
+                    input[i] = (float)((_random.NextDouble() * (maximum - minimum)) + minimum);
 
                 // do simple math
                 TimeSpan stopwatchTime;
@@ -77,13 +77,28 @@ namespace NOpenCL.Test.Intel
             }
         }
 
-        private unsafe void ExecuteKernel(Context context, Device device, CommandQueue commandQueue, Kernel kernel, float[] input, float[] output, int globalWorkSize, int localWorkSize, bool warming, bool useHostPointer, bool autoGroupSize, bool enableProfiling,
-            out TimeSpan stopwatchTime, out TimeSpan profiledTime, out TimeSpan readTime)
+        private unsafe void ExecuteKernel(
+            Context context,
+            Device device,
+            CommandQueue commandQueue,
+            Kernel kernel,
+            float[] input,
+            float[] output,
+            int globalWorkSize,
+            int localWorkSize,
+            bool warming,
+            bool useHostPointer,
+            bool autoGroupSize,
+            bool enableProfiling,
+            out TimeSpan stopwatchTime,
+            out TimeSpan profiledTime,
+            out TimeSpan readTime)
         {
             MemoryFlags inFlags = (useHostPointer ? MemoryFlags.UseHostPointer : MemoryFlags.CopyHostPointer) | MemoryFlags.ReadOnly;
             MemoryFlags outFlags = (useHostPointer ? MemoryFlags.UseHostPointer : MemoryFlags.CopyHostPointer) | MemoryFlags.ReadWrite;
 
             int taskSize = input.Length;
+
             // allocate buffers
             fixed (float* pinput = input, poutput = output)
             {
@@ -116,6 +131,7 @@ namespace NOpenCL.Test.Intel
 
                     Console.Write("Executing OpenCL kernel...");
                     Stopwatch timer = Stopwatch.StartNew();
+
                     // execute kernel, pls notice autoGroupSize
                     using (Event perfEvent = commandQueue.EnqueueNDRangeKernel(kernel, new[] { (IntPtr)globalWorkSize }, autoGroupSize ? null : new[] { (IntPtr)localWorkSize }))
                     {
@@ -128,6 +144,7 @@ namespace NOpenCL.Test.Intel
                         {
                             ulong start = perfEvent.CommandStartTime;
                             ulong end = perfEvent.CommandEndTime;
+
                             // a tick is 100ns
                             profiledTime = TimeSpan.FromTicks((long)(end - start) / 100);
                         }

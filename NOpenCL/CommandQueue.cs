@@ -103,7 +103,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueReadBuffer(this.Handle, buffer.Handle, blocking, (IntPtr)offset, (IntPtr)size, destination, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueReadBuffer(Handle, buffer.Handle, blocking, (IntPtr)offset, (IntPtr)size, destination, eventHandles);
             return new Event(handle);
         }
 
@@ -113,7 +113,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueReadBufferRect(this.Handle, buffer.Handle, blocking, ref bufferOrigin, ref hostOrigin, ref region, (IntPtr)bufferRowPitch, (IntPtr)bufferSlicePitch, (IntPtr)hostRowPitch, (IntPtr)hostSlicePitch, destination, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueReadBufferRect(Handle, buffer.Handle, blocking, ref bufferOrigin, ref hostOrigin, ref region, (IntPtr)bufferRowPitch, (IntPtr)bufferSlicePitch, (IntPtr)hostRowPitch, (IntPtr)hostSlicePitch, destination, eventHandles);
             return new Event(handle);
         }
 
@@ -123,7 +123,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueWriteBuffer(this.Handle, buffer.Handle, blocking, (IntPtr)offset, (IntPtr)size, source, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueWriteBuffer(Handle, buffer.Handle, blocking, (IntPtr)offset, (IntPtr)size, source, eventHandles);
             return new Event(handle);
         }
 
@@ -133,7 +133,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueWriteBufferRect(this.Handle, buffer.Handle, blocking, ref bufferOrigin, ref hostOrigin, ref region, (IntPtr)bufferRowPitch, (IntPtr)bufferSlicePitch, (IntPtr)hostRowPitch, (IntPtr)hostSlicePitch, source, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueWriteBufferRect(Handle, buffer.Handle, blocking, ref bufferOrigin, ref hostOrigin, ref region, (IntPtr)bufferRowPitch, (IntPtr)bufferSlicePitch, (IntPtr)hostRowPitch, (IntPtr)hostSlicePitch, source, eventHandles);
             return new Event(handle);
         }
 
@@ -143,7 +143,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyBuffer(this.Handle, source.Handle, destination.Handle, (IntPtr)sourceOffset, (IntPtr)destinationOffset, (IntPtr)size, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyBuffer(Handle, source.Handle, destination.Handle, (IntPtr)sourceOffset, (IntPtr)destinationOffset, (IntPtr)size, eventHandles);
             return new Event(handle);
         }
 
@@ -153,7 +153,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyBufferRect(this.Handle, source.Handle, destination.Handle, ref sourceOrigin, ref destinationOrigin, ref region, (IntPtr)sourceRowPitch, (IntPtr)sourceSlicePitch, (IntPtr)destinationRowPitch, (IntPtr)destinationSlicePitch, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyBufferRect(Handle, source.Handle, destination.Handle, ref sourceOrigin, ref destinationOrigin, ref region, (IntPtr)sourceRowPitch, (IntPtr)sourceSlicePitch, (IntPtr)destinationRowPitch, (IntPtr)destinationSlicePitch, eventHandles);
             return new Event(handle);
         }
 
@@ -163,7 +163,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueMapBuffer(this.Handle, buffer.Handle, blocking, mapFlags, (IntPtr)offset, (IntPtr)size, out mappedPointer, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueMapBuffer(Handle, buffer.Handle, blocking, mapFlags, (IntPtr)offset, (IntPtr)size, out mappedPointer, eventHandles);
             return new Event(handle);
         }
 
@@ -173,7 +173,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueReadImage(this.Handle, image.Handle, blocking, ref origin, ref region, (IntPtr)rowPitch, (IntPtr)slicePitch, destination, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueReadImage(Handle, image.Handle, blocking, ref origin, ref region, (IntPtr)rowPitch, (IntPtr)slicePitch, destination, eventHandles);
             return new Event(handle);
         }
 
@@ -183,7 +183,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueWriteImage(this.Handle, image.Handle, blocking, ref origin, ref region, (IntPtr)inputRowPitch, (IntPtr)inputSlicePitch, source, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueWriteImage(Handle, image.Handle, blocking, ref origin, ref region, (IntPtr)inputRowPitch, (IntPtr)inputSlicePitch, source, eventHandles);
             return new Event(handle);
         }
 
@@ -193,7 +193,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueFillImage(this.Handle, image.Handle, fillColor, ref origin, ref region, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueFillImage(Handle, image.Handle, fillColor, ref origin, ref region, eventHandles);
             return new Event(handle);
         }
 
@@ -203,7 +203,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueFillImage(this.Handle, image.Handle, fillColor, ref origin, ref region, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueFillImage(Handle, image.Handle, fillColor, ref origin, ref region, eventHandles);
             return new Event(handle);
         }
 
@@ -213,7 +213,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueFillImage(this.Handle, image.Handle, fillColor, ref origin, ref region, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueFillImage(Handle, image.Handle, fillColor, ref origin, ref region, eventHandles);
             return new Event(handle);
         }
 
@@ -223,7 +223,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyImage(this.Handle, sourceImage.Handle, destinationImage.Handle, ref sourceOrigin, ref destinationOrigin, ref region, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyImage(Handle, sourceImage.Handle, destinationImage.Handle, ref sourceOrigin, ref destinationOrigin, ref region, eventHandles);
             return new Event(handle);
         }
 
@@ -233,7 +233,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyImageToBuffer(this.Handle, sourceImage.Handle, destinationBuffer.Handle, ref sourceOrigin, ref region, (IntPtr)destinationOffset, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyImageToBuffer(Handle, sourceImage.Handle, destinationBuffer.Handle, ref sourceOrigin, ref region, (IntPtr)destinationOffset, eventHandles);
             return new Event(handle);
         }
 
@@ -243,7 +243,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyBufferToImage(this.Handle, sourceBuffer.Handle, destinationImage.Handle, (IntPtr)sourceOffset, ref destinationOrigin, ref region, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueCopyBufferToImage(Handle, sourceBuffer.Handle, destinationImage.Handle, (IntPtr)sourceOffset, ref destinationOrigin, ref region, eventHandles);
             return new Event(handle);
         }
 
@@ -255,7 +255,7 @@ namespace NOpenCL
 
             IntPtr imageRowPitch;
             IntPtr imageSlicePitch;
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueMapImage(this.Handle, image.Handle, blocking, mapFlags, ref origin, ref region, out imageRowPitch, out imageSlicePitch, out mappedPointer, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueMapImage(Handle, image.Handle, blocking, mapFlags, ref origin, ref region, out imageRowPitch, out imageSlicePitch, out mappedPointer, eventHandles);
             rowPitch = imageRowPitch.ToInt64();
             slicePitch = imageSlicePitch.ToInt64();
             return new Event(handle);
@@ -267,7 +267,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueUnmapMemObject(this.Handle, memObject.BaseHandle, mappedPointer, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueUnmapMemObject(Handle, memObject.BaseHandle, mappedPointer, eventHandles);
             return new Event(handle);
         }
 
@@ -281,7 +281,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueMigrateMemObjects(this.Handle, memHandles, flags, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueMigrateMemObjects(Handle, memHandles, flags, eventHandles);
             return new Event(handle);
         }
 
@@ -306,7 +306,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueNDRangeKernel(this.Handle, kernel.Handle, globalWorkOffset, globalWorkSize, localWorkSize, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueNDRangeKernel(Handle, kernel.Handle, globalWorkOffset, globalWorkSize, localWorkSize, eventHandles);
             return new Event(handle);
         }
 
@@ -331,7 +331,7 @@ namespace NOpenCL
             if (eventWaitList != null)
                 eventHandles = Array.ConvertAll(eventWaitList, @event => @event.Handle);
 
-            EventSafeHandle handle = UnsafeNativeMethods.EnqueueTask(this.Handle, kernel.Handle, eventHandles);
+            EventSafeHandle handle = UnsafeNativeMethods.EnqueueTask(Handle, kernel.Handle, eventHandles);
             return new Event(handle);
         }
 

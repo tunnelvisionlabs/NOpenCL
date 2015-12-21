@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="TunnelVisionLabs.NOpenCL Code Analysis Rules for Test Projects" Description="Code analysis rules for TunnelVisionLabs.NOpenCL test projects" ToolsVersion="14.0">
+  <Include Path="TunnelVisionLabs.NOpenCL.ruleset" Action="Default" />
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA1124" Action="None" />
+    <Rule Id="SA1600" Action="Hidden" />
+  </Rules>
+</RuleSet>

@@ -81,13 +81,14 @@ namespace NOpenCL.Test.NVidia
             Console.WriteLine("  CL_DEVICE_MAX_WRITE_IMAGE_ARGS:\t\t{0}", device.MaxWriteImageArguments);
 
             FloatingPointConfiguration fpconfig = device.SingleFloatingPointConfiguration;
-            Console.WriteLine("  CL_DEVICE_SINGLE_FP_CONFIG:\t\t{0}{1}{2}{3}{4}{5}",
-                (fpconfig & FloatingPointConfiguration.Denorm) != 0 ? "denorms " : "",
-                (fpconfig & FloatingPointConfiguration.InfNaN) != 0 ? "INF-quietNaNs " : "",
-                (fpconfig & FloatingPointConfiguration.RoundToNearest) != 0 ? "round-to-nearest " : "",
-                (fpconfig & FloatingPointConfiguration.RoundToZero) != 0 ? "round-to-zero " : "",
-                (fpconfig & FloatingPointConfiguration.RoundToInf) != 0 ? "round-to-inf " : "",
-                (fpconfig & FloatingPointConfiguration.Fma) != 0 ? "fma " : "");
+            Console.WriteLine(
+                "  CL_DEVICE_SINGLE_FP_CONFIG:\t\t{0}{1}{2}{3}{4}{5}",
+                (fpconfig & FloatingPointConfiguration.Denorm) != 0 ? "denorms " : string.Empty,
+                (fpconfig & FloatingPointConfiguration.InfNaN) != 0 ? "INF-quietNaNs " : string.Empty,
+                (fpconfig & FloatingPointConfiguration.RoundToNearest) != 0 ? "round-to-nearest " : string.Empty,
+                (fpconfig & FloatingPointConfiguration.RoundToZero) != 0 ? "round-to-zero " : string.Empty,
+                (fpconfig & FloatingPointConfiguration.RoundToInf) != 0 ? "round-to-inf " : string.Empty,
+                (fpconfig & FloatingPointConfiguration.Fma) != 0 ? "fma " : string.Empty);
 
             Console.Write("  CL_DEVICE_IMAGE <dim>");
             Console.WriteLine("\t\t\t2D_MAX_WIDTH\t {0}", device.Image2DMaxWidth);
@@ -132,7 +133,8 @@ namespace NOpenCL.Test.NVidia
             }
 
             Console.Write("  CL_DEVICE_PREFERRED_VECTOR_WIDTH_<t>\t");
-            Console.Write("CHAR {0}, SHORT {1}, INT {2}, LONG {3}, FLOAT {4}, DOUBLE {5}",
+            Console.Write(
+                "CHAR {0}, SHORT {1}, INT {2}, LONG {3}, FLOAT {4}, DOUBLE {5}",
                 device.PreferredVectorWidthChar,
                 device.PreferredVectorWidthShort,
                 device.PreferredVectorWidthInt,

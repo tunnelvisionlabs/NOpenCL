@@ -106,7 +106,7 @@ namespace NOpenCL
             if (device == null)
                 throw new ArgumentNullException("device");
 
-            CommandQueueSafeHandle handle = UnsafeNativeMethods.CreateCommandQueue(this.Handle, device.ID, properties);
+            CommandQueueSafeHandle handle = UnsafeNativeMethods.CreateCommandQueue(Handle, device.ID, properties);
             return new CommandQueue(handle, this, device);
         }
 

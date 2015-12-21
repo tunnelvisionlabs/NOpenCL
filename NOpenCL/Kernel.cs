@@ -85,7 +85,7 @@ namespace NOpenCL
         {
             get
             {
-                return UnsafeNativeMethods.GetKernelInfo(Handle, UnsafeNativeMethods.KernelInfo.Attributes).Split(new [] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                return UnsafeNativeMethods.GetKernelInfo(Handle, UnsafeNativeMethods.KernelInfo.Attributes).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
 
