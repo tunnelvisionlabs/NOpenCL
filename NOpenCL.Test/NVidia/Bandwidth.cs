@@ -497,7 +497,7 @@ namespace NOpenCL.Test.NVidia
             Console.WriteLine("   Transfer size (bytes)\tBandwidth (MB/s)");
             for (int i = 0; i < count; i++)
             {
-                Console.WriteLine("   {0}\t\t\t{1}{2}", memSizes[i], memSizes[i] < 10000 ? "\t" : "", bandwidths[i]);
+                Console.WriteLine("   {0}\t\t\t{1}{2}", memSizes[i], memSizes[i] < 10000 ? "\t" : string.Empty, bandwidths[i]);
             }
 
             Console.WriteLine();
