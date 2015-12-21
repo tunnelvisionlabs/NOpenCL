@@ -5,11 +5,14 @@ namespace NOpenCL
 {
     /// <summary>
     /// Specifies the image addressing-mode i.e. how out-of-range image coordinates are handled.
-    /// <para/>
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// For 1D and 2D image arrays, the addressing mode applies only to the x and (x, y)
     /// coordinates. The addressing mode for the coordinate which specifies the array index
     /// is always <see cref="ClampToEdge"/>.
-    /// </summary>
+    /// </para>
+    /// </remarks>
     public enum AddressingMode
     {
         /// <summary>
