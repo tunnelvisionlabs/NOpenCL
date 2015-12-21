@@ -87,7 +87,7 @@ namespace NOpenCL
         /// </remarks>
         CopyHostPointer = 1 << 5,
 
-        //Reserved = 1 << 6,
+        ////Reserved = 1 << 6,
 
         /// <summary>
         /// This flag specifies that the host will only write to the memory object (using

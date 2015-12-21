@@ -102,7 +102,7 @@ namespace NOpenCL.Test.NVidia
 
         private void TestBandwidthRange(Context context, Device[] devices, int start, int end, int increment, MemoryCopyKind memoryCopyKind, PrintMode printMode, AccessMode accessMode, MemoryMode memoryMode, int startDevice, int endDevice)
         {
-            //count the number of copies we're going to run
+            // count the number of copies we're going to run
             int count = 1 + ((end - start) / increment);
             int[] memSizes = new int[count];
             double[] bandwidths = new double[count];
@@ -117,7 +117,7 @@ namespace NOpenCL.Test.NVidia
                 // Allocate command queue for the device (dealloc first if already allocated)
                 using (CommandQueue queue = CreateQueue(context, devices[currentDevice]))
                 {
-                    //run each of the copies
+                    // run each of the copies
                     for (int i = 0; i < count; i++)
                     {
                         memSizes[i] = start + i * increment;
@@ -139,7 +139,7 @@ namespace NOpenCL.Test.NVidia
                 }
             } // Complete the bandwidth computation on all the devices
 
-            //print results
+            // print results
             if (printMode == PrintMode.Csv)
             {
                 PrintResultsCsv(memSizes, bandwidths, count, memoryCopyKind, accessMode, memoryMode, (1 + endDevice - startDevice));
@@ -212,7 +212,7 @@ namespace NOpenCL.Test.NVidia
                         commandQueue.EnqueueUnmapMemObject(deviceData, dm_idata);
                     }
 
-                    //get the the elapsed time in seconds
+                    // get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
                     // Calculate bandwidth in MB/s 
@@ -226,7 +226,7 @@ namespace NOpenCL.Test.NVidia
         }
 
         [DllImport("kernel32.dll")]
-        //[SuppressUnmanagedCodeSecurity]
+        ////[SuppressUnmanagedCodeSecurity]
         private static extern void CopyMemory(IntPtr destination, IntPtr source, UIntPtr length);
 
         private unsafe double TestDeviceToHostTransferPaged(Context context, CommandQueue commandQueue, int memSize, AccessMode accessMode)
@@ -270,7 +270,7 @@ namespace NOpenCL.Test.NVidia
                         commandQueue.EnqueueUnmapMemObject(deviceData, dm_idata);
                     }
 
-                    //get the the elapsed time in seconds
+                    // get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
                     // Calculate bandwidth in MB/s 
@@ -340,7 +340,7 @@ namespace NOpenCL.Test.NVidia
                         commandQueue.EnqueueUnmapMemObject(deviceData, dm_idata);
                     }
 
-                    //get the the elapsed time in seconds
+                    // get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
                     // Calculate bandwidth in MB/s 
@@ -391,7 +391,7 @@ namespace NOpenCL.Test.NVidia
                         commandQueue.EnqueueUnmapMemObject(deviceData, dm_idata);
                     }
 
-                    //get the the elapsed time in seconds
+                    // get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
                     // Calculate bandwidth in MB/s 
