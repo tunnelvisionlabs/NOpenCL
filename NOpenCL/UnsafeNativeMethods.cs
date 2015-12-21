@@ -14,6 +14,7 @@ namespace NOpenCL
         /// argument of several API methods.
         /// </summary>
         /// <param name="items">The list of items, or <c>null</c> if no items are specified.</param>
+        /// <typeparam name="T">The type of elements in the array.</typeparam>
         /// <returns>The length of <paramref name="items"/>, or 0 if <paramref name="items"/> is <c>null</c>.</returns>
         private static uint GetNumItems<T>(T[] items)
         {
@@ -33,6 +34,7 @@ namespace NOpenCL
         /// In this case, the list is treated as though the user passed <c>null</c> instead.
         /// </remarks>
         /// <param name="items">The list of items, or <c>null</c> if no items are specified.</param>
+        /// <typeparam name="T">The type of elements in the array.</typeparam>
         /// <returns><paramref name="items"/> if it contains at least one item, otherwise <c>null</c>.</returns>
         private static T[] GetItems<T>(T[] items)
         {
