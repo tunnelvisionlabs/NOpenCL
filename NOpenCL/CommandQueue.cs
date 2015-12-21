@@ -73,7 +73,7 @@ namespace NOpenCL
 
         /// <summary>
         /// Get the properties for the command queue. These properties are specified by the
-        /// <em>properties</em> argument in <see cref="CommandQueue.Create"/>.
+        /// <em>properties</em> argument in <see cref="Context.CreateCommandQueue(Device, CommandQueueProperties)"/>.
         /// </summary>
         /// <exception cref="ObjectDisposedException">if this command queue has been disposed.</exception>
         public CommandQueueProperties Properties
