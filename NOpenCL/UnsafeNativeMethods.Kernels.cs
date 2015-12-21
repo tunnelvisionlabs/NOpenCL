@@ -118,12 +118,16 @@ namespace NOpenCL
         {
             public static readonly KernelArgParameterInfo<uint> AddressQualifier =
                 (KernelArgParameterInfo<uint>)new ParameterInfoUInt32(0x1196);
+
             public static readonly KernelArgParameterInfo<uint> AccessQualifier =
                 (KernelArgParameterInfo<uint>)new ParameterInfoUInt32(0x1197);
+
             public static readonly KernelArgParameterInfo<string> TypeName =
                 (KernelArgParameterInfo<string>)new ParameterInfoString(0x1198);
+
             public static readonly KernelArgParameterInfo<ulong> TypeQualifier =
                 (KernelArgParameterInfo<ulong>)new ParameterInfoUInt64(0x1199);
+
             public static readonly KernelArgParameterInfo<string> Name =
                 (KernelArgParameterInfo<string>)new ParameterInfoString(0x119A);
         }

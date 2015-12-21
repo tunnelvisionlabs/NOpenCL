@@ -12,16 +12,22 @@ namespace NOpenCL.Extensions
 
         private static readonly UnsafeNativeMethods.DeviceParameterInfo<uint> ComputeCapabilityMajorNv
             = (UnsafeNativeMethods.DeviceParameterInfo<uint>)new UnsafeNativeMethods.ParameterInfoUInt32(0x4000);
+
         private static readonly UnsafeNativeMethods.DeviceParameterInfo<uint> ComputeCapabilityMinorNv
             = (UnsafeNativeMethods.DeviceParameterInfo<uint>)new UnsafeNativeMethods.ParameterInfoUInt32(0x4001);
+
         private static readonly UnsafeNativeMethods.DeviceParameterInfo<uint> RegistersPerBlockNv
             = (UnsafeNativeMethods.DeviceParameterInfo<uint>)new UnsafeNativeMethods.ParameterInfoUInt32(0x4002);
+
         private static readonly UnsafeNativeMethods.DeviceParameterInfo<uint> WarpSizeNv
             = (UnsafeNativeMethods.DeviceParameterInfo<uint>)new UnsafeNativeMethods.ParameterInfoUInt32(0x4003);
+
         private static readonly UnsafeNativeMethods.DeviceParameterInfo<bool> GpuOverlapNv
             = (UnsafeNativeMethods.DeviceParameterInfo<bool>)new UnsafeNativeMethods.ParameterInfoBoolean(0x4004);
+
         private static readonly UnsafeNativeMethods.DeviceParameterInfo<bool> KernelExecTimeoutNv
             = (UnsafeNativeMethods.DeviceParameterInfo<bool>)new UnsafeNativeMethods.ParameterInfoBoolean(0x4005);
+
         private static readonly UnsafeNativeMethods.DeviceParameterInfo<bool> IntegratedMemoryNv
             = (UnsafeNativeMethods.DeviceParameterInfo<bool>)new UnsafeNativeMethods.ParameterInfoBoolean(0x4006);
 
