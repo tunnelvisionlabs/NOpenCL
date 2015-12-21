@@ -13,7 +13,7 @@ namespace NOpenCL.Test.NVidia
     public class Bandwidth
     {
         private const int DefaultSize = 32 * (1 << 20); // 32 M
-        private const int DefaultIncrement = (1 << 22); // 4 M
+        private const int DefaultIncrement = 1 << 22; // 4 M
         private const int MemoryCopyIterations = 100;
 
         [TestMethod]
@@ -142,11 +142,11 @@ namespace NOpenCL.Test.NVidia
             // print results
             if (printMode == PrintMode.Csv)
             {
-                PrintResultsCsv(memSizes, bandwidths, count, memoryCopyKind, accessMode, memoryMode, (1 + endDevice - startDevice));
+                PrintResultsCsv(memSizes, bandwidths, count, memoryCopyKind, accessMode, memoryMode, 1 + endDevice - startDevice);
             }
             else
             {
-                PrintResultsReadable(memSizes, bandwidths, count, memoryCopyKind, accessMode, memoryMode, (1 + endDevice - startDevice));
+                PrintResultsReadable(memSizes, bandwidths, count, memoryCopyKind, accessMode, memoryMode, 1 + endDevice - startDevice);
             }
         }
 
