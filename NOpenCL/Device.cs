@@ -61,7 +61,7 @@ namespace NOpenCL
         {
             get
             {
-                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.BuiltInKernels).Split(new [] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                return UnsafeNativeMethods.GetDeviceInfo(ID, DeviceInfo.BuiltInKernels).Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
 
