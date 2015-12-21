@@ -7,10 +7,11 @@ namespace NOpenCL
     using System.Runtime.InteropServices;
     using NOpenCL.SafeHandles;
 
+    /// <content>
+    /// Buffer objects.
+    /// </content>
     partial class UnsafeNativeMethods
     {
-        #region Buffer Objects
-
         /// <summary>
         /// Creates a buffer object.
         /// http://www.khronos.org/registry/cl/sdk/1.2/docs/man/xhtml/clCreateBuffer.html
@@ -1163,7 +1164,5 @@ namespace NOpenCL
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void MemObjectDestructorCallback(IntPtr memObject, IntPtr userData);
-
-        #endregion
     }
 }

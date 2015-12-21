@@ -57,6 +57,8 @@
     <Compile Include="BufferCreateType.cs" />
     <Compile Include="BufferRegion.cs" />
     <Compile Include="EventStatusEventArgs.cs" />
+    <Compile Include="UnsafeNativeMethods.Cleanup.cs" />
+    <Compile Include="UnsafeNativeMethods.KernelExecution.cs" />
     <Compile Include="UnsafeNativeMethods.Profiling.cs" />
     <Compile Include="UnsafeNativeMethods.Synchronization.cs" />
     <Compile Include="UnsafeNativeMethods.Events.cs" />

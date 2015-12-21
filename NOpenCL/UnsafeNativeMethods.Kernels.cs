@@ -7,10 +7,11 @@ namespace NOpenCL
     using System.Runtime.InteropServices;
     using NOpenCL.SafeHandles;
 
+    /// <content>
+    /// Kernel objects.
+    /// </content>
     partial class UnsafeNativeMethods
     {
-        #region Kernel Objects
-
         [DllImport(ExternDll.OpenCL)]
         private static extern KernelSafeHandle clCreateKernel(
             ProgramSafeHandle program,
@@ -410,90 +411,5 @@ namespace NOpenCL
                 }
             }
         }
-
-        #endregion
-
-        #region Executing Kernels
-
-        [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clEnqueueNDRangeKernel(
-            CommandQueueSafeHandle commandQueue,
-            KernelSafeHandle kernel,
-            uint workDim,
-            [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] globalWorkOffset,
-            [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] globalWorkSize,
-            [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] localWorkSize,
-            uint numEventsInWaitList,
-            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
-            out EventSafeHandle @event);
-
-        public static EventSafeHandle EnqueueNDRangeKernel(
-            CommandQueueSafeHandle commandQueue,
-            KernelSafeHandle kernel,
-            IntPtr[] globalWorkOffset,
-            IntPtr[] globalWorkSize,
-            IntPtr[] localWorkSize,
-            EventSafeHandle[] eventWaitList)
-        {
-            if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
-            if (kernel == null)
-                throw new ArgumentNullException("kernel");
-            if (globalWorkSize == null)
-                throw new ArgumentNullException("globalWorkSize");
-            if (localWorkSize == null)
-                throw new ArgumentNullException("localWorkSize");
-
-            uint workDim = (uint)globalWorkSize.Length;
-            if (globalWorkOffset != null && globalWorkOffset.Length != workDim)
-                throw new ArgumentException();
-            if (localWorkSize != null && localWorkSize.Length != workDim)
-                throw new ArgumentException();
-
-            EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueNDRangeKernel(commandQueue, kernel, (uint)workDim, globalWorkOffset, globalWorkSize, localWorkSize, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
-            return result;
-        }
-
-        [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clEnqueueTask(
-            CommandQueueSafeHandle commandQueue,
-            KernelSafeHandle kernel,
-            uint numEventsInWaitList,
-            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
-            out EventSafeHandle @event);
-
-        public static EventSafeHandle EnqueueTask(
-            CommandQueueSafeHandle commandQueue,
-            KernelSafeHandle kernel,
-            EventSafeHandle[] eventWaitList)
-        {
-            if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
-            if (kernel == null)
-                throw new ArgumentNullException("kernel");
-
-            EventSafeHandle result;
-            ErrorHandler.ThrowOnFailure(clEnqueueTask(commandQueue, kernel, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
-            return result;
-        }
-
-        [DllImport(ExternDll.OpenCL)]
-        private static extern ErrorCode clEnqueueNativeKernel(
-            CommandQueueSafeHandle commandQueue,
-            NativeKernelFunction userFunction,
-            IntPtr args,
-            IntPtr cbArgs,
-            uint numMemObjects,
-            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] MemObjectSafeHandle[] memList,
-            [In, MarshalAs(UnmanagedType.LPArray)] IntPtr[] argsMemLoc,
-            uint numEventsInWaitList,
-            [In, MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SafeHandleArrayMarshaler))] EventSafeHandle[] eventWaitList,
-            out EventSafeHandle @event);
-
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void NativeKernelFunction(IntPtr args);
-
-        #endregion
     }
 }

@@ -7,10 +7,11 @@ namespace NOpenCL
     using System.Runtime.InteropServices;
     using NOpenCL.SafeHandles;
 
+    /// <content>
+    /// Event objects.
+    /// </content>
     partial class UnsafeNativeMethods
     {
-        #region Event Objects
-
         [DllImport(ExternDll.OpenCL)]
         private static extern EventSafeHandle clCreateUserEvent(ContextSafeHandle context, out ErrorCode errorCode);
 
@@ -218,7 +219,5 @@ namespace NOpenCL
 
         [DllImport(ExternDll.OpenCL)]
         public static extern ErrorCode clReleaseEvent(IntPtr @event);
-
-        #endregion
     }
 }

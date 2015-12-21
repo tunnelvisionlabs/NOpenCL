@@ -7,10 +7,11 @@ namespace NOpenCL
     using System.Runtime.InteropServices;
     using NOpenCL.SafeHandles;
 
+    /// <content>
+    /// Command queues.
+    /// </content>
     partial class UnsafeNativeMethods
     {
-        #region Command Queues
-
         [DllImport(ExternDll.OpenCL)]
         private static extern CommandQueueSafeHandle clCreateCommandQueue(
             ContextSafeHandle context,
@@ -133,7 +134,5 @@ namespace NOpenCL
                 }
             }
         }
-
-        #endregion
     }
 }

@@ -7,6 +7,9 @@ namespace NOpenCL
     using System.Runtime.InteropServices;
     using NOpenCL.SafeHandles;
 
+    /// <summary>
+    /// Contexts.
+    /// </summary>
     partial class UnsafeNativeMethods
     {
         private static class ContextProperties
@@ -25,8 +28,6 @@ namespace NOpenCL
             /// </summary>
             internal static readonly IntPtr InteropUserSync = (IntPtr)0x1085;
         }
-
-        #region Contexts
 
         [DllImport(ExternDll.OpenCL)]
         private static extern ContextSafeHandle clCreateContext(
@@ -194,7 +195,5 @@ namespace NOpenCL
                 }
             }
         }
-
-        #endregion
     }
 }

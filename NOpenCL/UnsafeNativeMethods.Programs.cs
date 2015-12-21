@@ -7,10 +7,11 @@ namespace NOpenCL
     using System.Runtime.InteropServices;
     using NOpenCL.SafeHandles;
 
+    /// <content>
+    /// Program objects.
+    /// </content>
     partial class UnsafeNativeMethods
     {
-        #region Program Objects
-
         [DllImport(ExternDll.OpenCL)]
         private static extern ProgramSafeHandle clCreateProgramWithSource(
             ContextSafeHandle context,
@@ -345,7 +346,5 @@ namespace NOpenCL
                 }
             }
         }
-
-        #endregion
     }
 }
