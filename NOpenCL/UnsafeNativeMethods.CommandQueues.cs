@@ -82,13 +82,15 @@ namespace NOpenCL
             /// Return the context specified when the command-queue is created.
             /// </summary>
             /// <seealso cref="CommandQueue.Context"/>
-            public static CommandQueueParameterInfo<IntPtr> Context = (CommandQueueParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1090);
+            public static CommandQueueParameterInfo<IntPtr> Context { get; } =
+                (CommandQueueParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1090);
 
             /// <summary>
             /// Return the device specified when the command-queue is created.
             /// </summary>
             /// <seealso cref="CommandQueue.Device"/>
-            public static CommandQueueParameterInfo<IntPtr> Device = (CommandQueueParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1091);
+            public static CommandQueueParameterInfo<IntPtr> Device { get; } =
+                (CommandQueueParameterInfo<IntPtr>)new ParameterInfoIntPtr(0x1091);
 
             /// <summary>
             /// Return the command-queue reference count.
@@ -99,14 +101,16 @@ namespace NOpenCL
             /// is provided for identifying memory leaks.
             /// </remarks>
             /// <seealso cref="CommandQueue.ReferenceCount"/>
-            public static CommandQueueParameterInfo<uint> ReferenceCount = (CommandQueueParameterInfo<uint>)new ParameterInfoUInt32(0x1092);
+            public static CommandQueueParameterInfo<uint> ReferenceCount { get; } =
+                (CommandQueueParameterInfo<uint>)new ParameterInfoUInt32(0x1092);
 
             /// <summary>
             /// Return the currently specified properties for the command-queue. These
             /// properties are specified by the <em>properties</em> argument in <see cref="clCreateCommandQueue"/>.
             /// </summary>
             /// <seealso cref="CommandQueue.Properties"/>
-            public static CommandQueueParameterInfo<ulong> Properties = (CommandQueueParameterInfo<ulong>)new ParameterInfoUInt64(0x1093);
+            public static CommandQueueParameterInfo<ulong> Properties { get; } =
+                (CommandQueueParameterInfo<ulong>)new ParameterInfoUInt64(0x1093);
         }
 
         public sealed class CommandQueueParameterInfo<T>
