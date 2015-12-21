@@ -120,7 +120,7 @@ namespace NOpenCL.Test.NVidia
                     // run each of the copies
                     for (int i = 0; i < count; i++)
                     {
-                        memSizes[i] = start + i * increment;
+                        memSizes[i] = start + (i * increment);
                         switch (memoryCopyKind)
                         {
                         case MemoryCopyKind.DeviceToHost:

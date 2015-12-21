@@ -49,7 +49,7 @@ namespace NOpenCL.Test.Intel
                 double minimum = -255.0;
                 double maximum = 255.0;
                 for (int i = 0; i < input.Length; i++)
-                    input[i] = (float)(_random.NextDouble() * (maximum - minimum) + minimum);
+                    input[i] = (float)((_random.NextDouble() * (maximum - minimum)) + minimum);
 
                 // do simple math
                 TimeSpan stopwatchTime;

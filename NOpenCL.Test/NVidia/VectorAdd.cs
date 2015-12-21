@@ -29,7 +29,7 @@ namespace NOpenCL.Test.NVidia
             int globalWorkSize = RoundUp(localWorkSize, NumElements);
             Console.WriteLine("Global work size \t\t= {0}", globalWorkSize);
             Console.WriteLine("Local work size \t\t= {0}", localWorkSize);
-            Console.WriteLine("Number of work groups \t\t= {0}", globalWorkSize % localWorkSize + globalWorkSize / localWorkSize);
+            Console.WriteLine("Number of work groups \t\t= {0}", (globalWorkSize % localWorkSize) + (globalWorkSize / localWorkSize));
             Console.WriteLine();
 
             // allocate and initialize host arrays
