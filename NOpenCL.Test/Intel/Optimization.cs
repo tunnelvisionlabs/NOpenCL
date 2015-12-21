@@ -98,6 +98,7 @@ namespace NOpenCL.Test.Intel
             MemoryFlags outFlags = (useHostPointer ? MemoryFlags.UseHostPointer : MemoryFlags.CopyHostPointer) | MemoryFlags.ReadWrite;
 
             int taskSize = input.Length;
+
             // allocate buffers
             fixed (float* pinput = input, poutput = output)
             {
@@ -130,6 +131,7 @@ namespace NOpenCL.Test.Intel
 
                     Console.Write("Executing OpenCL kernel...");
                     Stopwatch timer = Stopwatch.StartNew();
+
                     // execute kernel, pls notice autoGroupSize
                     using (Event perfEvent = commandQueue.EnqueueNDRangeKernel(kernel, new[] { (IntPtr)globalWorkSize }, autoGroupSize ? null : new[] { (IntPtr)localWorkSize }))
                     {
@@ -142,6 +144,7 @@ namespace NOpenCL.Test.Intel
                         {
                             ulong start = perfEvent.CommandStartTime;
                             ulong end = perfEvent.CommandEndTime;
+
                             // a tick is 100ns
                             profiledTime = TimeSpan.FromTicks((long)(end - start) / 100);
                         }
