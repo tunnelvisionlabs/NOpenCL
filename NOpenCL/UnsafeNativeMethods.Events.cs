@@ -10,7 +10,7 @@ namespace NOpenCL
     /// <content>
     /// Event objects.
     /// </content>
-    partial class UnsafeNativeMethods
+    internal partial class UnsafeNativeMethods
     {
         [DllImport(ExternDll.OpenCL)]
         private static extern EventSafeHandle clCreateUserEvent(ContextSafeHandle context, out ErrorCode errorCode);

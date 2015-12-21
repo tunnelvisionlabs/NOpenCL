@@ -10,7 +10,7 @@ namespace NOpenCL
     /// <content>
     /// Markers, barriers, and waiting.
     /// </content>
-    partial class UnsafeNativeMethods
+    internal partial class UnsafeNativeMethods
     {
         /// <summary>
         /// Enqueues a marker command which waits for either a list of events to complete, or all previously enqueued commands to complete.

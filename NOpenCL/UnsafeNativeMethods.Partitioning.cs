@@ -11,7 +11,7 @@ namespace NOpenCL
     /// <content>
     /// Partitioning a device.
     /// </content>
-    partial class UnsafeNativeMethods
+    internal partial class UnsafeNativeMethods
     {
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clCreateSubDevices(

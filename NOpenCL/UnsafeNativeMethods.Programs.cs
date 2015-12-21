@@ -10,7 +10,7 @@ namespace NOpenCL
     /// <content>
     /// Program objects.
     /// </content>
-    partial class UnsafeNativeMethods
+    internal partial class UnsafeNativeMethods
     {
         [DllImport(ExternDll.OpenCL)]
         private static extern ProgramSafeHandle clCreateProgramWithSource(

@@ -10,7 +10,7 @@ namespace NOpenCL
     /// <content>
     /// Sampler objects.
     /// </content>
-    partial class UnsafeNativeMethods
+    internal partial class UnsafeNativeMethods
     {
         /// <summary>
         /// Creates a sampler object.

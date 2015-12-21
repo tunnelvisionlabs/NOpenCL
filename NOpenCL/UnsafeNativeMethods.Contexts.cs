@@ -10,7 +10,7 @@ namespace NOpenCL
     /// <summary>
     /// Contexts.
     /// </summary>
-    partial class UnsafeNativeMethods
+    internal partial class UnsafeNativeMethods
     {
         private static class ContextProperties
         {

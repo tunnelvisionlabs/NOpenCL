@@ -10,7 +10,7 @@ namespace NOpenCL
     /// <content>
     /// Profiling operations on memory objects and kernels.
     /// </content>
-    partial class UnsafeNativeMethods
+    internal partial class UnsafeNativeMethods
     {
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clGetEventProfilingInfo(

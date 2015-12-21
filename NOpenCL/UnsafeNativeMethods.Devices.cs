@@ -9,7 +9,7 @@ namespace NOpenCL
     /// <content>
     /// Devices.
     /// </content>
-    partial class UnsafeNativeMethods
+    internal partial class UnsafeNativeMethods
     {
         [DllImport(ExternDll.OpenCL)]
         private static extern ErrorCode clGetDeviceIDs(

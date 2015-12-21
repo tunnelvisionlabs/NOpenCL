@@ -10,7 +10,7 @@ namespace NOpenCL
     /// <content>
     /// Buffer objects.
     /// </content>
-    partial class UnsafeNativeMethods
+    internal partial class UnsafeNativeMethods
     {
         /// <summary>
         /// Creates a buffer object.

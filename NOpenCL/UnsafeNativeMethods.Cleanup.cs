@@ -10,7 +10,7 @@ namespace NOpenCL
     /// <content>
     /// Flush and finish.
     /// </content>
-    partial class UnsafeNativeMethods
+    internal partial class UnsafeNativeMethods
     {
         /// <summary>
         /// Issues all previously queued OpenCL commands in a command-queue to the device associated with the command-queue.
