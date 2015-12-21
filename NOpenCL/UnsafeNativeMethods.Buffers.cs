@@ -919,7 +919,7 @@ namespace NOpenCL
             /// and <see cref="MemoryFlags.UseHostPointer"/> is specified in <em>memoryFlags</em>, return the
             /// <em>hostPointer</em> argument value specified when the memory object was created. Otherwise
             /// <see cref="IntPtr.Zero"/> is returned.
-            /// 
+            ///
             /// <para>If the memory object was created with <see cref="clCreateSubBuffer"/>, return the
             /// <em>hostPointer</em> + <em>origin</em> value specified when the memory object was created.
             /// <em>hostPointer</em> is the argument value specified to <see cref="clCreateBuffer"/> and

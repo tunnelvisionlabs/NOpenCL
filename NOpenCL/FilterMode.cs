@@ -42,13 +42,13 @@ namespace NOpenCL
         /// u = s' * wt
         /// i = (int)floor(u)
         /// i = min(i, wt – 1)
-        /// 
+        ///
         /// t' = 2.0f * rint(0.5f * t)
         /// t' = fabs(t – t’)
         /// v = t' * ht
         /// j = (int)floor(v)
         /// j = min(j, ht – 1)
-        /// 
+        ///
         /// r' = 2.0f * rint(0.5f * r)
         /// r' = fabs(r – r')
         /// w = r’ * dt

@@ -215,8 +215,8 @@ namespace NOpenCL.Test.NVidia
                     // get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
-                    // Calculate bandwidth in MB/s 
-                    //      This is for kernels that read and write GMEM simultaneously 
+                    // Calculate bandwidth in MB/s
+                    //      This is for kernels that read and write GMEM simultaneously
                     //      Obtained Throughput for unidirectional block copies will be 1/2 of this #
                     double bandwidthInMBs = 2.0 * ((double)memSize * (double)MemoryCopyIterations) / (elapsedTimeInSeconds * (double)(1 << 20));
 
@@ -273,8 +273,8 @@ namespace NOpenCL.Test.NVidia
                     // get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
-                    // Calculate bandwidth in MB/s 
-                    //      This is for kernels that read and write GMEM simultaneously 
+                    // Calculate bandwidth in MB/s
+                    //      This is for kernels that read and write GMEM simultaneously
                     //      Obtained Throughput for unidirectional block copies will be 1/2 of this #
                     double bandwidthInMBs = 2.0 * ((double)memSize * (double)MemoryCopyIterations) / (elapsedTimeInSeconds * (double)(1 << 20));
 
@@ -343,8 +343,8 @@ namespace NOpenCL.Test.NVidia
                     // get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
-                    // Calculate bandwidth in MB/s 
-                    //      This is for kernels that read and write GMEM simultaneously 
+                    // Calculate bandwidth in MB/s
+                    //      This is for kernels that read and write GMEM simultaneously
                     //      Obtained Throughput for unidirectional block copies will be 1/2 of this #
                     double bandwidthInMBs = 2.0 * ((double)memSize * (double)MemoryCopyIterations) / (elapsedTimeInSeconds * (double)(1 << 20));
 
@@ -394,8 +394,8 @@ namespace NOpenCL.Test.NVidia
                     // get the elapsed time in seconds
                     double elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
-                    // Calculate bandwidth in MB/s 
-                    //      This is for kernels that read and write GMEM simultaneously 
+                    // Calculate bandwidth in MB/s
+                    //      This is for kernels that read and write GMEM simultaneously
                     //      Obtained Throughput for unidirectional block copies will be 1/2 of this #
                     double bandwidthInMBs = 2.0 * ((double)memSize * (double)MemoryCopyIterations) / (elapsedTimeInSeconds * (double)(1 << 20));
 
@@ -449,8 +449,8 @@ namespace NOpenCL.Test.NVidia
                 // get the elapsed time in seconds
                 elapsedTimeInSeconds = timer.Elapsed.TotalSeconds;
 
-                // Calculate bandwidth in MB/s 
-                //      This is for kernels that read and write GMEM simultaneously 
+                // Calculate bandwidth in MB/s
+                //      This is for kernels that read and write GMEM simultaneously
                 //      Obtained Throughput for unidirectional block copies will be 1/2 of this #
                 bandwidthInMBs = 2.0 * ((double)memorySize * (double)MemoryCopyIterations) / (elapsedTimeInSeconds * (double)(1 << 20));
             }
