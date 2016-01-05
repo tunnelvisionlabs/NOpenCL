@@ -3,6 +3,13 @@
   <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
     <Rule Id="IDE0003" Action="None" />
   </Rules>
+  <Rules AnalyzerId="PublicApiAnalyzer" RuleNamespace="PublicApiAnalyzer">
+    <Rule Id="RS0016" Action="Error" />
+    <Rule Id="RS0017" Action="Error" />
+    <Rule Id="RS0022" Action="Error" />
+    <Rule Id="RS0024" Action="Error" />
+    <Rule Id="RS0025" Action="Error" />
+  </Rules>
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="SA1101" Action="None" />
     <Rule Id="SA1102" Action="None" />
