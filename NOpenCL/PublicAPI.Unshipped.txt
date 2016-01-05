@@ -1,0 +1,494 @@
+NOpenCL.AccessQualifier
+NOpenCL.AccessQualifier.None = 4515 -> NOpenCL.AccessQualifier
+NOpenCL.AccessQualifier.ReadOnly = 4512 -> NOpenCL.AccessQualifier
+NOpenCL.AccessQualifier.ReadWrite = 4514 -> NOpenCL.AccessQualifier
+NOpenCL.AccessQualifier.WriteOnly = 4513 -> NOpenCL.AccessQualifier
+NOpenCL.AddressQualifier
+NOpenCL.AddressQualifier.Constant = 4509 -> NOpenCL.AddressQualifier
+NOpenCL.AddressQualifier.Global = 4507 -> NOpenCL.AddressQualifier
+NOpenCL.AddressQualifier.Local = 4508 -> NOpenCL.AddressQualifier
+NOpenCL.AddressQualifier.Private = 4510 -> NOpenCL.AddressQualifier
+NOpenCL.AddressingMode
+NOpenCL.AddressingMode.Clamp = 4402 -> NOpenCL.AddressingMode
+NOpenCL.AddressingMode.ClampToEdge = 4401 -> NOpenCL.AddressingMode
+NOpenCL.AddressingMode.MirroredRepeat = 4404 -> NOpenCL.AddressingMode
+NOpenCL.AddressingMode.None = 4400 -> NOpenCL.AddressingMode
+NOpenCL.AddressingMode.Repeat = 4403 -> NOpenCL.AddressingMode
+NOpenCL.AffinityDomain
+NOpenCL.AffinityDomain.L1Cache = 16 -> NOpenCL.AffinityDomain
+NOpenCL.AffinityDomain.L2Cache = 8 -> NOpenCL.AffinityDomain
+NOpenCL.AffinityDomain.L3Cache = 4 -> NOpenCL.AffinityDomain
+NOpenCL.AffinityDomain.L4Cache = 2 -> NOpenCL.AffinityDomain
+NOpenCL.AffinityDomain.NextPartitionable = 32 -> NOpenCL.AffinityDomain
+NOpenCL.AffinityDomain.None = 0 -> NOpenCL.AffinityDomain
+NOpenCL.AffinityDomain.Numa = 1 -> NOpenCL.AffinityDomain
+NOpenCL.BinaryType
+NOpenCL.BinaryType.CompiledObject = 1 -> NOpenCL.BinaryType
+NOpenCL.BinaryType.Executable = 4 -> NOpenCL.BinaryType
+NOpenCL.BinaryType.Library = 2 -> NOpenCL.BinaryType
+NOpenCL.BinaryType.None = 0 -> NOpenCL.BinaryType
+NOpenCL.Buffer
+NOpenCL.Buffer.AssociatedMemObject.get -> NOpenCL.Buffer
+NOpenCL.Buffer.CreateSubBuffer(NOpenCL.MemoryFlags flags, NOpenCL.BufferRegion regionInfo) -> NOpenCL.Buffer
+NOpenCL.Buffer.Offset.get -> System.UIntPtr
+NOpenCL.BufferCoordinates
+NOpenCL.BufferCoordinates.BufferCoordinates(System.IntPtr x, System.IntPtr y) -> void
+NOpenCL.BufferCoordinates.BufferCoordinates(System.IntPtr x, System.IntPtr y, System.IntPtr z) -> void
+NOpenCL.BufferCreateType
+NOpenCL.BufferCreateType.Region = 4640 -> NOpenCL.BufferCreateType
+NOpenCL.BufferRegion
+NOpenCL.BufferRegion.BufferRegion(System.IntPtr origin, System.IntPtr size) -> void
+NOpenCL.BufferSize
+NOpenCL.BufferSize.BufferSize(System.IntPtr width, System.IntPtr height) -> void
+NOpenCL.BufferSize.BufferSize(System.IntPtr width, System.IntPtr height, System.IntPtr depth) -> void
+NOpenCL.BuildStatus
+NOpenCL.BuildStatus.Error = -2 -> NOpenCL.BuildStatus
+NOpenCL.BuildStatus.InProgress = -3 -> NOpenCL.BuildStatus
+NOpenCL.BuildStatus.None = -1 -> NOpenCL.BuildStatus
+NOpenCL.BuildStatus.Success = 0 -> NOpenCL.BuildStatus
+NOpenCL.CacheType
+NOpenCL.CacheType.None = 0 -> NOpenCL.CacheType
+NOpenCL.CacheType.ReadOnly = 1 -> NOpenCL.CacheType
+NOpenCL.CacheType.ReadWrite = 2 -> NOpenCL.CacheType
+NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.A = 4273 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.ARGB = 4279 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.BGRA = 4278 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.Depth = 4285 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.DepthStencil = 4286 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.Intensity = 4280 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.Luminance = 4281 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.R = 4272 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.RA = 4275 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.RG = 4274 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.RGB = 4276 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.RGBA = 4277 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.RGBx = 4284 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.RGx = 4283 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelOrder.Rx = 4282 -> NOpenCL.ChannelOrder
+NOpenCL.ChannelType
+NOpenCL.ChannelType.Float = 4318 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.HalfFloat = 4317 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.SignedInt16 = 4312 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.SignedInt32 = 4313 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.SignedInt8 = 4311 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.SnormInt16 = 4305 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.SnormInt8 = 4304 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.UnormInt101010 = 4310 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.UnormInt16 = 4307 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.UnormInt24 = 4319 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.UnormInt8 = 4306 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.UnormShort555 = 4309 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.UnormShort565 = 4308 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.UnsignedInt16 = 4315 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.UnsignedInt32 = 4316 -> NOpenCL.ChannelType
+NOpenCL.ChannelType.UnsignedInt8 = 4314 -> NOpenCL.ChannelType
+NOpenCL.CommandQueue
+NOpenCL.CommandQueue.Context.get -> NOpenCL.Context
+NOpenCL.CommandQueue.Device.get -> NOpenCL.Device
+NOpenCL.CommandQueue.Dispose() -> void
+NOpenCL.CommandQueue.EnqueueBarrier(params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueCopyBuffer(NOpenCL.Buffer source, NOpenCL.Buffer destination, long sourceOffset, long destinationOffset, long size, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueCopyBufferRect(NOpenCL.Buffer source, NOpenCL.Buffer destination, NOpenCL.BufferCoordinates sourceOrigin, NOpenCL.BufferCoordinates destinationOrigin, NOpenCL.BufferSize region, long sourceRowPitch, long sourceSlicePitch, long destinationRowPitch, long destinationSlicePitch, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueCopyBufferToImage(NOpenCL.Buffer sourceBuffer, NOpenCL.Image destinationImage, long sourceOffset, NOpenCL.BufferCoordinates destinationOrigin, NOpenCL.BufferSize region, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueCopyImage(NOpenCL.Image sourceImage, NOpenCL.Image destinationImage, NOpenCL.BufferCoordinates sourceOrigin, NOpenCL.BufferCoordinates destinationOrigin, NOpenCL.BufferSize region, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueCopyImageToBuffer(NOpenCL.Image sourceImage, NOpenCL.Buffer destinationBuffer, NOpenCL.BufferCoordinates sourceOrigin, NOpenCL.BufferSize region, long destinationOffset, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueFillImage(NOpenCL.Image image, float[] fillColor, NOpenCL.BufferCoordinates origin, NOpenCL.BufferSize region, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueFillImage(NOpenCL.Image image, int[] fillColor, NOpenCL.BufferCoordinates origin, NOpenCL.BufferSize region, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueFillImage(NOpenCL.Image image, uint[] fillColor, NOpenCL.BufferCoordinates origin, NOpenCL.BufferSize region, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueMapBuffer(NOpenCL.Buffer buffer, bool blocking, NOpenCL.MapFlags mapFlags, long offset, long size, out System.IntPtr mappedPointer, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueMapImage(NOpenCL.Image image, bool blocking, NOpenCL.MapFlags mapFlags, NOpenCL.BufferCoordinates origin, NOpenCL.BufferSize region, out long rowPitch, out long slicePitch, out System.IntPtr mappedPointer, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueMarker(params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueMigrateMemObjects(NOpenCL.MemObject[] memObjects, NOpenCL.MigrationFlags flags, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueNDRangeKernel(NOpenCL.Kernel kernel, System.IntPtr globalWorkOffset, System.IntPtr globalWorkSize, System.IntPtr localWorkSize, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueNDRangeKernel(NOpenCL.Kernel kernel, System.IntPtr globalWorkSize, System.IntPtr localWorkSize, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueNDRangeKernel(NOpenCL.Kernel kernel, System.IntPtr[] globalWorkOffset, System.IntPtr[] globalWorkSize, System.IntPtr[] localWorkSize, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueNDRangeKernel(NOpenCL.Kernel kernel, System.IntPtr[] globalWorkSize, System.IntPtr[] localWorkSize, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueReadBuffer(NOpenCL.Buffer buffer, bool blocking, long offset, long size, System.IntPtr destination, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueReadBufferRect(NOpenCL.Buffer buffer, bool blocking, NOpenCL.BufferCoordinates bufferOrigin, NOpenCL.BufferCoordinates hostOrigin, NOpenCL.BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, System.IntPtr destination, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueReadImage(NOpenCL.Image image, bool blocking, NOpenCL.BufferCoordinates origin, NOpenCL.BufferSize region, long rowPitch, long slicePitch, System.IntPtr destination, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueTask(NOpenCL.Kernel kernel, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueUnmapMemObject(NOpenCL.MemObject memObject, System.IntPtr mappedPointer, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueWriteBuffer(NOpenCL.Buffer buffer, bool blocking, long offset, long size, System.IntPtr source, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueWriteBufferRect(NOpenCL.Buffer buffer, bool blocking, NOpenCL.BufferCoordinates bufferOrigin, NOpenCL.BufferCoordinates hostOrigin, NOpenCL.BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, System.IntPtr source, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueWriteImage(NOpenCL.Image image, bool blocking, NOpenCL.BufferCoordinates origin, NOpenCL.BufferSize region, long inputRowPitch, long inputSlicePitch, System.IntPtr source, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.Finish() -> void
+NOpenCL.CommandQueue.Flush() -> void
+NOpenCL.CommandQueue.Properties.get -> NOpenCL.CommandQueueProperties
+NOpenCL.CommandQueue.ReferenceCount.get -> uint
+NOpenCL.CommandQueueProperties
+NOpenCL.CommandQueueProperties.None = 0 -> NOpenCL.CommandQueueProperties
+NOpenCL.CommandQueueProperties.OutOfOrderExecutionModeEnable = 1 -> NOpenCL.CommandQueueProperties
+NOpenCL.CommandQueueProperties.ProfilingEnable = 2 -> NOpenCL.CommandQueueProperties
+NOpenCL.CommandType
+NOpenCL.CommandType.AcquireGlObjects = 4607 -> NOpenCL.CommandType
+NOpenCL.CommandType.Barrier = 4613 -> NOpenCL.CommandType
+NOpenCL.CommandType.CopyBuffer = 4597 -> NOpenCL.CommandType
+NOpenCL.CommandType.CopyBufferRect = 4611 -> NOpenCL.CommandType
+NOpenCL.CommandType.CopyBufferToImage = 4602 -> NOpenCL.CommandType
+NOpenCL.CommandType.CopyImage = 4600 -> NOpenCL.CommandType
+NOpenCL.CommandType.CopyImageToBuffer = 4601 -> NOpenCL.CommandType
+NOpenCL.CommandType.FillBuffer = 4615 -> NOpenCL.CommandType
+NOpenCL.CommandType.FillImage = 4616 -> NOpenCL.CommandType
+NOpenCL.CommandType.MapBuffer = 4603 -> NOpenCL.CommandType
+NOpenCL.CommandType.MapImage = 4604 -> NOpenCL.CommandType
+NOpenCL.CommandType.Marker = 4606 -> NOpenCL.CommandType
+NOpenCL.CommandType.MigrateMemObjects = 4614 -> NOpenCL.CommandType
+NOpenCL.CommandType.NativeKernel = 4594 -> NOpenCL.CommandType
+NOpenCL.CommandType.NdrangeKernel = 4592 -> NOpenCL.CommandType
+NOpenCL.CommandType.ReadBuffer = 4595 -> NOpenCL.CommandType
+NOpenCL.CommandType.ReadBufferRect = 4609 -> NOpenCL.CommandType
+NOpenCL.CommandType.ReadImage = 4598 -> NOpenCL.CommandType
+NOpenCL.CommandType.ReleaseGlObjects = 4608 -> NOpenCL.CommandType
+NOpenCL.CommandType.Task = 4593 -> NOpenCL.CommandType
+NOpenCL.CommandType.UnmapMemObject = 4605 -> NOpenCL.CommandType
+NOpenCL.CommandType.User = 4612 -> NOpenCL.CommandType
+NOpenCL.CommandType.WriteBuffer = 4596 -> NOpenCL.CommandType
+NOpenCL.CommandType.WriteBufferRect = 4610 -> NOpenCL.CommandType
+NOpenCL.CommandType.WriteImage = 4599 -> NOpenCL.CommandType
+NOpenCL.Context
+NOpenCL.Context.CreateBuffer(NOpenCL.MemoryFlags flags, long size) -> NOpenCL.Buffer
+NOpenCL.Context.CreateBuffer(NOpenCL.MemoryFlags flags, long size, System.IntPtr hostAddress) -> NOpenCL.Buffer
+NOpenCL.Context.CreateCommandQueue(NOpenCL.Device device) -> NOpenCL.CommandQueue
+NOpenCL.Context.CreateCommandQueue(NOpenCL.Device device, NOpenCL.CommandQueueProperties properties) -> NOpenCL.CommandQueue
+NOpenCL.Context.CreateImage(NOpenCL.MemoryFlags flags, NOpenCL.ImageFormat format, NOpenCL.ImageDescriptor descriptor) -> NOpenCL.Image
+NOpenCL.Context.CreateImage(NOpenCL.MemoryFlags flags, NOpenCL.ImageFormat format, NOpenCL.ImageDescriptor descriptor, System.IntPtr hostAddress) -> NOpenCL.Image
+NOpenCL.Context.CreateProgramWithSource(params string[] sources) -> NOpenCL.Program
+NOpenCL.Context.CreateSampler(bool normalizedCoordinates, NOpenCL.AddressingMode addressingMode, NOpenCL.FilterMode filterMode) -> NOpenCL.Sampler
+NOpenCL.Context.CreateUserEvent() -> NOpenCL.Event
+NOpenCL.Context.Devices.get -> System.Collections.Generic.IReadOnlyList<NOpenCL.Device>
+NOpenCL.Context.Dispose() -> void
+NOpenCL.Context.NumDevices.get -> uint
+NOpenCL.Context.Properties.get -> System.Collections.Generic.IReadOnlyList<System.IntPtr>
+NOpenCL.Context.ReferenceCount.get -> uint
+NOpenCL.Device
+NOpenCL.Device.AddressBits.get -> uint
+NOpenCL.Device.Available.get -> bool
+NOpenCL.Device.BuiltInKernels.get -> System.Collections.Generic.IReadOnlyList<string>
+NOpenCL.Device.CompilerAvailable.get -> bool
+NOpenCL.Device.DeviceType.get -> NOpenCL.DeviceType
+NOpenCL.Device.Dispose() -> void
+NOpenCL.Device.DoubleFloatingPointConfiguration.get -> NOpenCL.FloatingPointConfiguration
+NOpenCL.Device.DriverVersion.get -> string
+NOpenCL.Device.Equals(NOpenCL.Device other) -> bool
+NOpenCL.Device.ErrorCorrectionSupport.get -> bool
+NOpenCL.Device.ExecutionCapabilities.get -> NOpenCL.ExecutionCapabilities
+NOpenCL.Device.Extensions.get -> System.Collections.Generic.IReadOnlyList<string>
+NOpenCL.Device.GlobalCacheLineSize.get -> uint
+NOpenCL.Device.GlobalCacheSize.get -> ulong
+NOpenCL.Device.GlobalCacheType.get -> NOpenCL.CacheType
+NOpenCL.Device.GlobalMemorySize.get -> ulong
+NOpenCL.Device.HalfFloatingPointConfiguration.get -> NOpenCL.FloatingPointConfiguration
+NOpenCL.Device.HostUnifiedMemory.get -> bool
+NOpenCL.Device.Image2DMaxHeight.get -> System.UIntPtr
+NOpenCL.Device.Image2DMaxWidth.get -> System.UIntPtr
+NOpenCL.Device.Image3DMaxDepth.get -> System.UIntPtr
+NOpenCL.Device.Image3DMaxHeight.get -> System.UIntPtr
+NOpenCL.Device.Image3DMaxWidth.get -> System.UIntPtr
+NOpenCL.Device.ImageMaxArraySize.get -> System.UIntPtr
+NOpenCL.Device.ImageMaxBufferSize.get -> System.UIntPtr
+NOpenCL.Device.ImageSupport.get -> bool
+NOpenCL.Device.LinkerAvailable.get -> bool
+NOpenCL.Device.LittleEndian.get -> bool
+NOpenCL.Device.LocalMemorySize.get -> ulong
+NOpenCL.Device.LocalMemoryType.get -> NOpenCL.LocalMemoryType
+NOpenCL.Device.MaxClockFrequency.get -> uint
+NOpenCL.Device.MaxComputeUnits.get -> uint
+NOpenCL.Device.MaxConstantArguments.get -> uint
+NOpenCL.Device.MaxConstantBufferSize.get -> ulong
+NOpenCL.Device.MaxMemoryAllocationSize.get -> ulong
+NOpenCL.Device.MaxParameterSize.get -> System.UIntPtr
+NOpenCL.Device.MaxReadImageArguments.get -> uint
+NOpenCL.Device.MaxSamplers.get -> uint
+NOpenCL.Device.MaxWorkGroupSize.get -> System.UIntPtr
+NOpenCL.Device.MaxWorkItemDimensions.get -> uint
+NOpenCL.Device.MaxWorkItemSizes.get -> System.Collections.Generic.IReadOnlyList<System.UIntPtr>
+NOpenCL.Device.MaxWriteImageArguments.get -> uint
+NOpenCL.Device.MemoryBaseAddressAlignment.get -> uint
+NOpenCL.Device.MinDataTypeAlignmentSize.get -> uint
+NOpenCL.Device.Name.get -> string
+NOpenCL.Device.NativeVectorWidthChar.get -> uint
+NOpenCL.Device.NativeVectorWidthDouble.get -> uint
+NOpenCL.Device.NativeVectorWidthFloat.get -> uint
+NOpenCL.Device.NativeVectorWidthHalf.get -> uint
+NOpenCL.Device.NativeVectorWidthInt.get -> uint
+NOpenCL.Device.NativeVectorWidthLong.get -> uint
+NOpenCL.Device.NativeVectorWidthShort.get -> uint
+NOpenCL.Device.OpenCLVersion.get -> string
+NOpenCL.Device.Parent.get -> NOpenCL.Device
+NOpenCL.Device.Partition(params int[] partitionSizes) -> NOpenCL.DisposableCollection<NOpenCL.Device>
+NOpenCL.Device.PartitionAffinityDomain.get -> NOpenCL.AffinityDomain
+NOpenCL.Device.PartitionByAffinityDomain(NOpenCL.AffinityDomain affinityDomain) -> NOpenCL.DisposableCollection<NOpenCL.Device>
+NOpenCL.Device.PartitionEqually(int partitionSize) -> NOpenCL.DisposableCollection<NOpenCL.Device>
+NOpenCL.Device.PartitionMaxSubDevices.get -> uint
+NOpenCL.Device.PartitionProperties.get -> System.Collections.Generic.IReadOnlyList<NOpenCL.PartitionProperty>
+NOpenCL.Device.PartitionType.get -> System.Collections.Generic.IReadOnlyList<NOpenCL.PartitionProperty>
+NOpenCL.Device.Platform.get -> NOpenCL.Platform
+NOpenCL.Device.PreferredInteropUserSync.get -> bool
+NOpenCL.Device.PreferredVectorWidthChar.get -> uint
+NOpenCL.Device.PreferredVectorWidthDouble.get -> uint
+NOpenCL.Device.PreferredVectorWidthFloat.get -> uint
+NOpenCL.Device.PreferredVectorWidthHalf.get -> uint
+NOpenCL.Device.PreferredVectorWidthInt.get -> uint
+NOpenCL.Device.PreferredVectorWidthLong.get -> uint
+NOpenCL.Device.PreferredVectorWidthShort.get -> uint
+NOpenCL.Device.PrintfBufferSize.get -> System.UIntPtr
+NOpenCL.Device.Profile.get -> string
+NOpenCL.Device.ProfilingTimerResolution.get -> System.UIntPtr
+NOpenCL.Device.QueueProperties.get -> NOpenCL.CommandQueueProperties
+NOpenCL.Device.ReferenceCount.get -> uint
+NOpenCL.Device.SingleFloatingPointConfiguration.get -> NOpenCL.FloatingPointConfiguration
+NOpenCL.Device.Vendor.get -> string
+NOpenCL.Device.VendorID.get -> uint
+NOpenCL.Device.Version.get -> string
+NOpenCL.DeviceType
+NOpenCL.DeviceType.Accelerator = 8 -> NOpenCL.DeviceType
+NOpenCL.DeviceType.All = 18446744073709551615 -> NOpenCL.DeviceType
+NOpenCL.DeviceType.Cpu = 2 -> NOpenCL.DeviceType
+NOpenCL.DeviceType.Custom = 16 -> NOpenCL.DeviceType
+NOpenCL.DeviceType.Default = 1 -> NOpenCL.DeviceType
+NOpenCL.DeviceType.Gpu = 4 -> NOpenCL.DeviceType
+NOpenCL.DeviceType.None = 0 -> NOpenCL.DeviceType
+NOpenCL.DisposableCollection<T>
+NOpenCL.DisposableCollection<T>.DisposableCollection() -> void
+NOpenCL.DisposableCollection<T>.DisposableCollection(bool reverseOrder) -> void
+NOpenCL.DisposableCollection<T>.Dispose() -> void
+NOpenCL.Event
+NOpenCL.Event.CommandEndTime.get -> ulong
+NOpenCL.Event.CommandExecutionStatus.get -> NOpenCL.ExecutionStatus
+NOpenCL.Event.CommandQueue.get -> NOpenCL.CommandQueue
+NOpenCL.Event.CommandQueuedTime.get -> ulong
+NOpenCL.Event.CommandStartTime.get -> ulong
+NOpenCL.Event.CommandSubmitTime.get -> ulong
+NOpenCL.Event.CommandType.get -> NOpenCL.CommandType
+NOpenCL.Event.Context.get -> NOpenCL.Context
+NOpenCL.Event.Dispose() -> void
+NOpenCL.Event.ReferenceCount.get -> uint
+NOpenCL.Event.SetUserEventStatus(NOpenCL.ExecutionStatus status) -> void
+NOpenCL.EventStatusEventArgs
+NOpenCL.EventStatusEventArgs.EventStatusEventArgs(NOpenCL.ExecutionStatus status) -> void
+NOpenCL.EventStatusEventArgs.Status.get -> NOpenCL.ExecutionStatus
+NOpenCL.ExecutionCapabilities
+NOpenCL.ExecutionCapabilities.Kernel = 1 -> NOpenCL.ExecutionCapabilities
+NOpenCL.ExecutionCapabilities.NativeKernel = 2 -> NOpenCL.ExecutionCapabilities
+NOpenCL.ExecutionCapabilities.None = 0 -> NOpenCL.ExecutionCapabilities
+NOpenCL.ExecutionStatus
+NOpenCL.ExecutionStatus.Complete = 0 -> NOpenCL.ExecutionStatus
+NOpenCL.ExecutionStatus.Queued = 3 -> NOpenCL.ExecutionStatus
+NOpenCL.ExecutionStatus.Running = 1 -> NOpenCL.ExecutionStatus
+NOpenCL.ExecutionStatus.Submitted = 2 -> NOpenCL.ExecutionStatus
+NOpenCL.Extensions.KhrD3D10Sharing
+NOpenCL.Extensions.KhrD3D11Sharing
+NOpenCL.Extensions.NvDeviceAttributeQuery
+NOpenCL.FilterMode
+NOpenCL.FilterMode.Linear = 4417 -> NOpenCL.FilterMode
+NOpenCL.FilterMode.Nearest = 4416 -> NOpenCL.FilterMode
+NOpenCL.FloatingPointConfiguration
+NOpenCL.FloatingPointConfiguration.CorrectlyRoundedDivideSqrt = 128 -> NOpenCL.FloatingPointConfiguration
+NOpenCL.FloatingPointConfiguration.Denorm = 1 -> NOpenCL.FloatingPointConfiguration
+NOpenCL.FloatingPointConfiguration.Fma = 32 -> NOpenCL.FloatingPointConfiguration
+NOpenCL.FloatingPointConfiguration.InfNaN = 2 -> NOpenCL.FloatingPointConfiguration
+NOpenCL.FloatingPointConfiguration.None = 0 -> NOpenCL.FloatingPointConfiguration
+NOpenCL.FloatingPointConfiguration.RoundToInf = 16 -> NOpenCL.FloatingPointConfiguration
+NOpenCL.FloatingPointConfiguration.RoundToNearest = 4 -> NOpenCL.FloatingPointConfiguration
+NOpenCL.FloatingPointConfiguration.RoundToZero = 8 -> NOpenCL.FloatingPointConfiguration
+NOpenCL.FloatingPointConfiguration.SoftFloat = 64 -> NOpenCL.FloatingPointConfiguration
+NOpenCL.Image
+NOpenCL.Image.ArraySize.get -> System.UIntPtr
+NOpenCL.Image.Buffer.get -> NOpenCL.Buffer
+NOpenCL.Image.Depth.get -> System.UIntPtr
+NOpenCL.Image.ElementSize.get -> System.UIntPtr
+NOpenCL.Image.Format.get -> NOpenCL.ImageFormat
+NOpenCL.Image.Height.get -> System.UIntPtr
+NOpenCL.Image.NumMipLevels.get -> uint
+NOpenCL.Image.NumSamples.get -> uint
+NOpenCL.Image.RowPitch.get -> System.UIntPtr
+NOpenCL.Image.SlicePitch.get -> System.UIntPtr
+NOpenCL.Image.Width.get -> System.UIntPtr
+NOpenCL.ImageDescriptor
+NOpenCL.ImageFormat
+NOpenCL.ImageFormat.ImageFormat(NOpenCL.ChannelOrder channelOrder, NOpenCL.ChannelType channelType) -> void
+NOpenCL.Kernel
+NOpenCL.Kernel.Arguments.get -> System.Collections.ObjectModel.ReadOnlyCollection<NOpenCL.KernelArgument>
+NOpenCL.Kernel.Attributes.get -> System.Collections.Generic.IReadOnlyList<string>
+NOpenCL.Kernel.Context.get -> NOpenCL.Context
+NOpenCL.Kernel.Dispose() -> void
+NOpenCL.Kernel.FunctionName.get -> string
+NOpenCL.Kernel.GetCompileWorkGroupSize(NOpenCL.Device device) -> System.Collections.Generic.IReadOnlyList<System.IntPtr>
+NOpenCL.Kernel.GetGlobalWorkSize(NOpenCL.Device device) -> System.Collections.Generic.IReadOnlyList<System.IntPtr>
+NOpenCL.Kernel.GetLocalMemorySize(NOpenCL.Device device) -> ulong
+NOpenCL.Kernel.GetPreferredWorkGroupSizeMultiple(NOpenCL.Device device) -> System.IntPtr
+NOpenCL.Kernel.GetPrivateMemorySize(NOpenCL.Device device) -> ulong
+NOpenCL.Kernel.GetWorkGroupSize(NOpenCL.Device device) -> System.IntPtr
+NOpenCL.Kernel.Program.get -> NOpenCL.Program
+NOpenCL.Kernel.ReferenceCount.get -> uint
+NOpenCL.KernelArgument
+NOpenCL.KernelArgument.AccessQualifier.get -> NOpenCL.AccessQualifier
+NOpenCL.KernelArgument.AddressQualifier.get -> NOpenCL.AddressQualifier
+NOpenCL.KernelArgument.Index.get -> int
+NOpenCL.KernelArgument.Kernel.get -> NOpenCL.Kernel
+NOpenCL.KernelArgument.Name.get -> string
+NOpenCL.KernelArgument.SetValue(NOpenCL.Buffer buffer) -> void
+NOpenCL.KernelArgument.SetValue(NOpenCL.Image image) -> void
+NOpenCL.KernelArgument.SetValue(System.UIntPtr size, System.IntPtr value) -> void
+NOpenCL.KernelArgument.SetValue(int value) -> void
+NOpenCL.KernelArgument.TypeName.get -> string
+NOpenCL.KernelArgument.TypeQualifiers.get -> NOpenCL.TypeQualifiers
+NOpenCL.LocalMemoryType
+NOpenCL.LocalMemoryType.Global = 2 -> NOpenCL.LocalMemoryType
+NOpenCL.LocalMemoryType.Local = 1 -> NOpenCL.LocalMemoryType
+NOpenCL.LocalMemoryType.None = 0 -> NOpenCL.LocalMemoryType
+NOpenCL.MapFlags
+NOpenCL.MapFlags.None = 0 -> NOpenCL.MapFlags
+NOpenCL.MapFlags.Read = 1 -> NOpenCL.MapFlags
+NOpenCL.MapFlags.Write = 2 -> NOpenCL.MapFlags
+NOpenCL.MapFlags.WriteInvalidateRegion = 4 -> NOpenCL.MapFlags
+NOpenCL.MemObject
+NOpenCL.MemObject.Destroyed -> System.EventHandler
+NOpenCL.MemObject.Dispose() -> void
+NOpenCL.MemObject<THandle>
+NOpenCL.MemObject<THandle>.Context.get -> NOpenCL.Context
+NOpenCL.MemObject<THandle>.Flags.get -> NOpenCL.MemoryFlags
+NOpenCL.MemObject<THandle>.HostPointer.get -> System.IntPtr
+NOpenCL.MemObject<THandle>.MapCount.get -> uint
+NOpenCL.MemObject<THandle>.ObjectType.get -> NOpenCL.MemObjectType
+NOpenCL.MemObject<THandle>.ReferenceCount.get -> uint
+NOpenCL.MemObject<THandle>.Size.get -> System.UIntPtr
+NOpenCL.MemObjectType
+NOpenCL.MemObjectType.Buffer = 4336 -> NOpenCL.MemObjectType
+NOpenCL.MemObjectType.Image1D = 4340 -> NOpenCL.MemObjectType
+NOpenCL.MemObjectType.Image1DArray = 4341 -> NOpenCL.MemObjectType
+NOpenCL.MemObjectType.Image1DBuffer = 4342 -> NOpenCL.MemObjectType
+NOpenCL.MemObjectType.Image2D = 4337 -> NOpenCL.MemObjectType
+NOpenCL.MemObjectType.Image2DArray = 4339 -> NOpenCL.MemObjectType
+NOpenCL.MemObjectType.Image3D = 4338 -> NOpenCL.MemObjectType
+NOpenCL.MemoryFlags
+NOpenCL.MemoryFlags.AllocateHostPointer = 16 -> NOpenCL.MemoryFlags
+NOpenCL.MemoryFlags.CopyHostPointer = 32 -> NOpenCL.MemoryFlags
+NOpenCL.MemoryFlags.HostNoAccess = 512 -> NOpenCL.MemoryFlags
+NOpenCL.MemoryFlags.HostReadOnly = 256 -> NOpenCL.MemoryFlags
+NOpenCL.MemoryFlags.HostWriteOnly = 128 -> NOpenCL.MemoryFlags
+NOpenCL.MemoryFlags.None = 0 -> NOpenCL.MemoryFlags
+NOpenCL.MemoryFlags.ReadOnly = 4 -> NOpenCL.MemoryFlags
+NOpenCL.MemoryFlags.ReadWrite = 1 -> NOpenCL.MemoryFlags
+NOpenCL.MemoryFlags.UseHostPointer = 8 -> NOpenCL.MemoryFlags
+NOpenCL.MemoryFlags.WriteOnly = 2 -> NOpenCL.MemoryFlags
+NOpenCL.MigrationFlags
+NOpenCL.MigrationFlags.ContentUndefined = 2 -> NOpenCL.MigrationFlags
+NOpenCL.MigrationFlags.Host = 1 -> NOpenCL.MigrationFlags
+NOpenCL.MigrationFlags.None = 0 -> NOpenCL.MigrationFlags
+NOpenCL.PartitionProperty
+NOpenCL.PartitionProperty.PartitionByAffinityDomain = 4232 -> NOpenCL.PartitionProperty
+NOpenCL.PartitionProperty.PartitionByCounts = 4231 -> NOpenCL.PartitionProperty
+NOpenCL.PartitionProperty.PartitionByCountsListEnd = 0 -> NOpenCL.PartitionProperty
+NOpenCL.PartitionProperty.PartitionEqually = 4230 -> NOpenCL.PartitionProperty
+NOpenCL.Platform
+NOpenCL.Platform.Equals(NOpenCL.Platform other) -> bool
+NOpenCL.Platform.Extensions.get -> System.Collections.Generic.IReadOnlyList<string>
+NOpenCL.Platform.GetDevices() -> NOpenCL.Device[]
+NOpenCL.Platform.GetDevices(NOpenCL.DeviceType deviceType) -> NOpenCL.Device[]
+NOpenCL.Platform.Name.get -> string
+NOpenCL.Platform.Profile.get -> string
+NOpenCL.Platform.UnloadCompiler() -> void
+NOpenCL.Platform.Vendor.get -> string
+NOpenCL.Platform.Version.get -> string
+NOpenCL.Program
+NOpenCL.Program.Binaries.get -> System.Collections.Generic.IReadOnlyList<System.IntPtr>
+NOpenCL.Program.BinarySizes.get -> System.Collections.Generic.IReadOnlyList<System.UIntPtr>
+NOpenCL.Program.Build() -> void
+NOpenCL.Program.Build(NOpenCL.Device[] devices) -> void
+NOpenCL.Program.Build(NOpenCL.Device[] devices, string options) -> void
+NOpenCL.Program.Build(string options) -> void
+NOpenCL.Program.Context.get -> NOpenCL.Context
+NOpenCL.Program.CreateKernel(string name) -> NOpenCL.Kernel
+NOpenCL.Program.Devices.get -> System.Collections.Generic.IReadOnlyList<NOpenCL.Device>
+NOpenCL.Program.Dispose() -> void
+NOpenCL.Program.GetBinaryType(NOpenCL.Device device) -> NOpenCL.BinaryType
+NOpenCL.Program.GetBuildLog(NOpenCL.Device device) -> string
+NOpenCL.Program.GetBuildOptions(NOpenCL.Device device) -> string
+NOpenCL.Program.GetBuildStatus(NOpenCL.Device device) -> NOpenCL.BuildStatus
+NOpenCL.Program.KernelNames.get -> System.Collections.Generic.IReadOnlyList<string>
+NOpenCL.Program.NumDevices.get -> uint
+NOpenCL.Program.NumKernels.get -> System.IntPtr
+NOpenCL.Program.ReferenceCount.get -> uint
+NOpenCL.Program.Source.get -> string
+NOpenCL.SafeHandles.BufferSafeHandle
+NOpenCL.SafeHandles.BufferSafeHandle.BufferSafeHandle() -> void
+NOpenCL.SafeHandles.CommandQueueSafeHandle
+NOpenCL.SafeHandles.CommandQueueSafeHandle.CommandQueueSafeHandle() -> void
+NOpenCL.SafeHandles.ContextSafeHandle
+NOpenCL.SafeHandles.ContextSafeHandle.ContextSafeHandle() -> void
+NOpenCL.SafeHandles.DeviceSafeHandle
+NOpenCL.SafeHandles.DeviceSafeHandle.DeviceSafeHandle() -> void
+NOpenCL.SafeHandles.EventSafeHandle
+NOpenCL.SafeHandles.EventSafeHandle.EventSafeHandle() -> void
+NOpenCL.SafeHandles.ImageSafeHandle
+NOpenCL.SafeHandles.ImageSafeHandle.ImageSafeHandle() -> void
+NOpenCL.SafeHandles.KernelSafeHandle
+NOpenCL.SafeHandles.KernelSafeHandle.KernelSafeHandle() -> void
+NOpenCL.SafeHandles.MemObjectSafeHandle
+NOpenCL.SafeHandles.MemObjectSafeHandle.MemObjectSafeHandle() -> void
+NOpenCL.SafeHandles.ProgramSafeHandle
+NOpenCL.SafeHandles.ProgramSafeHandle.ProgramSafeHandle() -> void
+NOpenCL.SafeHandles.SamplerSafeHandle
+NOpenCL.SafeHandles.SamplerSafeHandle.SamplerSafeHandle() -> void
+NOpenCL.Sampler
+NOpenCL.Sampler.AddressingMode.get -> NOpenCL.AddressingMode
+NOpenCL.Sampler.Context.get -> NOpenCL.Context
+NOpenCL.Sampler.Dispose() -> void
+NOpenCL.Sampler.FilterMode.get -> NOpenCL.FilterMode
+NOpenCL.Sampler.NormalizedCoordinates.get -> bool
+NOpenCL.Sampler.ReferenceCount.get -> uint
+NOpenCL.TypeQualifiers
+NOpenCL.TypeQualifiers.Const = 1 -> NOpenCL.TypeQualifiers
+NOpenCL.TypeQualifiers.None = 0 -> NOpenCL.TypeQualifiers
+NOpenCL.TypeQualifiers.Restrict = 2 -> NOpenCL.TypeQualifiers
+NOpenCL.TypeQualifiers.Volatile = 4 -> NOpenCL.TypeQualifiers
+override NOpenCL.Device.Equals(object obj) -> bool
+override NOpenCL.Device.GetHashCode() -> int
+override NOpenCL.Platform.Equals(object obj) -> bool
+override NOpenCL.Platform.GetHashCode() -> int
+override NOpenCL.Platform.ToString() -> string
+override NOpenCL.SafeHandles.MemObjectSafeHandle.ReleaseHandle() -> bool
+readonly NOpenCL.BufferCoordinates.X -> System.IntPtr
+readonly NOpenCL.BufferCoordinates.Y -> System.IntPtr
+readonly NOpenCL.BufferCoordinates.Z -> System.IntPtr
+readonly NOpenCL.BufferRegion.Origin -> System.IntPtr
+readonly NOpenCL.BufferRegion.Size -> System.IntPtr
+readonly NOpenCL.BufferSize.Depth -> System.IntPtr
+readonly NOpenCL.BufferSize.Height -> System.IntPtr
+readonly NOpenCL.BufferSize.Width -> System.IntPtr
+readonly NOpenCL.ImageDescriptor.ArraySize -> System.UIntPtr
+readonly NOpenCL.ImageDescriptor.Buffer -> NOpenCL.SafeHandles.BufferSafeHandle
+readonly NOpenCL.ImageDescriptor.Depth -> System.UIntPtr
+readonly NOpenCL.ImageDescriptor.Height -> System.UIntPtr
+readonly NOpenCL.ImageDescriptor.NumMipLevels -> uint
+readonly NOpenCL.ImageDescriptor.NumSamples -> uint
+readonly NOpenCL.ImageDescriptor.RowPitch -> System.UIntPtr
+readonly NOpenCL.ImageDescriptor.SlicePitch -> System.UIntPtr
+readonly NOpenCL.ImageDescriptor.Type -> NOpenCL.MemObjectType
+readonly NOpenCL.ImageDescriptor.Width -> System.UIntPtr
+readonly NOpenCL.ImageFormat.ChannelOrder -> NOpenCL.ChannelOrder
+readonly NOpenCL.ImageFormat.ChannelType -> NOpenCL.ChannelType
+static NOpenCL.Context.Create(NOpenCL.Platform platform, NOpenCL.DeviceType deviceType) -> NOpenCL.Context
+static NOpenCL.Context.Create(NOpenCL.Platform platform, params NOpenCL.Device[] devices) -> NOpenCL.Context
+static NOpenCL.Context.Create(params NOpenCL.Device[] devices) -> NOpenCL.Context
+static NOpenCL.Event.WaitAll(params NOpenCL.Event[] events) -> void
+static NOpenCL.Extensions.KhrD3D10Sharing.GetD3D10PreferSharedResourcesKhr(this NOpenCL.Context context) -> bool
+static NOpenCL.Extensions.KhrD3D10Sharing.IsSupported(NOpenCL.Device device) -> bool
+static NOpenCL.Extensions.KhrD3D10Sharing.IsSupported(NOpenCL.Platform platform) -> bool
+static NOpenCL.Extensions.KhrD3D11Sharing.GetD3D11PreferSharedResourcesKhr(this NOpenCL.Context context) -> bool
+static NOpenCL.Extensions.KhrD3D11Sharing.IsSupported(NOpenCL.Device device) -> bool
+static NOpenCL.Extensions.KhrD3D11Sharing.IsSupported(NOpenCL.Platform platform) -> bool
+static NOpenCL.Extensions.NvDeviceAttributeQuery.GetComputeCapabilityMajorNv(this NOpenCL.Device device) -> uint
+static NOpenCL.Extensions.NvDeviceAttributeQuery.GetComputeCapabilityMinorNv(this NOpenCL.Device device) -> uint
+static NOpenCL.Extensions.NvDeviceAttributeQuery.GetGpuOverlapNv(this NOpenCL.Device device) -> bool
+static NOpenCL.Extensions.NvDeviceAttributeQuery.GetIntegratedMemoryNv(this NOpenCL.Device device) -> bool
+static NOpenCL.Extensions.NvDeviceAttributeQuery.GetKernelExecTimeoutNv(this NOpenCL.Device device) -> bool
+static NOpenCL.Extensions.NvDeviceAttributeQuery.GetRegistersPerBlockNv(this NOpenCL.Device device) -> uint
+static NOpenCL.Extensions.NvDeviceAttributeQuery.GetWarpSizeNv(this NOpenCL.Device device) -> uint
+static NOpenCL.Extensions.NvDeviceAttributeQuery.IsSupported(NOpenCL.Device device) -> bool
+static NOpenCL.Platform.GetPlatforms() -> NOpenCL.Platform[]
+static readonly NOpenCL.Extensions.KhrD3D10Sharing.ExtensionName -> string
+static readonly NOpenCL.Extensions.KhrD3D11Sharing.ExtensionName -> string
+static readonly NOpenCL.Extensions.NvDeviceAttributeQuery.ExtensionName -> string
