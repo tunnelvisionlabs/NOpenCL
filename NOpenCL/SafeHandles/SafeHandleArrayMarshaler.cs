@@ -68,7 +68,7 @@ namespace NOpenCL.SafeHandles
                         current.DangerousAddRef(ref success);
                 }
 
-                IntPtr result = Marshal.AllocHGlobal(array.Length * IntPtr.Size);
+                IntPtr result = Marshal.AllocHGlobal((array.Length + 1) * IntPtr.Size);
                 Marshal.WriteIntPtr(result, 0, GCHandle.ToIntPtr(GCHandle.Alloc(array, GCHandleType.Normal)));
                 for (int j = 0; j < array.Length; j++)
                 {
