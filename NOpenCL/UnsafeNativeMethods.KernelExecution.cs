@@ -38,8 +38,6 @@ namespace NOpenCL
                 throw new ArgumentNullException("kernel");
             if (globalWorkSize == null)
                 throw new ArgumentNullException("globalWorkSize");
-            if (localWorkSize == null)
-                throw new ArgumentNullException("localWorkSize");
 
             uint workDim = (uint)globalWorkSize.Length;
             if (globalWorkOffset != null && globalWorkOffset.Length != workDim)
