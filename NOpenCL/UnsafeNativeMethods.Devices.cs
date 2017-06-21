@@ -22,9 +22,11 @@ namespace NOpenCL
         public static ClDeviceID[] GetDeviceIDs(ClPlatformID platform, DeviceType deviceType)
         {
             uint required;
-            ErrorHandler.ThrowOnFailure(clGetDeviceIDs(platform, deviceType, 0, null, out required));
-            if (required == 0)
+            ErrorCode result = clGetDeviceIDs(platform, deviceType, 0, null, out required);
+            if (result == ErrorCode.DeviceNotFound && required == 0)
                 return new ClDeviceID[0];
+
+            ErrorHandler.ThrowOnFailure(result);
 
             ClDeviceID[] devices = new ClDeviceID[required];
             uint actual;
