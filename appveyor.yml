@@ -10,7 +10,10 @@ before_build:
 build:
   project: NOpenCL.sln
   verbosity: minimal
-test: off
+test:
+  categories:
+    except:
+    - RequireGpu
 cache:
 - intel_sdk_for_opencl_setup_6.0.0.1049.exe -> build\appveyor-install.ps1
 - opencl_runtime_16.1.1_x64_setup.msi -> build\appveyor-install.ps1

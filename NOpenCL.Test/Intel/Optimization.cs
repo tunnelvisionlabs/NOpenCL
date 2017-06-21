@@ -14,7 +14,19 @@ namespace NOpenCL.Test.Intel
         private readonly Random _random = new Random();
 
         [TestMethod]
-        public void TestOptimization()
+        [TestCategory(TestCategories.RequireGpu)]
+        public void TestOptimizationGpu()
+        {
+            TestOptimization(runOnGpu: true);
+        }
+
+        [TestMethod]
+        public void TestOptimizationCpu()
+        {
+            TestOptimization(runOnGpu: false);
+        }
+
+        private void TestOptimization(bool runOnGpu)
         {
             int taskSize = 1 << 24;
             int localWorkSize = 32;
@@ -24,7 +36,6 @@ namespace NOpenCL.Test.Intel
             bool useHostPointer = true;
             bool autoGroupSize = false;
             bool enableProfiling = true;
-            bool runOnGpu = true;
             TestOptimization(taskSize, localWorkSize, warming, gather4, useRelaxedMath, useHostPointer, autoGroupSize, enableProfiling, runOnGpu);
         }
 
@@ -72,7 +83,7 @@ namespace NOpenCL.Test.Intel
                 Console.WriteLine("Performing verification...");
                 for (int i = 0; i < taskSize; i++)
                 {
-                    Assert.AreEqual(regularOutput[i], openCLOutput[i], 0.01);
+                    Assert.AreEqual(regularOutput[i], openCLOutput[i], Math.Max(0.01, Math.Abs(regularOutput[i] / 500.0)));
                 }
             }
         }

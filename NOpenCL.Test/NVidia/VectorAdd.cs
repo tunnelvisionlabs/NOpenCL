@@ -48,6 +48,12 @@ namespace NOpenCL.Test.NVidia
             // get the devices
             Console.WriteLine("Get GPU devices...");
             Device[] devices = platform.GetDevices(DeviceType.Gpu);
+            if (devices.Length == 0)
+            {
+                Console.WriteLine("No GPU devices found. Falling back to CPU for test...");
+                devices = platform.GetDevices(DeviceType.Cpu);
+                Assert.AreNotEqual(0, devices.Length, "There are no devices supporting OpenCL");
+            }
 
             // create the context
             Console.WriteLine("Get context...");
