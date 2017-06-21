@@ -1,0 +1,13 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration: Release
+init:
+- git config --global core.autocrlf true
+install:
+- powershell -Command .\build\appveyor-install.ps1
+before_build:
+- nuget restore
+build:
+  project: NOpenCL.sln
+  verbosity: minimal
+test: off
