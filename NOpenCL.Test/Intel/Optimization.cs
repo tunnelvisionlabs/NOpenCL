@@ -83,7 +83,7 @@ namespace NOpenCL.Test.Intel
                 Console.WriteLine("Performing verification...");
                 for (int i = 0; i < taskSize; i++)
                 {
-                    Assert.AreEqual(regularOutput[i], openCLOutput[i], 0.01);
+                    Assert.AreEqual(regularOutput[i], openCLOutput[i], Math.Max(0.01, Math.Abs(regularOutput[i] / 500.0)));
                 }
             }
         }
