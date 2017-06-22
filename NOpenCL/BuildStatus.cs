@@ -3,14 +3,16 @@
 
 namespace NOpenCL
 {
+#pragma warning disable CS1574 // XML comment has cref attribute that could not be resolved
     /// <summary>
     /// Returns the build, compile, or link status, whichever was performed last
     /// on the specified program and device.
     /// </summary>
-    /// <seealso cref="O:NOpenCL.Program.Build"/>
+    /// <seealso cref="Program.Build()" autoUpgrade="true"/>
     /// <seealso cref="Program.Compile"/>
     /// <seealso cref="Program.Link"/>
     public enum BuildStatus
+#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
     {
         /// <summary>
         /// The build was successful.

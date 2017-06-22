@@ -92,10 +92,11 @@ __kernel void VectorAdd(__global const float* a, __global const float* b, __glob
                         {
                             // build the program
                             string options;
-                            if (false)
-                                options = "-cl-fast-relaxed-math -DMAC";
-                            else
-                                options = "-cl-fast-relaxed-math";
+#if false
+                            options = "-cl-fast-relaxed-math -DMAC";
+#else
+                            options = "-cl-fast-relaxed-math";
+#endif
 
                             program.Build(options);
 
