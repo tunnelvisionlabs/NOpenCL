@@ -80,6 +80,7 @@ namespace NOpenCL
             return Array.ConvertAll(devices, device => new Device(device));
         }
 
+#pragma warning disable CS1574 // XML comment has cref attribute that could not be resolved
         /// <summary>
         /// Allows the implementation to release the resources allocated by the OpenCL compiler for this platform.
         /// </summary>
@@ -91,6 +92,7 @@ namespace NOpenCL
         /// appropriate program executable.
         /// </remarks>
         public void UnloadCompiler()
+#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
         {
             UnsafeNativeMethods.UnloadPlatformCompiler(ID);
         }

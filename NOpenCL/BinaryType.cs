@@ -13,6 +13,7 @@ namespace NOpenCL
         /// </summary>
         None = 0,
 
+#pragma warning disable CS1574 // XML comment has cref attribute that could not be resolved
         /// <summary>
         /// A compiled binary is associated with the device. This is the case if a program
         /// was created using <see cref="Context.CreateProgramWithSource"/> and compiled
@@ -20,7 +21,9 @@ namespace NOpenCL
         /// <see cref="Context.CreateProgramWithBinary"/>.
         /// </summary>
         CompiledObject = 0x0001,
+#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
 
+#pragma warning disable CS1574 // XML comment has cref attribute that could not be resolved
         /// <summary>
         /// A library binary is associated with the device. This is the case if a program
         /// was created by <see cref="Program.Link"/> which is called with the
@@ -28,7 +31,9 @@ namespace NOpenCL
         /// <see cref="Context.CreateProgramWithBinary"/>.
         /// </summary>
         Library = 0x0002,
+#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
 
+#pragma warning disable CS1574 // XML comment has cref attribute that could not be resolved
         /// <summary>
         /// An executable binary is associated with the device. This is the case if a
         /// program was created by <see cref="Program.Link"/> without the <c>–createlibrary</c>
@@ -36,5 +41,6 @@ namespace NOpenCL
         /// or an executable binary is loaded using <see cref="Context.CreateProgramWithBinary"/>.
         /// </summary>
         Executable = 0x0004,
+#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
     }
 }
