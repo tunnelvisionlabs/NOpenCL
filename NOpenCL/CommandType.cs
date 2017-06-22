@@ -30,5 +30,13 @@ namespace NOpenCL
         MigrateMemObjects = 0x1206,
         FillBuffer = 0x1207,
         FillImage = 0x1208,
+
+        GlFenceSyncObjectKhr = 0x200D,
+        AcquireD3d10ObjectsKhr = 0x4017,
+        ReleaseD3d10ObjectsKhr = 0x4018,
+        AcquireDx9MediaSurfacesKhr = 0x202B,
+        ReleaseDx9MediaSurfacesKhr = 0x202C,
+        AcquireD3d11ObjectsKhr = 0x4020,
+        ReleaseD3d11ObjectsKhr = 0x4021,
     }
 }
