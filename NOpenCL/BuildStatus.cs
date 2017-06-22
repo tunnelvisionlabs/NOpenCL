@@ -8,7 +8,7 @@ namespace NOpenCL
     /// Returns the build, compile, or link status, whichever was performed last
     /// on the specified program and device.
     /// </summary>
-    /// <seealso cref="O:NOpenCL.Program.Build"/>
+    /// <seealso cref="Program.Build()" autoUpgrade="true"/>
     /// <seealso cref="Program.Compile"/>
     /// <seealso cref="Program.Link"/>
     public enum BuildStatus

@@ -37,7 +37,7 @@ namespace NOpenCL
         /// <summary>
         /// An executable binary is associated with the device. This is the case if a
         /// program was created by <see cref="Program.Link"/> without the <c>–createlibrary</c>
-        /// link option or the program was created by <see cref="O:NOpenCL.Program.Build"/>
+        /// link option or the program was created by <see cref="Program.Build()" autoUpgrade="true"/>
         /// or an executable binary is loaded using <see cref="Context.CreateProgramWithBinary"/>.
         /// </summary>
         Executable = 0x0004,
