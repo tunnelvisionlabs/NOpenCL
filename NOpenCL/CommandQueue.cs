@@ -17,11 +17,11 @@ namespace NOpenCL
         internal CommandQueue(CommandQueueSafeHandle handle, Context context, Device device)
         {
             if (handle == null)
-                throw new ArgumentNullException("handle");
+                throw new ArgumentNullException(nameof(handle));
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             if (device == null)
-                throw new ArgumentNullException("device");
+                throw new ArgumentNullException(nameof(device));
 
             _handle = handle;
             _context = context;

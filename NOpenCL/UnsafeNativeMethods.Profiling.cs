@@ -94,7 +94,7 @@ namespace NOpenCL
             public EventProfilingParameterInfo(ParameterInfo<T> parameterInfo)
             {
                 if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
+                    throw new ArgumentNullException(nameof(parameterInfo));
 
                 _parameterInfo = parameterInfo;
             }

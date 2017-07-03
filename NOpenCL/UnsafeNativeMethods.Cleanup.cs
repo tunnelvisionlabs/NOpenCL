@@ -65,7 +65,7 @@ namespace NOpenCL
         internal static void Flush(CommandQueueSafeHandle commandQueue)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
 
             ErrorHandler.ThrowOnFailure(clFlush(commandQueue));
         }
@@ -103,7 +103,7 @@ namespace NOpenCL
         internal static void Finish(CommandQueueSafeHandle commandQueue)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
 
             ErrorHandler.ThrowOnFailure(clFinish(commandQueue));
         }

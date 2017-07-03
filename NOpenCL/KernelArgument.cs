@@ -13,9 +13,9 @@ namespace NOpenCL
         internal KernelArgument(Kernel kernel, int index)
         {
             if (kernel == null)
-                throw new ArgumentNullException("kernel");
+                throw new ArgumentNullException(nameof(kernel));
             if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
 
             _kernel = kernel;
             _index = index;
@@ -80,7 +80,7 @@ namespace NOpenCL
         public void SetValue(Buffer buffer)
         {
             if (buffer == null)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
 
             unsafe
             {
@@ -92,7 +92,7 @@ namespace NOpenCL
         public void SetValue(Image image)
         {
             if (image == null)
-                throw new ArgumentNullException("image");
+                throw new ArgumentNullException(nameof(image));
 
             unsafe
             {

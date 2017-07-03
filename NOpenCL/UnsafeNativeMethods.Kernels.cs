@@ -21,9 +21,9 @@ namespace NOpenCL
         public static KernelSafeHandle CreateKernel(ProgramSafeHandle program, string kernelName)
         {
             if (program == null)
-                throw new ArgumentNullException("program");
+                throw new ArgumentNullException(nameof(program));
             if (kernelName == null)
-                throw new ArgumentNullException("kernelName");
+                throw new ArgumentNullException(nameof(kernelName));
             if (string.IsNullOrEmpty(kernelName))
                 throw new ArgumentException();
 
@@ -56,9 +56,9 @@ namespace NOpenCL
         public static void SetKernelArg(KernelSafeHandle kernel, int argumentIndex, UIntPtr argSize, IntPtr argValue)
         {
             if (kernel == null)
-                throw new ArgumentNullException("kernel");
+                throw new ArgumentNullException(nameof(kernel));
             if (argumentIndex < 0)
-                throw new ArgumentOutOfRangeException("argumentIndex");
+                throw new ArgumentOutOfRangeException(nameof(argumentIndex));
 
             ErrorHandler.ThrowOnFailure(clSetKernelArg(kernel, argumentIndex, argSize, argValue));
         }
@@ -75,11 +75,11 @@ namespace NOpenCL
         public static T GetKernelArgInfo<T>(KernelSafeHandle kernel, int argumentIndex, KernelArgParameterInfo<T> parameter)
         {
             if (kernel == null)
-                throw new ArgumentNullException("kernel");
+                throw new ArgumentNullException(nameof(kernel));
             if (parameter == null)
-                throw new ArgumentNullException("parameter");
+                throw new ArgumentNullException(nameof(parameter));
             if (argumentIndex < 0)
-                throw new ArgumentOutOfRangeException("argumentIndex");
+                throw new ArgumentOutOfRangeException(nameof(argumentIndex));
 
             int? fixedSize = parameter.ParameterInfo.FixedSize;
 #if DEBUG
@@ -139,7 +139,7 @@ namespace NOpenCL
             public KernelArgParameterInfo(ParameterInfo<T> parameterInfo)
             {
                 if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
+                    throw new ArgumentNullException(nameof(parameterInfo));
 
                 _parameterInfo = parameterInfo;
             }
@@ -169,9 +169,9 @@ namespace NOpenCL
         public static T GetKernelInfo<T>(KernelSafeHandle kernel, KernelParameterInfo<T> parameter)
         {
             if (kernel == null)
-                throw new ArgumentNullException("kernel");
+                throw new ArgumentNullException(nameof(kernel));
             if (parameter == null)
-                throw new ArgumentNullException("parameter");
+                throw new ArgumentNullException(nameof(parameter));
 
             int? fixedSize = parameter.ParameterInfo.FixedSize;
 #if DEBUG
@@ -257,7 +257,7 @@ namespace NOpenCL
             public KernelParameterInfo(ParameterInfo<T> parameterInfo)
             {
                 if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
+                    throw new ArgumentNullException(nameof(parameterInfo));
 
                 _parameterInfo = parameterInfo;
             }
@@ -288,9 +288,9 @@ namespace NOpenCL
         public static T GetKernelWorkGroupInfo<T>(KernelSafeHandle kernel, ClDeviceID device, KernelWorkGroupParameterInfo<T> parameter)
         {
             if (kernel == null)
-                throw new ArgumentNullException("kernel");
+                throw new ArgumentNullException(nameof(kernel));
             if (parameter == null)
-                throw new ArgumentNullException("parameter");
+                throw new ArgumentNullException(nameof(parameter));
 
             int? fixedSize = parameter.ParameterInfo.FixedSize;
 #if DEBUG
@@ -397,7 +397,7 @@ namespace NOpenCL
             public KernelWorkGroupParameterInfo(ParameterInfo<T> parameterInfo)
             {
                 if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
+                    throw new ArgumentNullException(nameof(parameterInfo));
 
                 _parameterInfo = parameterInfo;
             }

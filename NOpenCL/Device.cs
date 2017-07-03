@@ -24,7 +24,7 @@ namespace NOpenCL
         internal Device(UnsafeNativeMethods.ClDeviceID device, DeviceSafeHandle handle)
         {
             if (handle == null)
-                throw new ArgumentNullException("handle");
+                throw new ArgumentNullException(nameof(handle));
 
             _device = device;
             _handle = handle;
@@ -1066,9 +1066,9 @@ namespace NOpenCL
         public DisposableCollection<Device> Partition(params int[] partitionSizes)
         {
             if (partitionSizes == null)
-                throw new ArgumentNullException("partitionSizes");
+                throw new ArgumentNullException(nameof(partitionSizes));
             if (partitionSizes.Length == 0)
-                throw new ArgumentException();
+                throw new ArgumentException($"{nameof(partitionSizes)} cannot be empty", nameof(partitionSizes));
 
             return UnsafeNativeMethods.PartitionByCounts(ID, partitionSizes);
         }

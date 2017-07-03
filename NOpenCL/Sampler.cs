@@ -21,9 +21,9 @@ namespace NOpenCL
         internal Sampler(SamplerSafeHandle handle, Context context)
         {
             if (handle == null)
-                throw new ArgumentNullException("handle");
+                throw new ArgumentNullException(nameof(handle));
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             _handle = handle;
             _context = context;

@@ -18,7 +18,7 @@ namespace NOpenCL
         public static EventSafeHandle CreateUserEvent(ContextSafeHandle context)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             ErrorCode errorCode;
             EventSafeHandle handle = clCreateUserEvent(context, out errorCode);
@@ -32,7 +32,7 @@ namespace NOpenCL
         public static void SetUserEventStatus(EventSafeHandle @event, ExecutionStatus executionStatus)
         {
             if (@event == null)
-                throw new ArgumentNullException("event");
+                throw new ArgumentNullException(nameof(@event));
 
             ErrorHandler.ThrowOnFailure(clSetUserEventStatus(@event, executionStatus));
         }
@@ -45,7 +45,7 @@ namespace NOpenCL
         public static void WaitForEvents(EventSafeHandle[] eventWaitList)
         {
             if (eventWaitList == null)
-                throw new ArgumentNullException("eventWaitList");
+                throw new ArgumentNullException(nameof(eventWaitList));
             if (eventWaitList.Length == 0)
                 throw new ArgumentException();
 
@@ -180,7 +180,7 @@ namespace NOpenCL
             public EventParameterInfo(ParameterInfo<T> parameterInfo)
             {
                 if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
+                    throw new ArgumentNullException(nameof(parameterInfo));
 
                 _parameterInfo = parameterInfo;
             }
