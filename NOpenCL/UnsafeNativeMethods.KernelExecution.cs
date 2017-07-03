@@ -33,11 +33,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (kernel == null)
-                throw new ArgumentNullException("kernel");
+                throw new ArgumentNullException(nameof(kernel));
             if (globalWorkSize == null)
-                throw new ArgumentNullException("globalWorkSize");
+                throw new ArgumentNullException(nameof(globalWorkSize));
 
             uint workDim = (uint)globalWorkSize.Length;
             if (globalWorkOffset != null && globalWorkOffset.Length != workDim)
@@ -64,9 +64,9 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (kernel == null)
-                throw new ArgumentNullException("kernel");
+                throw new ArgumentNullException(nameof(kernel));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueTask(commandQueue, kernel, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));

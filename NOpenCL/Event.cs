@@ -18,7 +18,7 @@ namespace NOpenCL
         internal Event(EventSafeHandle handle)
         {
             if (handle == null)
-                throw new ArgumentNullException("handle");
+                throw new ArgumentNullException(nameof(handle));
 
             _handle = handle;
         }
@@ -108,9 +108,9 @@ namespace NOpenCL
         public static void WaitAll(params Event[] events)
         {
             if (events == null)
-                throw new ArgumentNullException("events");
+                throw new ArgumentNullException(nameof(events));
             if (events.Length == 0)
-                throw new ArgumentException();
+                throw new ArgumentException($"{nameof(events)} cannot be empty", nameof(events));
 
             EventSafeHandle[] eventHandles = null;
             if (events != null)

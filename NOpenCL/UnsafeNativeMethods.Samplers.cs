@@ -60,7 +60,7 @@ namespace NOpenCL
         internal static SamplerSafeHandle CreateSampler(ContextSafeHandle context, bool normalizedCoordinates, AddressingMode addressingMode, FilterMode filterMode)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             ErrorCode errorCode;
             SamplerSafeHandle handle = clCreateSampler(context, normalizedCoordinates, addressingMode, filterMode, out errorCode);
@@ -146,9 +146,9 @@ namespace NOpenCL
         internal static T GetSamplerInfo<T>(SamplerSafeHandle sampler, SamplerParameterInfo<T> parameter)
         {
             if (sampler == null)
-                throw new ArgumentNullException("sampler");
+                throw new ArgumentNullException(nameof(sampler));
             if (parameter == null)
-                throw new ArgumentNullException("parameter");
+                throw new ArgumentNullException(nameof(parameter));
 
             int? fixedSize = parameter.ParameterInfo.FixedSize;
 #if DEBUG
@@ -225,7 +225,7 @@ namespace NOpenCL
             public SamplerParameterInfo(ParameterInfo<T> parameterInfo)
             {
                 if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
+                    throw new ArgumentNullException(nameof(parameterInfo));
 
                 _parameterInfo = parameterInfo;
             }

@@ -23,9 +23,9 @@ namespace NOpenCL
         public static ProgramSafeHandle CreateProgramWithSource(ContextSafeHandle context, string[] strings)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             if (strings == null)
-                throw new ArgumentNullException("strings");
+                throw new ArgumentNullException(nameof(strings));
 
             ErrorCode errorCode;
             ProgramSafeHandle handle = clCreateProgramWithSource(context, (uint)strings.Length, strings, null, out errorCode);
@@ -146,9 +146,9 @@ namespace NOpenCL
         public static T GetProgramInfo<T>(ProgramSafeHandle program, ProgramParameterInfo<T> parameter)
         {
             if (program == null)
-                throw new ArgumentNullException("program");
+                throw new ArgumentNullException(nameof(program));
             if (parameter == null)
-                throw new ArgumentNullException("parameter");
+                throw new ArgumentNullException(nameof(parameter));
 
             int? fixedSize = parameter.ParameterInfo.FixedSize;
 #if DEBUG
@@ -203,7 +203,7 @@ namespace NOpenCL
             public ProgramParameterInfo(ParameterInfo<T> parameterInfo)
             {
                 if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
+                    throw new ArgumentNullException(nameof(parameterInfo));
 
                 _parameterInfo = parameterInfo;
             }
@@ -234,9 +234,9 @@ namespace NOpenCL
         public static T GetProgramBuildInfo<T>(ProgramSafeHandle program, ClDeviceID device, ProgramBuildParameterInfo<T> parameter)
         {
             if (program == null)
-                throw new ArgumentNullException("program");
+                throw new ArgumentNullException(nameof(program));
             if (parameter == null)
-                throw new ArgumentNullException("parameter");
+                throw new ArgumentNullException(nameof(parameter));
 
             int? fixedSize = parameter.ParameterInfo.FixedSize;
 #if DEBUG
@@ -328,7 +328,7 @@ namespace NOpenCL
             public ProgramBuildParameterInfo(ParameterInfo<T> parameterInfo)
             {
                 if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
+                    throw new ArgumentNullException(nameof(parameterInfo));
 
                 _parameterInfo = parameterInfo;
             }

@@ -17,9 +17,9 @@ namespace NOpenCL
         internal MemObject(Context context, THandle handle)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
             if (handle == null)
-                throw new ArgumentNullException("handle");
+                throw new ArgumentNullException(nameof(handle));
 
             _context = context;
             _handle = handle;

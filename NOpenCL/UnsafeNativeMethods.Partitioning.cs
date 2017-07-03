@@ -46,14 +46,14 @@ namespace NOpenCL
         public static DisposableCollection<Device> PartitionByCounts(ClDeviceID device, int[] partitionSizes)
         {
             if (partitionSizes == null)
-                throw new ArgumentNullException("partitionSizes");
+                throw new ArgumentNullException(nameof(partitionSizes));
 
             List<IntPtr> propertiesList = new List<IntPtr>();
             propertiesList.Add((IntPtr)PartitionProperty.PartitionByCounts);
             foreach (int partitionSize in partitionSizes)
             {
                 if (partitionSize < 0)
-                    throw new ArgumentOutOfRangeException("partitionSizes", "Partition size cannot be negative.");
+                    throw new ArgumentOutOfRangeException(nameof(partitionSizes), "Partition size cannot be negative.");
 
                 propertiesList.Add((IntPtr)partitionSize);
             }

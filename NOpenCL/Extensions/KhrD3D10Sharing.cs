@@ -22,7 +22,7 @@ namespace NOpenCL.Extensions
         public static bool IsSupported(Platform platform)
         {
             if (platform == null)
-                throw new ArgumentNullException("platform");
+                throw new ArgumentNullException(nameof(platform));
 
             return platform.Extensions.Contains(ExtensionName);
         }
@@ -30,7 +30,7 @@ namespace NOpenCL.Extensions
         public static bool IsSupported(Device device)
         {
             if (device == null)
-                throw new ArgumentNullException("device");
+                throw new ArgumentNullException(nameof(device));
 
             return device.Extensions.Contains(ExtensionName);
         }
@@ -38,7 +38,7 @@ namespace NOpenCL.Extensions
         public static bool GetD3D10PreferSharedResourcesKhr(this Context context)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             return UnsafeNativeMethods.GetContextInfo(context.Handle, D3D10PreferSharedResourcesKhr);
         }

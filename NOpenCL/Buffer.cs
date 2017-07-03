@@ -19,7 +19,7 @@ namespace NOpenCL
             : base(context, handle)
         {
             if (parent == null)
-                throw new ArgumentNullException("parent");
+                throw new ArgumentNullException(nameof(parent));
 
             _parent = parent;
         }

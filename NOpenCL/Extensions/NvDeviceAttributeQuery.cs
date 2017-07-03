@@ -34,7 +34,7 @@ namespace NOpenCL.Extensions
         public static bool IsSupported(Device device)
         {
             if (device == null)
-                throw new ArgumentNullException("device");
+                throw new ArgumentNullException(nameof(device));
 
             return device.Extensions.Contains(ExtensionName);
         }
@@ -42,7 +42,7 @@ namespace NOpenCL.Extensions
         public static uint GetComputeCapabilityMajorNv(this Device device)
         {
             if (device == null)
-                throw new ArgumentNullException("device");
+                throw new ArgumentNullException(nameof(device));
 
             return UnsafeNativeMethods.GetDeviceInfo(device.ID, ComputeCapabilityMajorNv);
         }
@@ -50,7 +50,7 @@ namespace NOpenCL.Extensions
         public static uint GetComputeCapabilityMinorNv(this Device device)
         {
             if (device == null)
-                throw new ArgumentNullException("device");
+                throw new ArgumentNullException(nameof(device));
 
             return UnsafeNativeMethods.GetDeviceInfo(device.ID, ComputeCapabilityMinorNv);
         }
@@ -58,7 +58,7 @@ namespace NOpenCL.Extensions
         public static uint GetRegistersPerBlockNv(this Device device)
         {
             if (device == null)
-                throw new ArgumentNullException("device");
+                throw new ArgumentNullException(nameof(device));
 
             return UnsafeNativeMethods.GetDeviceInfo(device.ID, RegistersPerBlockNv);
         }
@@ -66,7 +66,7 @@ namespace NOpenCL.Extensions
         public static uint GetWarpSizeNv(this Device device)
         {
             if (device == null)
-                throw new ArgumentNullException("device");
+                throw new ArgumentNullException(nameof(device));
 
             return UnsafeNativeMethods.GetDeviceInfo(device.ID, WarpSizeNv);
         }
@@ -74,7 +74,7 @@ namespace NOpenCL.Extensions
         public static bool GetGpuOverlapNv(this Device device)
         {
             if (device == null)
-                throw new ArgumentNullException("device");
+                throw new ArgumentNullException(nameof(device));
 
             return UnsafeNativeMethods.GetDeviceInfo(device.ID, GpuOverlapNv);
         }
@@ -82,7 +82,7 @@ namespace NOpenCL.Extensions
         public static bool GetKernelExecTimeoutNv(this Device device)
         {
             if (device == null)
-                throw new ArgumentNullException("device");
+                throw new ArgumentNullException(nameof(device));
 
             return UnsafeNativeMethods.GetDeviceInfo(device.ID, KernelExecTimeoutNv);
         }
@@ -90,7 +90,7 @@ namespace NOpenCL.Extensions
         public static bool GetIntegratedMemoryNv(this Device device)
         {
             if (device == null)
-                throw new ArgumentNullException("device");
+                throw new ArgumentNullException(nameof(device));
 
             return UnsafeNativeMethods.GetDeviceInfo(device.ID, IntegratedMemoryNv);
         }

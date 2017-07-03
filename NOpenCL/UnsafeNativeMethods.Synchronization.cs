@@ -56,7 +56,7 @@ namespace NOpenCL
         internal static EventSafeHandle EnqueueMarkerWithWaitList(CommandQueueSafeHandle commandQueue, EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueMarkerWithWaitList(commandQueue, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -108,7 +108,7 @@ namespace NOpenCL
         internal static EventSafeHandle EnqueueBarrierWithWaitList(CommandQueueSafeHandle commandQueue, EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueBarrierWithWaitList(commandQueue, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));

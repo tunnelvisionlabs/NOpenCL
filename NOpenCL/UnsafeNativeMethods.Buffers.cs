@@ -49,7 +49,7 @@ namespace NOpenCL
         public static BufferSafeHandle CreateBuffer(ContextSafeHandle context, MemoryFlags flags, IntPtr size, IntPtr hostPointer)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             ErrorCode errorCode;
             BufferSafeHandle handle = clCreateBuffer(context, flags, size, hostPointer, out errorCode);
@@ -97,7 +97,7 @@ namespace NOpenCL
         public static BufferSafeHandle CreateSubBuffer(BufferSafeHandle buffer, MemoryFlags flags, BufferRegion regionInfo)
         {
             if (buffer == null)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
 
             ErrorCode errorCode;
             BufferSafeHandle handle = clCreateSubBuffer(buffer, flags, BufferCreateType.Region, ref regionInfo, out errorCode);
@@ -176,11 +176,11 @@ namespace NOpenCL
         public static EventSafeHandle EnqueueReadBuffer(CommandQueueSafeHandle commandQueue, BufferSafeHandle buffer, bool blocking, IntPtr offset, IntPtr size, IntPtr destination, EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (buffer == null)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             if (destination == IntPtr.Zero)
-                throw new ArgumentNullException("destination");
+                throw new ArgumentNullException(nameof(destination));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueReadBuffer(commandQueue, buffer, blocking, offset, size, destination, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -202,11 +202,11 @@ namespace NOpenCL
         public static EventSafeHandle EnqueueWriteBuffer(CommandQueueSafeHandle commandQueue, BufferSafeHandle buffer, bool blocking, IntPtr offset, IntPtr size, IntPtr source, EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (buffer == null)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             if (source == IntPtr.Zero)
-                throw new ArgumentNullException("destination");
+                throw new ArgumentNullException(nameof(source));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueWriteBuffer(commandQueue, buffer, blocking, offset, size, source, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -245,11 +245,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (buffer == null)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             if (destination == IntPtr.Zero)
-                throw new ArgumentNullException("destination");
+                throw new ArgumentNullException(nameof(destination));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueReadBufferRect(commandQueue, buffer, blocking, ref bufferOrigin, ref hostOrigin, ref region, bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, destination, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -288,11 +288,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (buffer == null)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             if (source == IntPtr.Zero)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueWriteBufferRect(commandQueue, buffer, blocking, ref bufferOrigin, ref hostOrigin, ref region, bufferRowPitch, bufferSlicePitch, hostRowPitch, hostSlicePitch, source, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -321,11 +321,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (buffer == null)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
             if (pattern == IntPtr.Zero)
-                throw new ArgumentNullException("pattern");
+                throw new ArgumentNullException(nameof(pattern));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueFillBuffer(commandQueue, buffer, pattern, patternSize, offset, size, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -347,11 +347,11 @@ namespace NOpenCL
         public static EventSafeHandle EnqueueCopyBuffer(CommandQueueSafeHandle commandQueue, BufferSafeHandle sourceBuffer, BufferSafeHandle destinationBuffer, IntPtr sourceOffset, IntPtr destinationOffset, IntPtr size, EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (sourceBuffer == null)
-                throw new ArgumentNullException("sourceBuffer");
+                throw new ArgumentNullException(nameof(sourceBuffer));
             if (destinationBuffer == null)
-                throw new ArgumentNullException("destinationBuffer");
+                throw new ArgumentNullException(nameof(destinationBuffer));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueCopyBuffer(commandQueue, sourceBuffer, destinationBuffer, sourceOffset, destinationOffset, size, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -388,11 +388,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (sourceBuffer == null)
-                throw new ArgumentNullException("sourceBuffer");
+                throw new ArgumentNullException(nameof(sourceBuffer));
             if (destinationBuffer == null)
-                throw new ArgumentNullException("destinationBuffer");
+                throw new ArgumentNullException(nameof(destinationBuffer));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueCopyBufferRect(commandQueue, sourceBuffer, destinationBuffer, ref sourceOrigin, ref destinationOrigin, ref region, sourceRowPitch, sourceSlicePitch, destinationRowPitch, destinationSlicePitch, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -423,9 +423,9 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (buffer == null)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
 
             EventSafeHandle result;
             ErrorCode errorCode;
@@ -446,7 +446,7 @@ namespace NOpenCL
         public static ImageSafeHandle CreateImage(ContextSafeHandle context, MemoryFlags flags, ref ImageFormat imageFormat, ref ImageDescriptor imageDescriptor, IntPtr hostAddress)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             ErrorCode errorCode;
             ImageSafeHandle result = clCreateImage(context, flags, ref imageFormat, ref imageDescriptor, hostAddress, out errorCode);
@@ -509,11 +509,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (image == null)
-                throw new ArgumentNullException("image");
+                throw new ArgumentNullException(nameof(image));
             if (destination == IntPtr.Zero)
-                throw new ArgumentNullException("destination");
+                throw new ArgumentNullException(nameof(destination));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueReadImage(commandQueue, image, blocking, ref origin, ref region, rowPitch, slicePitch, destination, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -546,11 +546,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (image == null)
-                throw new ArgumentNullException("image");
+                throw new ArgumentNullException(nameof(image));
             if (source == IntPtr.Zero)
-                throw new ArgumentNullException("source");
+                throw new ArgumentNullException(nameof(source));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueWriteImage(commandQueue, image, blocking, ref origin, ref region, inputRowPitch, inputSlicePitch, source, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -577,11 +577,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (image == null)
-                throw new ArgumentNullException("image");
+                throw new ArgumentNullException(nameof(image));
             if (fillColor == null)
-                throw new ArgumentNullException("fillColor");
+                throw new ArgumentNullException(nameof(fillColor));
             if (fillColor.Length != 4)
                 throw new ArgumentException();
 
@@ -610,11 +610,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (image == null)
-                throw new ArgumentNullException("image");
+                throw new ArgumentNullException(nameof(image));
             if (fillColor == null)
-                throw new ArgumentNullException("fillColor");
+                throw new ArgumentNullException(nameof(fillColor));
             if (fillColor.Length != 4)
                 throw new ArgumentException();
 
@@ -643,11 +643,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (image == null)
-                throw new ArgumentNullException("image");
+                throw new ArgumentNullException(nameof(image));
             if (fillColor == null)
-                throw new ArgumentNullException("fillColor");
+                throw new ArgumentNullException(nameof(fillColor));
             if (fillColor.Length != 4)
                 throw new ArgumentException();
 
@@ -678,11 +678,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (sourceImage == null)
-                throw new ArgumentNullException("sourceImage");
+                throw new ArgumentNullException(nameof(sourceImage));
             if (destinationImage == null)
-                throw new ArgumentNullException("destinationImage");
+                throw new ArgumentNullException(nameof(destinationImage));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueCopyImage(commandQueue, sourceImage, destinationImage, ref sourceOrigin, ref destinationOrigin, ref region, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -711,11 +711,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (sourceImage == null)
-                throw new ArgumentNullException("sourceImage");
+                throw new ArgumentNullException(nameof(sourceImage));
             if (destinationBuffer == null)
-                throw new ArgumentNullException("destinationBuffer");
+                throw new ArgumentNullException(nameof(destinationBuffer));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueCopyImageToBuffer(commandQueue, sourceImage, destinationBuffer, ref sourceOrigin, ref region, destinationOffset, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -744,11 +744,11 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (sourceBuffer == null)
-                throw new ArgumentNullException("sourceBuffer");
+                throw new ArgumentNullException(nameof(sourceBuffer));
             if (destinationImage == null)
-                throw new ArgumentNullException("destinationImage");
+                throw new ArgumentNullException(nameof(destinationImage));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueCopyBufferToImage(commandQueue, sourceBuffer, destinationImage, sourceOffset, ref destinationOrigin, ref region, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -783,9 +783,9 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (image == null)
-                throw new ArgumentNullException("image");
+                throw new ArgumentNullException(nameof(image));
 
             EventSafeHandle result;
             ErrorCode errorCode;
@@ -810,9 +810,9 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (memObject == null)
-                throw new ArgumentNullException("memObject");
+                throw new ArgumentNullException(nameof(memObject));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueUnmapMemObject(commandQueue, memObject, mappedPointer, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -836,9 +836,9 @@ namespace NOpenCL
             EventSafeHandle[] eventWaitList)
         {
             if (commandQueue == null)
-                throw new ArgumentNullException("commandQueue");
+                throw new ArgumentNullException(nameof(commandQueue));
             if (memObjects == null)
-                throw new ArgumentNullException("memObjects");
+                throw new ArgumentNullException(nameof(memObjects));
 
             EventSafeHandle result;
             ErrorHandler.ThrowOnFailure(clEnqueueMigrateMemObjects(commandQueue, (uint)memObjects.Length, memObjects, flags, GetNumItems(eventWaitList), GetItems(eventWaitList), out result));
@@ -856,9 +856,9 @@ namespace NOpenCL
         public static T GetMemObjectInfo<T>(MemObjectSafeHandle memObject, MemObjectParameterInfo<T> parameter)
         {
             if (memObject == null)
-                throw new ArgumentNullException("memObject");
+                throw new ArgumentNullException(nameof(memObject));
             if (parameter == null)
-                throw new ArgumentNullException("parameter");
+                throw new ArgumentNullException(nameof(parameter));
 
             int? fixedSize = parameter.ParameterInfo.FixedSize;
 #if DEBUG
@@ -986,7 +986,7 @@ namespace NOpenCL
             public MemObjectParameterInfo(ParameterInfo<T> parameterInfo)
             {
                 if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
+                    throw new ArgumentNullException(nameof(parameterInfo));
 
                 _parameterInfo = parameterInfo;
             }
@@ -1016,9 +1016,9 @@ namespace NOpenCL
         public static T GetImageInfo<T>(ImageSafeHandle image, ImageParameterInfo<T> parameter)
         {
             if (image == null)
-                throw new ArgumentNullException("image");
+                throw new ArgumentNullException(nameof(image));
             if (parameter == null)
-                throw new ArgumentNullException("parameter");
+                throw new ArgumentNullException(nameof(parameter));
 
             int? fixedSize = parameter.ParameterInfo.FixedSize;
 #if DEBUG
@@ -1135,7 +1135,7 @@ namespace NOpenCL
             public ImageParameterInfo(ParameterInfo<T> parameterInfo)
             {
                 if (parameterInfo == null)
-                    throw new ArgumentNullException("parameterInfo");
+                    throw new ArgumentNullException(nameof(parameterInfo));
 
                 _parameterInfo = parameterInfo;
             }

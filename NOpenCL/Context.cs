@@ -16,7 +16,7 @@ namespace NOpenCL
         private Context(ContextSafeHandle context)
         {
             if (context == null)
-                throw new ArgumentNullException("context");
+                throw new ArgumentNullException(nameof(context));
 
             _context = context;
         }
@@ -66,9 +66,9 @@ namespace NOpenCL
         public static Context Create(params Device[] devices)
         {
             if (devices == null)
-                throw new ArgumentNullException("devices");
+                throw new ArgumentNullException(nameof(devices));
             if (devices.Length == 0)
-                throw new ArgumentException("No devices specified.");
+                throw new ArgumentException("No devices specified.", nameof(devices));
 
             UnsafeNativeMethods.ClDeviceID[] deviceIDs = Array.ConvertAll(devices, device => device.ID);
             ContextSafeHandle handle = UnsafeNativeMethods.CreateContext(deviceIDs, null, IntPtr.Zero);
@@ -78,9 +78,9 @@ namespace NOpenCL
         public static Context Create(Platform platform, params Device[] devices)
         {
             if (devices == null)
-                throw new ArgumentNullException("devices");
+                throw new ArgumentNullException(nameof(devices));
             if (devices.Length == 0)
-                throw new ArgumentException("No devices specified.");
+                throw new ArgumentException("No devices specified.", nameof(devices));
 
             UnsafeNativeMethods.ClDeviceID[] deviceIDs = Array.ConvertAll(devices, device => device.ID);
             ContextSafeHandle handle = UnsafeNativeMethods.CreateContext(platform.ID, deviceIDs, null, IntPtr.Zero);
@@ -90,7 +90,7 @@ namespace NOpenCL
         public static Context Create(Platform platform, DeviceType deviceType)
         {
             if (platform == null)
-                throw new ArgumentNullException("platform");
+                throw new ArgumentNullException(nameof(platform));
 
             ContextSafeHandle handle = UnsafeNativeMethods.CreateContextFromType(platform.ID, deviceType, null, IntPtr.Zero);
             return new Context(handle);
@@ -104,7 +104,7 @@ namespace NOpenCL
         public CommandQueue CreateCommandQueue(Device device, CommandQueueProperties properties)
         {
             if (device == null)
-                throw new ArgumentNullException("device");
+                throw new ArgumentNullException(nameof(device));
 
             CommandQueueSafeHandle handle = UnsafeNativeMethods.CreateCommandQueue(Handle, device.ID, properties);
             return new CommandQueue(handle, this, device);
@@ -118,14 +118,14 @@ namespace NOpenCL
         public Buffer CreateBuffer(MemoryFlags flags, long size, IntPtr hostAddress)
         {
             if (size < 0)
-                throw new ArgumentOutOfRangeException("size");
+                throw new ArgumentOutOfRangeException(nameof(size));
             else if (size == 0)
-                throw new ArgumentException("Invalid buffer size.");
+                throw new ArgumentException("Invalid buffer size.", nameof(size));
 
             if (hostAddress == IntPtr.Zero && (flags & (MemoryFlags.UseHostPointer | MemoryFlags.CopyHostPointer)) != 0)
-                throw new ArgumentException("Invalid host address.");
+                throw new ArgumentException("Invalid host address.", nameof(hostAddress));
             if (hostAddress != IntPtr.Zero && (flags & (MemoryFlags.UseHostPointer | MemoryFlags.CopyHostPointer)) == 0)
-                throw new ArgumentException("Invalid host address.");
+                throw new ArgumentException("Invalid host address.", nameof(hostAddress));
 
             BufferSafeHandle handle = UnsafeNativeMethods.CreateBuffer(Handle, flags, (IntPtr)size, hostAddress);
             return new Buffer(this, handle);
@@ -139,9 +139,9 @@ namespace NOpenCL
         public Image CreateImage(MemoryFlags flags, ImageFormat format, ImageDescriptor descriptor, IntPtr hostAddress)
         {
             if (hostAddress == IntPtr.Zero && (flags & (MemoryFlags.UseHostPointer | MemoryFlags.CopyHostPointer)) != 0)
-                throw new ArgumentException("Invalid host address.");
+                throw new ArgumentException("Invalid host address.", nameof(hostAddress));
             if (hostAddress != IntPtr.Zero && (flags & (MemoryFlags.UseHostPointer | MemoryFlags.CopyHostPointer)) == 0)
-                throw new ArgumentException("Invalid host address.");
+                throw new ArgumentException("Invalid host address.", nameof(hostAddress));
 
             ImageSafeHandle handle = UnsafeNativeMethods.CreateImage(Handle, flags, ref format, ref descriptor, hostAddress);
             return new Image(this, handle);

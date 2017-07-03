@@ -20,9 +20,9 @@ namespace NOpenCL
         internal Kernel(KernelSafeHandle handle, Program program)
         {
             if (handle == null)
-                throw new ArgumentNullException("handle");
+                throw new ArgumentNullException(nameof(handle));
             if (program == null)
-                throw new ArgumentNullException("program");
+                throw new ArgumentNullException(nameof(program));
 
             _handle = handle;
             _program = program;
