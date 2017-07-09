@@ -57,7 +57,7 @@ namespace NOpenCL.Test.NVidia
 
             // create the context
             Console.WriteLine("Get context...");
-            using (Context context = Context.Create(devices))
+            using (var context = Context.Create(devices))
             {
                 // create a command queue
                 Console.WriteLine("Get command queue...");

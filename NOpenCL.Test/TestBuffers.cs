@@ -15,7 +15,7 @@ namespace NOpenCL.Test
             bool destroyed = false;
 
             Platform platform = Platform.GetPlatforms()[0];
-            using (Context context = Context.Create(platform.GetDevices()))
+            using (var context = Context.Create(platform.GetDevices()))
             {
                 using (Buffer buffer = context.CreateBuffer(MemoryFlags.AllocateHostPointer, 1024))
                 {

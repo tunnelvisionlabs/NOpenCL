@@ -30,7 +30,7 @@ namespace NOpenCL
             uint actual;
             ErrorHandler.ThrowOnFailure(clCreateSubDevices(device, properties, required, devices, out actual));
 
-            DisposableCollection<Device> result = new DisposableCollection<Device>(false);
+            var result = new DisposableCollection<Device>(false);
             for (int i = 0; i < actual; i++)
                 result.Add(new Device(devices[i], new DeviceSafeHandle(devices[i])));
 
@@ -48,7 +48,7 @@ namespace NOpenCL
             if (partitionSizes == null)
                 throw new ArgumentNullException(nameof(partitionSizes));
 
-            List<IntPtr> propertiesList = new List<IntPtr>();
+            var propertiesList = new List<IntPtr>();
             propertiesList.Add((IntPtr)PartitionProperty.PartitionByCounts);
             foreach (int partitionSize in partitionSizes)
             {

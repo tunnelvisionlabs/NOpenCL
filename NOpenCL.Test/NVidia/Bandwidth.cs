@@ -61,7 +61,7 @@ namespace NOpenCL.Test.NVidia
             if (testMode == TestMode.Range)
                 throw new NotImplementedException();
 
-            using (Context context = Context.Create(devices))
+            using (var context = Context.Create(devices))
             {
                 if (hostToDevice)
                     TestBandwidth(context, devices, start, end, increment, testMode, MemoryCopyKind.HostToDevice, printMode, accessMode, memoryMode, startDevice, endDevice);
@@ -193,7 +193,7 @@ namespace NOpenCL.Test.NVidia
 
                     // sync queue to host
                     commandQueue.Finish();
-                    Stopwatch timer = Stopwatch.StartNew();
+                    var timer = Stopwatch.StartNew();
                     if (accessMode == AccessMode.Direct)
                     {
                         // DIRECT: API access to device buffer
@@ -251,7 +251,7 @@ namespace NOpenCL.Test.NVidia
 
                     // sync queue to host
                     commandQueue.Finish();
-                    Stopwatch timer = Stopwatch.StartNew();
+                    var timer = Stopwatch.StartNew();
                     if (accessMode == AccessMode.Direct)
                     {
                         // DIRECT: API access to device buffer
@@ -317,7 +317,7 @@ namespace NOpenCL.Test.NVidia
                 {
                     // sync queue to host
                     commandQueue.Finish();
-                    Stopwatch timer = Stopwatch.StartNew();
+                    var timer = Stopwatch.StartNew();
                     if (accessMode == AccessMode.Direct)
                     {
                         commandQueue.EnqueueMapBuffer(pinnedData, true, MapFlags.Read, 0, memSize, out h_data);
@@ -372,7 +372,7 @@ namespace NOpenCL.Test.NVidia
                 {
                     // sync queue to host
                     commandQueue.Finish();
-                    Stopwatch timer = Stopwatch.StartNew();
+                    var timer = Stopwatch.StartNew();
                     if (accessMode == AccessMode.Direct)
                     {
                         // DIRECT: API access to device buffer
@@ -440,7 +440,7 @@ namespace NOpenCL.Test.NVidia
 
                 // sync queue to host, start timer 0, and copy data from one GPU buffer to another GPU buffer
                 commandQueue.Finish();
-                Stopwatch timer = Stopwatch.StartNew();
+                var timer = Stopwatch.StartNew();
                 for (int i = 0; i < MemoryCopyIterations; i++)
                 {
                     using (commandQueue.EnqueueCopyBuffer(d_idata, d_odata, 0, 0, memorySize))

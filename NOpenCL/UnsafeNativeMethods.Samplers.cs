@@ -232,7 +232,7 @@ namespace NOpenCL
 
             public static explicit operator SamplerParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                SamplerParameterInfo<T> result = parameterInfo as SamplerParameterInfo<T>;
+                var result = parameterInfo as SamplerParameterInfo<T>;
                 if (result != null)
                     return result;
 
