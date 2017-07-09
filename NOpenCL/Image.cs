@@ -77,7 +77,7 @@ namespace NOpenCL
             }
         }
 
-        public Buffer Buffer
+        public Buffer<byte> Buffer
         {
             get
             {

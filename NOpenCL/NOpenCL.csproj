@@ -56,7 +56,7 @@
     <Compile Include="AddressQualifier.cs" />
     <Compile Include="AffinityDomain.cs" />
     <Compile Include="BinaryType.cs" />
-    <Compile Include="Buffer.cs" />
+    <Compile Include="Buffer`1.cs" />
     <Compile Include="BufferCoordinates.cs" />
     <Compile Include="BufferCreateType.cs" />
     <Compile Include="BufferRegion.cs" />

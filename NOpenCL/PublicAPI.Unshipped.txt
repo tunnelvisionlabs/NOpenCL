@@ -27,10 +27,10 @@ NOpenCL.BinaryType.CompiledObject = 1 -> NOpenCL.BinaryType
 NOpenCL.BinaryType.Executable = 4 -> NOpenCL.BinaryType
 NOpenCL.BinaryType.Library = 2 -> NOpenCL.BinaryType
 NOpenCL.BinaryType.None = 0 -> NOpenCL.BinaryType
-NOpenCL.Buffer
-NOpenCL.Buffer.AssociatedMemObject.get -> NOpenCL.Buffer
-NOpenCL.Buffer.CreateSubBuffer(NOpenCL.MemoryFlags flags, NOpenCL.BufferRegion regionInfo) -> NOpenCL.Buffer
-NOpenCL.Buffer.Offset.get -> System.UIntPtr
+NOpenCL.Buffer<T>
+NOpenCL.Buffer<T>.AssociatedMemObject.get -> NOpenCL.Buffer<T>
+NOpenCL.Buffer<T>.CreateSubBuffer(NOpenCL.MemoryFlags flags, NOpenCL.BufferRegion regionInfo) -> NOpenCL.Buffer<T>
+NOpenCL.Buffer<T>.Offset.get -> System.UIntPtr
 NOpenCL.BufferCoordinates
 NOpenCL.BufferCoordinates.BufferCoordinates(System.IntPtr x, System.IntPtr y) -> void
 NOpenCL.BufferCoordinates.BufferCoordinates(System.IntPtr x, System.IntPtr y, System.IntPtr z) -> void
@@ -88,15 +88,15 @@ NOpenCL.CommandQueue.Context.get -> NOpenCL.Context
 NOpenCL.CommandQueue.Device.get -> NOpenCL.Device
 NOpenCL.CommandQueue.Dispose() -> void
 NOpenCL.CommandQueue.EnqueueBarrier(params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
-NOpenCL.CommandQueue.EnqueueCopyBuffer(NOpenCL.Buffer source, NOpenCL.Buffer destination, long sourceOffset, long destinationOffset, long size, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
-NOpenCL.CommandQueue.EnqueueCopyBufferRect(NOpenCL.Buffer source, NOpenCL.Buffer destination, NOpenCL.BufferCoordinates sourceOrigin, NOpenCL.BufferCoordinates destinationOrigin, NOpenCL.BufferSize region, long sourceRowPitch, long sourceSlicePitch, long destinationRowPitch, long destinationSlicePitch, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
-NOpenCL.CommandQueue.EnqueueCopyBufferToImage(NOpenCL.Buffer sourceBuffer, NOpenCL.Image destinationImage, long sourceOffset, NOpenCL.BufferCoordinates destinationOrigin, NOpenCL.BufferSize region, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueCopyBuffer<T>(NOpenCL.Buffer<T> source, NOpenCL.Buffer<T> destination, long sourceOffset, long destinationOffset, long size, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueCopyBufferRect<T>(NOpenCL.Buffer<T> source, NOpenCL.Buffer<T> destination, NOpenCL.BufferCoordinates sourceOrigin, NOpenCL.BufferCoordinates destinationOrigin, NOpenCL.BufferSize region, long sourceRowPitch, long sourceSlicePitch, long destinationRowPitch, long destinationSlicePitch, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueCopyBufferToImage<T>(NOpenCL.Buffer<T> sourceBuffer, NOpenCL.Image destinationImage, long sourceOffset, NOpenCL.BufferCoordinates destinationOrigin, NOpenCL.BufferSize region, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueCopyImage(NOpenCL.Image sourceImage, NOpenCL.Image destinationImage, NOpenCL.BufferCoordinates sourceOrigin, NOpenCL.BufferCoordinates destinationOrigin, NOpenCL.BufferSize region, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
-NOpenCL.CommandQueue.EnqueueCopyImageToBuffer(NOpenCL.Image sourceImage, NOpenCL.Buffer destinationBuffer, NOpenCL.BufferCoordinates sourceOrigin, NOpenCL.BufferSize region, long destinationOffset, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueCopyImageToBuffer<T>(NOpenCL.Image sourceImage, NOpenCL.Buffer<T> destinationBuffer, NOpenCL.BufferCoordinates sourceOrigin, NOpenCL.BufferSize region, long destinationOffset, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueFillImage(NOpenCL.Image image, float[] fillColor, NOpenCL.BufferCoordinates origin, NOpenCL.BufferSize region, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueFillImage(NOpenCL.Image image, int[] fillColor, NOpenCL.BufferCoordinates origin, NOpenCL.BufferSize region, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueFillImage(NOpenCL.Image image, uint[] fillColor, NOpenCL.BufferCoordinates origin, NOpenCL.BufferSize region, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
-NOpenCL.CommandQueue.EnqueueMapBuffer(NOpenCL.Buffer buffer, bool blocking, NOpenCL.MapFlags mapFlags, long offset, long size, out System.IntPtr mappedPointer, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueMapBuffer<T>(NOpenCL.Buffer<T> buffer, bool blocking, NOpenCL.MapFlags mapFlags, long offset, long size, out System.IntPtr mappedPointer, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueMapImage(NOpenCL.Image image, bool blocking, NOpenCL.MapFlags mapFlags, NOpenCL.BufferCoordinates origin, NOpenCL.BufferSize region, out long rowPitch, out long slicePitch, out System.IntPtr mappedPointer, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueMarker(params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueMigrateMemObjects(NOpenCL.MemObject[] memObjects, NOpenCL.MigrationFlags flags, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
@@ -104,13 +104,13 @@ NOpenCL.CommandQueue.EnqueueNDRangeKernel(NOpenCL.Kernel kernel, System.IntPtr g
 NOpenCL.CommandQueue.EnqueueNDRangeKernel(NOpenCL.Kernel kernel, System.IntPtr globalWorkSize, System.IntPtr localWorkSize, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueNDRangeKernel(NOpenCL.Kernel kernel, System.IntPtr[] globalWorkOffset, System.IntPtr[] globalWorkSize, System.IntPtr[] localWorkSize, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueNDRangeKernel(NOpenCL.Kernel kernel, System.IntPtr[] globalWorkSize, System.IntPtr[] localWorkSize, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
-NOpenCL.CommandQueue.EnqueueReadBuffer(NOpenCL.Buffer buffer, bool blocking, long offset, long size, System.IntPtr destination, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
-NOpenCL.CommandQueue.EnqueueReadBufferRect(NOpenCL.Buffer buffer, bool blocking, NOpenCL.BufferCoordinates bufferOrigin, NOpenCL.BufferCoordinates hostOrigin, NOpenCL.BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, System.IntPtr destination, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueReadBuffer<T>(NOpenCL.Buffer<T> buffer, bool blocking, long offset, long size, System.IntPtr destination, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueReadBufferRect<T>(NOpenCL.Buffer<T> buffer, bool blocking, NOpenCL.BufferCoordinates bufferOrigin, NOpenCL.BufferCoordinates hostOrigin, NOpenCL.BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, System.IntPtr destination, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueReadImage(NOpenCL.Image image, bool blocking, NOpenCL.BufferCoordinates origin, NOpenCL.BufferSize region, long rowPitch, long slicePitch, System.IntPtr destination, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueTask(NOpenCL.Kernel kernel, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueUnmapMemObject(NOpenCL.MemObject memObject, System.IntPtr mappedPointer, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
-NOpenCL.CommandQueue.EnqueueWriteBuffer(NOpenCL.Buffer buffer, bool blocking, long offset, long size, System.IntPtr source, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
-NOpenCL.CommandQueue.EnqueueWriteBufferRect(NOpenCL.Buffer buffer, bool blocking, NOpenCL.BufferCoordinates bufferOrigin, NOpenCL.BufferCoordinates hostOrigin, NOpenCL.BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, System.IntPtr source, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueWriteBuffer<T>(NOpenCL.Buffer<T> buffer, bool blocking, long offset, long size, System.IntPtr source, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
+NOpenCL.CommandQueue.EnqueueWriteBufferRect<T>(NOpenCL.Buffer<T> buffer, bool blocking, NOpenCL.BufferCoordinates bufferOrigin, NOpenCL.BufferCoordinates hostOrigin, NOpenCL.BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, System.IntPtr source, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.EnqueueWriteImage(NOpenCL.Image image, bool blocking, NOpenCL.BufferCoordinates origin, NOpenCL.BufferSize region, long inputRowPitch, long inputSlicePitch, System.IntPtr source, params NOpenCL.Event[] eventWaitList) -> NOpenCL.Event
 NOpenCL.CommandQueue.Finish() -> void
 NOpenCL.CommandQueue.Flush() -> void
@@ -154,8 +154,8 @@ NOpenCL.CommandType.WriteBuffer = 4596 -> NOpenCL.CommandType
 NOpenCL.CommandType.WriteBufferRect = 4610 -> NOpenCL.CommandType
 NOpenCL.CommandType.WriteImage = 4599 -> NOpenCL.CommandType
 NOpenCL.Context
-NOpenCL.Context.CreateBuffer(NOpenCL.MemoryFlags flags, long size) -> NOpenCL.Buffer
-NOpenCL.Context.CreateBuffer(NOpenCL.MemoryFlags flags, long size, System.IntPtr hostAddress) -> NOpenCL.Buffer
+NOpenCL.Context.CreateBuffer<T>(NOpenCL.MemoryFlags flags, long size) -> NOpenCL.Buffer<T>
+NOpenCL.Context.CreateBuffer<T>(NOpenCL.MemoryFlags flags, long size, System.IntPtr hostAddress) -> NOpenCL.Buffer<T>
 NOpenCL.Context.CreateCommandQueue(NOpenCL.Device device) -> NOpenCL.CommandQueue
 NOpenCL.Context.CreateCommandQueue(NOpenCL.Device device, NOpenCL.CommandQueueProperties properties) -> NOpenCL.CommandQueue
 NOpenCL.Context.CreateImage(NOpenCL.MemoryFlags flags, NOpenCL.ImageFormat format, NOpenCL.ImageDescriptor descriptor) -> NOpenCL.Image
@@ -302,7 +302,7 @@ NOpenCL.FloatingPointConfiguration.RoundToZero = 8 -> NOpenCL.FloatingPointConfi
 NOpenCL.FloatingPointConfiguration.SoftFloat = 64 -> NOpenCL.FloatingPointConfiguration
 NOpenCL.Image
 NOpenCL.Image.ArraySize.get -> System.UIntPtr
-NOpenCL.Image.Buffer.get -> NOpenCL.Buffer
+NOpenCL.Image.Buffer.get -> NOpenCL.Buffer<byte>
 NOpenCL.Image.Depth.get -> System.UIntPtr
 NOpenCL.Image.ElementSize.get -> System.UIntPtr
 NOpenCL.Image.Format.get -> NOpenCL.ImageFormat
@@ -335,10 +335,10 @@ NOpenCL.KernelArgument.AddressQualifier.get -> NOpenCL.AddressQualifier
 NOpenCL.KernelArgument.Index.get -> int
 NOpenCL.KernelArgument.Kernel.get -> NOpenCL.Kernel
 NOpenCL.KernelArgument.Name.get -> string
-NOpenCL.KernelArgument.SetValue(NOpenCL.Buffer buffer) -> void
 NOpenCL.KernelArgument.SetValue(NOpenCL.Image image) -> void
 NOpenCL.KernelArgument.SetValue(System.UIntPtr size, System.IntPtr value) -> void
 NOpenCL.KernelArgument.SetValue(int value) -> void
+NOpenCL.KernelArgument.SetValue<T>(NOpenCL.Buffer<T> buffer) -> void
 NOpenCL.KernelArgument.TypeName.get -> string
 NOpenCL.KernelArgument.TypeQualifiers.get -> NOpenCL.TypeQualifiers
 NOpenCL.LocalMemoryType

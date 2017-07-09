@@ -110,12 +110,14 @@ namespace NOpenCL
             return new CommandQueue(handle, this, device);
         }
 
-        public Buffer CreateBuffer(MemoryFlags flags, long size)
+        public Buffer<T> CreateBuffer<T>(MemoryFlags flags, long size)
+            where T : struct
         {
-            return CreateBuffer(flags, size, IntPtr.Zero);
+            return CreateBuffer<T>(flags, size, IntPtr.Zero);
         }
 
-        public Buffer CreateBuffer(MemoryFlags flags, long size, IntPtr hostAddress)
+        public Buffer<T> CreateBuffer<T>(MemoryFlags flags, long size, IntPtr hostAddress)
+            where T : struct
         {
             if (size < 0)
                 throw new ArgumentOutOfRangeException(nameof(size));
@@ -128,7 +130,7 @@ namespace NOpenCL
                 throw new ArgumentException("Invalid host address.", nameof(hostAddress));
 
             BufferSafeHandle handle = UnsafeNativeMethods.CreateBuffer(Handle, flags, (IntPtr)size, hostAddress);
-            return new Buffer(this, handle);
+            return new Buffer<T>(this, handle);
         }
 
         public Image CreateImage(MemoryFlags flags, ImageFormat format, ImageDescriptor descriptor)

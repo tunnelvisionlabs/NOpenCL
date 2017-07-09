@@ -6,7 +6,6 @@ namespace NOpenCL.Test.Intel
     using System;
     using System.Diagnostics;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Buffer = NOpenCL.Buffer;
 
     [TestClass]
     public class Optimization
@@ -113,8 +112,8 @@ namespace NOpenCL.Test.Intel
             // allocate buffers
             fixed (float* pinput = input, poutput = output)
             {
-                using (Buffer inputBuffer = context.CreateBuffer(inFlags, sizeof(float) * taskSize, (IntPtr)pinput),
-                    outputBuffer = context.CreateBuffer(outFlags, sizeof(float) * taskSize, (IntPtr)poutput))
+                using (Buffer<float> inputBuffer = context.CreateBuffer<float>(inFlags, sizeof(float) * taskSize, (IntPtr)pinput),
+                    outputBuffer = context.CreateBuffer<float>(outFlags, sizeof(float) * taskSize, (IntPtr)poutput))
                 {
                     kernel.Arguments[0].SetValue(inputBuffer);
                     kernel.Arguments[1].SetValue(outputBuffer);

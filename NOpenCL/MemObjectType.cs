@@ -11,7 +11,7 @@ namespace NOpenCL
         /// <summary>
         /// A buffer.
         /// </summary>
-        /// <seealso cref="NOpenCL.Buffer"/>
+        /// <seealso cref="NOpenCL.Buffer{T}"/>
         Buffer = 0x10F0,
 
         /// <summary>
