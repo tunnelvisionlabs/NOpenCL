@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26621.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NOpenCL", "NOpenCL\NOpenCL.csproj", "{C94F61DD-9361-4B1F-B1A8-DAD72BD6FD51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NOpenCL", "NOpenCL\NOpenCL.csproj", "{C94F61DD-9361-4B1F-B1A8-DAD72BD6FD51}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NOpenCL.Test", "NOpenCL.Test\NOpenCL.Test.csproj", "{E3049450-381D-42F5-AB04-16628C8C85BB}"
 EndProject
@@ -44,5 +44,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{47E2DAA8-FDA9-4C18-990E-ABC9413ACFB0} = {8C7939AD-02F1-456F-9754-3AB7D6E7BD03}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F839AC4F-5F94-446F-BB93-1D34CF748AF6}
 	EndGlobalSection
 EndGlobal
