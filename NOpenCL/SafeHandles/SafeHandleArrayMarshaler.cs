@@ -29,8 +29,8 @@ namespace NOpenCL.SafeHandles
             if (pNativeData == IntPtr.Zero)
                 return;
 
-            GCHandle managedHandle = GCHandle.FromIntPtr(Marshal.ReadIntPtr(pNativeData, -IntPtr.Size));
-            SafeHandle[] array = (SafeHandle[])managedHandle.Target;
+            var managedHandle = GCHandle.FromIntPtr(Marshal.ReadIntPtr(pNativeData, -IntPtr.Size));
+            var array = (SafeHandle[])managedHandle.Target;
             managedHandle.Free();
 
             for (int i = 0; i < array.Length; i++)
@@ -56,7 +56,7 @@ namespace NOpenCL.SafeHandles
             if (ManagedObj == null)
                 return IntPtr.Zero;
 
-            SafeHandle[] array = (SafeHandle[])ManagedObj;
+            var array = (SafeHandle[])ManagedObj;
             int i = 0;
             bool success = false;
             try

@@ -141,7 +141,7 @@ namespace NOpenCL.Test.Intel
                     }
 
                     Console.Write("Executing OpenCL kernel...");
-                    Stopwatch timer = Stopwatch.StartNew();
+                    var timer = Stopwatch.StartNew();
 
                     // execute kernel, pls notice autoGroupSize
                     using (Event perfEvent = commandQueue.EnqueueNDRangeKernel(kernel, new[] { (IntPtr)globalWorkSize }, autoGroupSize ? null : new[] { (IntPtr)localWorkSize }))
@@ -193,7 +193,7 @@ namespace NOpenCL.Test.Intel
 
         private void ExecuteNative(float[] input, float[] output)
         {
-            Stopwatch timer = Stopwatch.StartNew();
+            var timer = Stopwatch.StartNew();
             int taskSize = input.Length;
             for (int i = 0; i < taskSize; i++)
                 output[i] = 1.0f / (float)Math.Sqrt(Math.Abs(input[i]));
@@ -204,7 +204,7 @@ namespace NOpenCL.Test.Intel
 
         private IDisposable SetupOpenCL(out Context context, out Device device, out CommandQueue commandQueue, out Kernel kernel, out Kernel kernel4, bool runOnGPU, bool useRelaxedMath, bool enableProfiling)
         {
-            DisposableCollection<IDisposable> disposables = new DisposableCollection<IDisposable>(true);
+            var disposables = new DisposableCollection<IDisposable>(true);
             try
             {
                 string buildOptions = "-cl-fast-relaxed-math";

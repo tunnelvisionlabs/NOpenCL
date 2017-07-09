@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Tunnel Vision Laboratories, LLC. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+#pragma warning disable IDE1006 // Naming Styles
+
 namespace NOpenCL
 {
     using System;
@@ -232,7 +234,7 @@ namespace NOpenCL
 
             public static explicit operator SamplerParameterInfo<T>(ParameterInfo<T> parameterInfo)
             {
-                SamplerParameterInfo<T> result = parameterInfo as SamplerParameterInfo<T>;
+                var result = parameterInfo as SamplerParameterInfo<T>;
                 if (result != null)
                     return result;
 
