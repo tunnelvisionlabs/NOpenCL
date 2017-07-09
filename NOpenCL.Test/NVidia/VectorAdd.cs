@@ -5,7 +5,6 @@ namespace NOpenCL.Test.NVidia
 {
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Buffer = NOpenCL.Buffer;
 
     [TestClass]
     public class VectorAdd
@@ -64,9 +63,9 @@ namespace NOpenCL.Test.NVidia
                 using (CommandQueue commandQueue = context.CreateCommandQueue(devices[0], CommandQueueProperties.None))
                 {
                     Console.WriteLine("Create buffers...");
-                    using (Buffer deviceSrcA = context.CreateBuffer(MemoryFlags.ReadOnly, globalWorkSize * sizeof(float)),
-                        deviceSrcB = context.CreateBuffer(MemoryFlags.ReadOnly, globalWorkSize * sizeof(float)),
-                        deviceDst = context.CreateBuffer(MemoryFlags.WriteOnly, globalWorkSize * sizeof(float)))
+                    using (Buffer<float> deviceSrcA = context.CreateBuffer<float>(MemoryFlags.ReadOnly, globalWorkSize * sizeof(float)),
+                        deviceSrcB = context.CreateBuffer<float>(MemoryFlags.ReadOnly, globalWorkSize * sizeof(float)),
+                        deviceDst = context.CreateBuffer<float>(MemoryFlags.WriteOnly, globalWorkSize * sizeof(float)))
                     {
                         string source =
                             @"// OpenCL Kernel Function for element by element vector addition

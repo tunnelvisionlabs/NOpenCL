@@ -97,7 +97,8 @@ namespace NOpenCL
             }
         }
 
-        public Event EnqueueReadBuffer(Buffer buffer, bool blocking, long offset, long size, IntPtr destination, params Event[] eventWaitList)
+        public Event EnqueueReadBuffer<T>(Buffer<T> buffer, bool blocking, long offset, long size, IntPtr destination, params Event[] eventWaitList)
+            where T : struct
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -107,7 +108,8 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueReadBufferRect(Buffer buffer, bool blocking, BufferCoordinates bufferOrigin, BufferCoordinates hostOrigin, BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, IntPtr destination, params Event[] eventWaitList)
+        public Event EnqueueReadBufferRect<T>(Buffer<T> buffer, bool blocking, BufferCoordinates bufferOrigin, BufferCoordinates hostOrigin, BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, IntPtr destination, params Event[] eventWaitList)
+            where T : struct
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -117,7 +119,8 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueWriteBuffer(Buffer buffer, bool blocking, long offset, long size, IntPtr source, params Event[] eventWaitList)
+        public Event EnqueueWriteBuffer<T>(Buffer<T> buffer, bool blocking, long offset, long size, IntPtr source, params Event[] eventWaitList)
+            where T : struct
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -127,7 +130,8 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueWriteBufferRect(Buffer buffer, bool blocking, BufferCoordinates bufferOrigin, BufferCoordinates hostOrigin, BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, IntPtr source, params Event[] eventWaitList)
+        public Event EnqueueWriteBufferRect<T>(Buffer<T> buffer, bool blocking, BufferCoordinates bufferOrigin, BufferCoordinates hostOrigin, BufferSize region, long bufferRowPitch, long bufferSlicePitch, long hostRowPitch, long hostSlicePitch, IntPtr source, params Event[] eventWaitList)
+            where T : struct
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -137,7 +141,8 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueCopyBuffer(Buffer source, Buffer destination, long sourceOffset, long destinationOffset, long size, params Event[] eventWaitList)
+        public Event EnqueueCopyBuffer<T>(Buffer<T> source, Buffer<T> destination, long sourceOffset, long destinationOffset, long size, params Event[] eventWaitList)
+            where T : struct
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -147,7 +152,8 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueCopyBufferRect(Buffer source, Buffer destination, BufferCoordinates sourceOrigin, BufferCoordinates destinationOrigin, BufferSize region, long sourceRowPitch, long sourceSlicePitch, long destinationRowPitch, long destinationSlicePitch, params Event[] eventWaitList)
+        public Event EnqueueCopyBufferRect<T>(Buffer<T> source, Buffer<T> destination, BufferCoordinates sourceOrigin, BufferCoordinates destinationOrigin, BufferSize region, long sourceRowPitch, long sourceSlicePitch, long destinationRowPitch, long destinationSlicePitch, params Event[] eventWaitList)
+            where T : struct
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -157,7 +163,8 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueMapBuffer(Buffer buffer, bool blocking, MapFlags mapFlags, long offset, long size, out IntPtr mappedPointer, params Event[] eventWaitList)
+        public Event EnqueueMapBuffer<T>(Buffer<T> buffer, bool blocking, MapFlags mapFlags, long offset, long size, out IntPtr mappedPointer, params Event[] eventWaitList)
+            where T : struct
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -227,7 +234,8 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueCopyImageToBuffer(Image sourceImage, Buffer destinationBuffer, BufferCoordinates sourceOrigin, BufferSize region, long destinationOffset, params Event[] eventWaitList)
+        public Event EnqueueCopyImageToBuffer<T>(Image sourceImage, Buffer<T> destinationBuffer, BufferCoordinates sourceOrigin, BufferSize region, long destinationOffset, params Event[] eventWaitList)
+            where T : struct
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)
@@ -237,7 +245,8 @@ namespace NOpenCL
             return new Event(handle);
         }
 
-        public Event EnqueueCopyBufferToImage(Buffer sourceBuffer, Image destinationImage, long sourceOffset, BufferCoordinates destinationOrigin, BufferSize region, params Event[] eventWaitList)
+        public Event EnqueueCopyBufferToImage<T>(Buffer<T> sourceBuffer, Image destinationImage, long sourceOffset, BufferCoordinates destinationOrigin, BufferSize region, params Event[] eventWaitList)
+            where T : struct
         {
             EventSafeHandle[] eventHandles = null;
             if (eventWaitList != null)

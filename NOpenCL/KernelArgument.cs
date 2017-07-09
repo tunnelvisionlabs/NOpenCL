@@ -77,7 +77,8 @@ namespace NOpenCL
             }
         }
 
-        public void SetValue(Buffer buffer)
+        public void SetValue<T>(Buffer<T> buffer)
+            where T : struct
         {
             if (buffer == null)
                 throw new ArgumentNullException(nameof(buffer));
