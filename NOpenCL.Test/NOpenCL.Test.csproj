@@ -3,7 +3,6 @@
 
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
-    <EnableDefaultItems>False</EnableDefaultItems>
     <EnableDefaultNoneItems>False</EnableDefaultNoneItems>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -27,16 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NOpenCL\NOpenCL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Intel\Optimization.cs" />
-    <Compile Include="NVidia\Bandwidth.cs" />
-    <Compile Include="NVidia\OclUtils.cs" />
-    <Compile Include="NVidia\VectorAdd.cs" />
-    <Compile Include="TestBuffers.cs" />
-    <Compile Include="TestCategories.cs" />
-    <Compile Include="TestPlatform.cs" />
   </ItemGroup>
 
   <ItemGroup>
