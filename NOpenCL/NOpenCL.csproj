@@ -1,136 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C94F61DD-9361-4B1F-B1A8-DAD72BD6FD51}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NOpenCL</RootNamespace>
-    <AssemblyName>NOpenCL</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>net45</TargetFramework>
+    <EnableDefaultNoneItems>False</EnableDefaultNoneItems>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>1591</NoWarn>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <NoWarn>1591</NoWarn>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(BuildingInsideVisualStudio)' != 'true'">
-    <!-- Ideally this is always enabled, but that tends to hurt developer productivity -->
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
+
   <PropertyGroup>
-    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <CodeAnalysisRuleSet>..\TunnelVisionLabs.NOpenCL.ruleset</CodeAnalysisRuleSet>
+    <Company>Tunnel Vision Laboratories, LLC</Company>
+    <Copyright>Copyright © Sam Harwell 2013</Copyright>
+    <Description />
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="PublicApiAnalyzer" Version="1.0.0-alpha001" PrivateAssets="all" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta004" PrivateAssets="all" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AccessQualifier.cs" />
-    <Compile Include="AddressingMode.cs" />
-    <Compile Include="AddressQualifier.cs" />
-    <Compile Include="AffinityDomain.cs" />
-    <Compile Include="BinaryType.cs" />
-    <Compile Include="Buffer.cs" />
-    <Compile Include="BufferCoordinates.cs" />
-    <Compile Include="BufferCreateType.cs" />
-    <Compile Include="BufferRegion.cs" />
-    <Compile Include="EventStatusEventArgs.cs" />
-    <Compile Include="UnsafeNativeMethods.Cleanup.cs" />
-    <Compile Include="UnsafeNativeMethods.KernelExecution.cs" />
-    <Compile Include="UnsafeNativeMethods.Profiling.cs" />
-    <Compile Include="UnsafeNativeMethods.Synchronization.cs" />
-    <Compile Include="UnsafeNativeMethods.Events.cs" />
-    <Compile Include="UnsafeNativeMethods.Kernels.cs" />
-    <Compile Include="UnsafeNativeMethods.Programs.cs" />
-    <Compile Include="UnsafeNativeMethods.Samplers.cs" />
-    <Compile Include="UnsafeNativeMethods.Buffers.cs" />
-    <Compile Include="UnsafeNativeMethods.CommandQueues.cs" />
-    <Compile Include="UnsafeNativeMethods.Contexts.cs" />
-    <Compile Include="UnsafeNativeMethods.Partitioning.cs" />
-    <Compile Include="UnsafeNativeMethods.Devices.cs" />
-    <Compile Include="UnsafeNativeMethods.Platforms.cs" />
-    <Compile Include="SafeHandles\BufferSafeHandle.cs" />
-    <Compile Include="BufferSize.cs" />
-    <Compile Include="BuildStatus.cs" />
-    <Compile Include="CacheType.cs" />
-    <Compile Include="ChannelOrder.cs" />
-    <Compile Include="ChannelType.cs" />
-    <Compile Include="CommandQueue.cs" />
-    <Compile Include="CommandQueueProperties.cs" />
-    <Compile Include="CommandType.cs" />
-    <Compile Include="Context.cs" />
-    <Compile Include="SafeHandles\ContextSafeHandle.cs" />
-    <Compile Include="SafeHandles\CommandQueueSafeHandle.cs" />
-    <Compile Include="ImageDescriptor.cs" />
-    <Compile Include="ImageFormat.cs" />
-    <Compile Include="SafeHandles\ImageSafeHandle.cs" />
-    <Compile Include="Image.cs" />
-    <Compile Include="MapFlags.cs" />
-    <Compile Include="MemObject.cs" />
-    <Compile Include="MemObjectType.cs" />
-    <Compile Include="MigrationFlags.cs" />
-    <Compile Include="SafeHandles\SafeHandleArrayMarshaler.cs" />
-    <Compile Include="Kernel.cs" />
-    <Compile Include="DisposableCollection`1.cs" />
-    <Compile Include="Event.cs" />
-    <Compile Include="SafeHandles\EventSafeHandle.cs" />
-    <Compile Include="ExecutionStatus.cs" />
-    <Compile Include="Extensions\KhrD3D11Sharing.cs" />
-    <Compile Include="Extensions\KhrD3D10Sharing.cs" />
-    <Compile Include="Extensions\NvDeviceAttributeQuery.cs" />
-    <Compile Include="FilterMode.cs" />
-    <Compile Include="KernelArgument.cs" />
-    <Compile Include="SafeHandles\KernelSafeHandle.cs" />
-    <Compile Include="MemObject`1.cs" />
-    <Compile Include="SafeHandles\MemObjectSafeHandle.cs" />
-    <Compile Include="MemoryFlags.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Sampler.cs" />
-    <Compile Include="SafeHandles\SamplerSafeHandle.cs" />
-    <Compile Include="SafeHandles\ProgramSafeHandle.cs" />
-    <Compile Include="SafeHandles\DeviceSafeHandle.cs" />
-    <Compile Include="Device.cs" />
-    <Compile Include="DeviceType.cs" />
-    <Compile Include="ErrorHandler.cs" />
-    <Compile Include="ExecutionCapabilities.cs" />
-    <Compile Include="ExternDll.cs" />
-    <Compile Include="FloatingPointConfiguration.cs" />
-    <Compile Include="LocalMemoryType.cs" />
-    <Compile Include="PartitionProperty.cs" />
-    <Compile Include="Platform.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TypeQualifiers.cs" />
-    <Compile Include="UnsafeNativeMethods.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
+
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json">
       <Link>stylecop.json</Link>
@@ -138,19 +38,5 @@
     <AdditionalFiles Include="PublicAPI.Shipped.txt" />
     <AdditionalFiles Include="PublicAPI.Unshipped.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\PublicApiAnalyzer.1.0.0-alpha001\analyzers\dotnet\cs\PublicApiAnalyzer.CodeFixes.dll" />
-    <Analyzer Include="..\packages\PublicApiAnalyzer.1.0.0-alpha001\analyzers\dotnet\cs\PublicApiAnalyzer.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0-rc2\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0-rc2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
-    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0-rc2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

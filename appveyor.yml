@@ -1,6 +1,8 @@
 version: 1.0.{build}
 image: Visual Studio 2017
 configuration: Release
+environment:
+  TreatWarningsAsErrors: true
 init:
 - git config --global core.autocrlf true
 install:
@@ -11,7 +13,7 @@ build:
   project: NOpenCL.sln
   verbosity: minimal
 test_script:
-- .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"vstest.console.exe" -targetargs:"/logger:Appveyor /TestCaseFilter:TestCategory!=RequireGpu C:\projects\nopencl\NOpenCL.Test\bin\Release\NOpenCL.Test.dll" -threshold:1 -oldStyle -returntargetcode -filter:"+[NOpenCL*]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -excludebyfile:*\*Designer.cs -hideskipped:All -output:.\NOpenCL_coverage.xml
+- .\packages\OpenCover.4.6.519\tools\OpenCover.Console.exe -register:user -target:"vstest.console.exe" -targetargs:"/logger:Appveyor /TestCaseFilter:TestCategory!=RequireGpu C:\projects\nopencl\NOpenCL.Test\bin\Release\net45\NOpenCL.Test.dll" -threshold:1 -oldStyle -returntargetcode -filter:"+[NOpenCL*]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -excludebyfile:*\*Designer.cs -hideskipped:All -output:.\NOpenCL_coverage.xml
 - .\packages\Codecov.1.0.1\tools\codecov.exe -n "VS2017 %configuration%" -f "NOpenCL_coverage.xml"
 cache:
 - intel_sdk_for_opencl_setup_6.0.0.1049.exe -> build\appveyor-install.ps1
