@@ -517,32 +517,32 @@ namespace NOpenCL.Test.NVidia
         {
             Quick,
             Range,
-            Shmoo
+            Shmoo,
         }
 
         public enum MemoryCopyKind
         {
             DeviceToHost,
             HostToDevice,
-            DeviceToDevice
+            DeviceToDevice,
         }
 
         public enum PrintMode
         {
             UserReadable,
-            Csv
+            Csv,
         }
 
         public enum MemoryMode
         {
             Pageable,
-            Pinned
+            Pinned,
         }
 
         public enum AccessMode
         {
             Mapped,
-            Direct
+            Direct,
         }
     }
 }
